@@ -20,15 +20,15 @@ def get_content(filename):
     return content
 
 for post_dir in os.listdir("posts"):
-    
-    f = open("posts/" + post_dir + "/post.yaml")
+    subdir = "posts/" + post_dir + "/"
+    f = open(subdir + "post.yaml")
     metadata = yaml.load(f)
     f.close()
 
     if metadata["processed"] == True:
         continue
 
-    content = get_content(metadata["filename"])
+    content = get_content(subdir + metadata["filename"])
     
     tag = "<div class=\"content\">"
     index = base.find(tag)
