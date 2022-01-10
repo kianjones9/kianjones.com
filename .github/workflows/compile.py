@@ -21,7 +21,7 @@ def get_content(filename):
 
 for post_dir in os.listdir("posts"):
     
-    f = open(post_dir + "post.yaml")
+    f = open(post_dir + "/post.yaml")
     metadata = yaml.load(f)
     f.close()
 
