@@ -1,0 +1,54 @@
+<!doctype html>
+
+<html lang="en">
+    
+    <head>
+        <meta charset="utf-8">
+
+        <title>kianjones.com - Home</title>
+        <meta name="kianjones.com - Home" content="The personal site of Kian Jones">
+        
+        <link rel="stylesheet" href="style.css">
+        
+    </head>
+    
+    <body>
+        
+        <nav>
+            <a href="./resources.html">Resources</a>
+            <a href="./posts.html">Posts</a>
+            <a href="./index.html">Home</a>
+            <span id="prompt">root@KianOS:~$</span>
+            <span id="cursor">▊</span>
+            
+        </nav>
+
+        <div class="content">
+            <p><a href="https://bitdegree.ca/index.php?Program=NET&Section=Courses&Page=List">Network Technology</a> Student @ <a href="https://bitdegree.ca/index.php?Program=BIT">Carleton University and Algonquin College</a></p>
+            <p>President of the <a href="https://bitsoc.ca">Bachelor of IT Society</a></p>
+            <p><a href="https://goravens.ca">Carleton Ravens</a> Ultimate Frisbee</p>
+
+            <br>
+            <p>Network Engineering Intern @ Facebook</p>
+            <p><a href="https://ietf.org">IETF Contributor</a> - BMP</p>
+            <p>Previously an Intern at Nokia, CENGN, Environment Canada, and SurveyMonkey</p>
+
+        </div>
+
+        <script>
+            var cursor = true;
+            var speed = 530;
+            setInterval(() => {
+              if(cursor) {
+                document.getElementById('cursor').style.opacity = 0;
+                cursor = false;
+              } else {
+                document.getElementById('cursor').style.opacity = 1;
+                cursor = true;
+              }
+            }, speed);
+        </script>
+        
+    </body>
+
+</html>

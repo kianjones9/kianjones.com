@@ -1,0 +1,50 @@
+<!doctype html>
+
+<html lang="en">
+    
+    <head>
+        <meta charset="utf-8">
+
+        <title>kianjones.com - Posts</title>
+        <meta name="kianjones.com - Posts" content="The personal site of Kian Jones">
+        
+        <link rel="stylesheet" href="style.css">
+        
+    </head>
+    
+    <body>
+        
+        <nav>
+            <a href="./resources.html">Resources</a>
+            <a href="./posts.html">Posts</a>
+            <a href="./index.html">Home</a>
+            <span id="prompt">root@KianOS:~/posts$</span>
+            <span id="cursor">▊</span>
+            
+        </nav>
+
+        <div class="content">
+          <h2>Posts</h2>
+          <div id="post-list">
+            <a href="posts/2021-01-03-2021-year-end-review.html">2021 Year End Review</a>
+          </div>
+        </div>
+
+        <script>
+            var cursor = true;
+            var speed = 530;
+            setInterval(() => {
+              if(cursor) {
+                document.getElementById('cursor').style.opacity = 0;
+                cursor = false;
+              }else {
+                document.getElementById('cursor').style.opacity = 1;
+                cursor = true;
+              }
+            }, speed);
+
+        </script>
+          
+    </body>
+
+</html>
