@@ -22,7 +22,7 @@ def get_content(filename):
 for post_dir in os.listdir("posts"):
     subdir = "posts/" + post_dir + "/"
     f = open(subdir + "post.yaml")
-    metadata = yaml.load(f)
+    metadata = yaml.load(f, Loader=yaml.FullLoader)
     f.close()
 
     if metadata["processed"] == True:
