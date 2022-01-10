@@ -24,7 +24,7 @@ jobs:
     steps:
     - uses: actions/checkout@v1
     - name: run ls
-      run: ls
+      run: ls -lah
     
     - name: Run script to reformat HTML file exported from Notion
       run: python ./.github/workflows/compile.py
