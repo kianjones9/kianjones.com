@@ -1,7 +1,7 @@
 import os
 import yaml
 
-file = open("base-post.html","r")
+file = open("./.github/workflows/base-post.html","r")
 base = file.read()
 file.close()
 
@@ -19,7 +19,7 @@ def get_content(filename):
     content =  text[start_index:end_index + len(close_tag)]
     return content
 
-for post_dir in os.listdir("posts/"):
+for post_dir in os.listdir("posts"):
     
     f = open(post_dir + "post.yaml")
     metadata = yaml.load(f)
