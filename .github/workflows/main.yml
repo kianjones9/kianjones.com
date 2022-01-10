@@ -23,6 +23,9 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
     - uses: actions/checkout@v1
+    - name: run ls
+      run: ls
+    
     - name: Run script to reformat HTML file exported from Notion
       run: python ./.github/workflows/compile.py
     
