@@ -25,16 +25,16 @@ for post_dir in os.listdir("posts"):
     metadata = yaml.load(f)
     f.close()
 
-    if metadata.processed == True:
+    if metadata["processed"] == True:
         continue
 
-    content = get_content(metadata.filename)
+    content = get_content(metadata["filename"])
     
     tag = "<div class=\"content\">"
     index = base.find(tag)
     post = base[:index + len(tag)] + content + base[len(tag) + index:]
 
 
-    file = open("posts/" + metadata.filename,"w")
+    file = open("posts/" + metadata["filename"],"w")
     file.write(post)
     file.close()
