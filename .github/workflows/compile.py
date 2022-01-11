@@ -1,17 +1,19 @@
 import os
 import yaml
+import codecs
 
 file = open("./.github/workflows/base-post.html","r")
 base = file.read()
 file.close()
 
+
 def get_content(filename):
 
-    f = open(filename, "r")
+    f = codecs.open(filename, "r", encoding="utf-8")
     text = f.read()
     f.close()
     
-    open_tag = "<article>"
+    open_tag = "<article"
     start_index = text.find(open_tag)
     close_tag = "</article>"
     end_index = text.find(close_tag)
