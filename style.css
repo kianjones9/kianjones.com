@@ -549,11 +549,11 @@ body {
     margin-left: 8px;
     outline: none;
     width: 100%;
-    caret-color: transparent;
+    caret-color: #ff006e;
 }
 
 #terminal-input::placeholder {
-    color: #666;
+    color: transparent;
 }
 
 .cursor {

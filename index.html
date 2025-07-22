@@ -215,28 +215,10 @@
                 <div class="terminal-content">
                     <div class="scroll-container">
                         <div class="terminal-output scroll-content" id="terminal-output">
-                        <div class="terminal-line">
-                            <span class="prompt">kian@letta:~/kianjones.com$</span>
-                            <span>echo "Welcome to my interactive portfolio!"</span>
-                        </div>
-                        <div class="output">Welcome to my interactive portfolio!</div>
-                        <div class="terminal-line">
-                            <span class="prompt">kian@letta:~/kianjones.com$</span>
-                            <span>ls -la</span>
-                        </div>
-                        <div class="output">
-drwxr-xr-x  4 kian  staff  128 Jul 21 20:00 .
-drwxr-xr-x  3 kian  staff   96 Jul 21 19:30 ..
--rw-r--r--  1 kian  staff 2341 Jul 21 20:00 README.md
--rw-r--r--  1 kian  staff 1024 Jul 21 19:45 bio.md
--rw-r--r--  1 kian  staff  512 Jul 21 19:45 contact.md
-drwxr-xr-x  5 kian  staff  160 Jul 21 19:50 posts
-drwxr-xr-x  2 kian  staff   64 Jul 21 19:50 projects</div>
                             <div class="terminal-input-line">
                                 <span class="prompt">kian@letta:~/kianjones.com$</span>
                                 <span class="input-container">
-                                    <input type="text" id="terminal-input" placeholder="Type a command..." />
-                                    <span class="cursor" id="cursor">▊</span>
+                                    <input type="text" id="terminal-input" placeholder="" />
                                 </span>
                             </div>
                         </div>
@@ -536,22 +518,60 @@ sub-second response times and 99.9% uptime.`
                 }
             };
 
-            terminalInput.addEventListener('keypress', (e) => {
+            // Command history
+            let commandHistory = [];
+            let historyIndex = -1;
+
+            terminalInput.addEventListener('keydown', (e) => {
                 if (e.key === 'Enter') {
+                    e.preventDefault();
                     const command = terminalInput.value.trim();
+                    executeCommand(command);
                     if (command) {
-                        executeCommand(command);
+                        commandHistory.push(command);
                     }
+                    historyIndex = commandHistory.length;
                     terminalInput.value = '';
+                } else if (e.key === 'ArrowUp') {
+                    e.preventDefault();
+                    if (historyIndex > 0) {
+                        historyIndex--;
+                        terminalInput.value = commandHistory[historyIndex];
+                        // Move cursor to end
+                        setTimeout(() => {
+                            terminalInput.setSelectionRange(terminalInput.value.length, terminalInput.value.length);
+                        }, 0);
+                    }
+                } else if (e.key === 'ArrowDown') {
+                    e.preventDefault();
+                    if (historyIndex < commandHistory.length - 1) {
+                        historyIndex++;
+                        terminalInput.value = commandHistory[historyIndex];
+                    } else {
+                        historyIndex = commandHistory.length;
+                        terminalInput.value = '';
+                    }
+                    // Move cursor to end
+                    setTimeout(() => {
+                        terminalInput.setSelectionRange(terminalInput.value.length, terminalInput.value.length);
+                    }, 0);
                 }
             });
 
             function executeCommand(commandLine) {
-                // Add command to output
+                // Add command to output (always show the prompt line, even for empty commands)
                 const cmdDiv = document.createElement('div');
                 cmdDiv.className = 'terminal-line';
                 cmdDiv.innerHTML = `<span class="prompt">kian@letta:~/kianjones.com$</span> ${commandLine}`;
-                terminalOutput.appendChild(cmdDiv);
+                
+                // Insert before the input line
+                const inputLine = document.querySelector('.terminal-input-line');
+                terminalOutput.insertBefore(cmdDiv, inputLine);
+                
+                // If empty command, just add new prompt
+                if (!commandLine.trim()) {
+                    return;
+                }
 
                 // Parse and execute
                 const parts = commandLine.split(' ');
@@ -569,7 +589,10 @@ sub-second response times and 99.9% uptime.`
                     const resultDiv = document.createElement('div');
                     resultDiv.className = 'output';
                     resultDiv.textContent = result;
-                    terminalOutput.appendChild(resultDiv);
+                    
+                    // Insert before the input line
+                    const inputLine = document.querySelector('.terminal-input-line');
+                    terminalOutput.insertBefore(resultDiv, inputLine);
                 }
 
                 // Scroll to bottom
@@ -589,28 +612,11 @@ sub-second response times and 99.9% uptime.`
                 }
             }, 530);
 
-            // Terminal click to focus and cursor positioning
+            // Terminal click to focus
             document.querySelector('.terminal-content').addEventListener('click', (e) => {
                 terminalInput.focus();
-                updateCursorPosition();
             });
 
-            // Update cursor position
-            function updateCursorPosition() {
-                const inputValue = terminalInput.value;
-                const cursor = document.getElementById('cursor');
-                const inputRect = terminalInput.getBoundingClientRect();
-                const canvas = document.createElement('canvas');
-                const context = canvas.getContext('2d');
-                context.font = '14px "Cascadia Code", "Monaco", monospace';
-                const textWidth = context.measureText(inputValue).width;
-                
-                cursor.style.left = (8 + textWidth) + 'px';
-            }
-
-            // Update cursor on input
-            terminalInput.addEventListener('input', updateCursorPosition);
-            terminalInput.addEventListener('keyup', updateCursorPosition);
 
             // Panel Resizing
             let isResizing = false;
