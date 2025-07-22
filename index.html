@@ -488,17 +488,74 @@ sub-second response times and 99.9% uptime.`
             const terminalInput = document.getElementById('terminal-input');
             const terminalOutput = document.getElementById('terminal-output');
             
+            // File system structure
+            const fileSystem = {
+                '/': {
+                    'README.md': { type: 'file', content: 'readme' },
+                    'bio.md': { type: 'file', content: 'bio' },
+                    'contact.md': { type: 'file', content: 'contact' },
+                    'posts/': {
+                        type: 'directory',
+                        children: {
+                            'scaling-ai-agents.md': { type: 'file', content: 'scaling-agents' },
+                            'observability-agents.md': { type: 'file', content: 'observability' },
+                            'network-architecture.md': { type: 'file', content: 'networking' },
+                            'gpu-infrastructure.md': { type: 'file', content: 'gpu-infra' }
+                        }
+                    },
+                    'projects/': {
+                        type: 'directory',
+                        children: {
+                            'letta-infrastructure.md': { type: 'file', content: 'letta-infra' }
+                        }
+                    }
+                }
+            };
+
+            let currentPath = '/';
+
             const commands = {
                 help: () => `Available commands:
-  ls          - list files
+  ls [dir]    - list files in directory
   cat <file>  - show file content  
   clear       - clear terminal
   whoami      - show user info
-  pwd         - current directory`,
+  pwd         - current directory
+  cd <dir>    - change directory`,
                 
-                ls: () => `README.md  bio.md  contact.md  posts/  projects/`,
+                ls: (dir = '.') => {
+                    const targetPath = resolvePath(currentPath, dir);
+                    const dirObj = getDirectoryContents(targetPath);
+                    
+                    if (!dirObj) {
+                        return `ls: ${dir}: No such file or directory`;
+                    }
+                    
+                    if (dirObj.type === 'file') {
+                        return path.basename(targetPath);
+                    }
+                    
+                    const entries = Object.keys(dirObj.children || {}).sort();
+                    return entries.join('  ') || '';
+                },
+
+                cd: (dir = '/') => {
+                    const newPath = resolvePath(currentPath, dir);
+                    const dirObj = getDirectoryContents(newPath);
+                    
+                    if (!dirObj) {
+                        return `cd: ${dir}: No such file or directory`;
+                    }
+                    
+                    if (dirObj.type === 'file') {
+                        return `cd: ${dir}: Not a directory`;
+                    }
+                    
+                    currentPath = newPath;
+                    return '';
+                },
                 
-                pwd: () => `/home/kian/kianjones.com`,
+                pwd: () => `/home/kian/kianjones.com${currentPath === '/' ? '' : currentPath}`,
                 
                 whoami: () => `kian - Infrastructure Engineer @ Letta`,
                 
@@ -508,15 +565,110 @@ sub-second response times and 99.9% uptime.`
                 },
                 
                 cat: (file) => {
-                    const fileMap = {
-                        'README.md': 'readme',
-                        'bio.md': 'bio', 
-                        'contact.md': 'contact'
-                    };
-                    const content = fileContent[fileMap[file]];
+                    if (!file) {
+                        return 'cat: missing file operand';
+                    }
+                    
+                    const filePath = resolvePath(currentPath, file);
+                    const fileObj = getDirectoryContents(filePath);
+                    
+                    if (!fileObj) {
+                        return `cat: ${file}: No such file or directory`;
+                    }
+                    
+                    if (fileObj.type === 'directory') {
+                        return `cat: ${file}: Is a directory`;
+                    }
+                    
+                    const content = fileContent[fileObj.content];
                     return content || `cat: ${file}: No such file or directory`;
                 }
             };
+
+            // Helper functions for file system navigation
+            function resolvePath(current, target) {
+                if (target === '.') return current;
+                if (target === '..') {
+                    const parts = current.split('/').filter(p => p);
+                    if (parts.length === 0) return '/';
+                    parts.pop();
+                    return '/' + parts.join('/');
+                }
+                if (target.startsWith('/')) return target;
+                
+                const currentParts = current === '/' ? [] : current.split('/').filter(p => p);
+                const targetParts = target.split('/').filter(p => p);
+                
+                const result = [...currentParts, ...targetParts];
+                return result.length === 0 ? '/' : '/' + result.join('/');
+            }
+
+            function getDirectoryContents(path) {
+                if (path === '/') return fileSystem['/'];
+                
+                const parts = path.split('/').filter(p => p);
+                let current = fileSystem['/'];
+                
+                for (const part of parts) {
+                    const key = part.endsWith('/') ? part : part + '/';
+                    const fileKey = part.endsWith('/') ? part.slice(0, -1) : part;
+                    
+                    if (current.children && current.children[key]) {
+                        current = current.children[key];
+                    } else if (current[key]) {
+                        current = current[key];
+                    } else if (current.children && current.children[fileKey]) {
+                        current = current.children[fileKey];
+                    } else if (current[fileKey]) {
+                        current = current[fileKey];
+                    } else {
+                        return null;
+                    }
+                }
+                
+                return current;
+            }
+
+            // Tab completion functionality
+            function getCompletions(partial) {
+                const parts = partial.split(' ');
+                const command = parts[0];
+                const currentArg = parts[parts.length - 1] || '';
+                
+                if (parts.length === 1) {
+                    // Complete command names
+                    const commandNames = Object.keys(commands);
+                    return commandNames.filter(cmd => cmd.startsWith(partial));
+                }
+                
+                if (command === 'ls' || command === 'cd' || command === 'cat') {
+                    // Complete file/directory names
+                    const dirPath = currentArg.includes('/') 
+                        ? currentArg.substring(0, currentArg.lastIndexOf('/') + 1)
+                        : '';
+                    const fileName = currentArg.includes('/') 
+                        ? currentArg.substring(currentArg.lastIndexOf('/') + 1)
+                        : currentArg;
+                    
+                    const searchPath = resolvePath(currentPath, dirPath || '.');
+                    const dirContents = getDirectoryContents(searchPath);
+                    
+                    if (!dirContents || dirContents.type === 'file') return [];
+                    
+                    const entries = Object.keys(dirContents.children || dirContents).filter(entry => {
+                        if (command === 'cd') {
+                            // Only directories for cd
+                            const entryObj = (dirContents.children || dirContents)[entry];
+                            return entryObj.type === 'directory' && entry.startsWith(fileName);
+                        }
+                        return entry.startsWith(fileName);
+                    });
+                    
+                    return entries.map(entry => dirPath + entry);
+                }
+                
+                return [];
+            }
 
             // Command history
             let commandHistory = [];
@@ -536,6 +688,46 @@ sub-second response times and 99.9% uptime.`
                     setTimeout(() => {
                         terminalInput.focus();
                     }, 0);
+                } else if (e.key === 'Tab') {
+                    e.preventDefault();
+                    const currentInput = terminalInput.value;
+                    const completions = getCompletions(currentInput);
+                    
+                    if (completions.length === 1) {
+                        // Single completion - auto-complete
+                        const parts = currentInput.split(' ');
+                        parts[parts.length - 1] = completions[0];
+                        terminalInput.value = parts.join(' ');
+                        // Move cursor to end
+                        setTimeout(() => {
+                            terminalInput.setSelectionRange(terminalInput.value.length, terminalInput.value.length);
+                        }, 0);
+                    } else if (completions.length > 1) {
+                        // Multiple completions - show them
+                        executeCommand(currentInput, true); // Show command but don't execute
+                        const resultDiv = document.createElement('div');
+                        resultDiv.className = 'output';
+                        resultDiv.textContent = completions.join('  ');
+                        
+                        const inputLine = document.querySelector('.terminal-input-line');
+                        terminalOutput.insertBefore(resultDiv, inputLine);
+                        
+                        // Find common prefix
+                        const commonPrefix = getCommonPrefix(completions);
+                        const parts = currentInput.split(' ');
+                        const lastPart = parts[parts.length - 1];
+                        
+                        if (commonPrefix.length > lastPart.length) {
+                            parts[parts.length - 1] = commonPrefix;
+                            terminalInput.value = parts.join(' ');
+                        }
+                        
+                        setTimeout(() => {
+                            terminalOutput.scrollTop = terminalOutput.scrollHeight;
+                            terminalInput.focus();
+                            terminalInput.setSelectionRange(terminalInput.value.length, terminalInput.value.length);
+                        }, 0);
+                    }
                 } else if (e.key === 'ArrowUp') {
                     e.preventDefault();
                     if (historyIndex > 0) {
@@ -562,15 +754,34 @@ sub-second response times and 99.9% uptime.`
                 }
             });
 
-            function executeCommand(commandLine) {
+            // Helper function to find common prefix for tab completion
+            function getCommonPrefix(strings) {
+                if (strings.length === 0) return '';
+                if (strings.length === 1) return strings[0];
+                
+                let prefix = strings[0];
+                for (let i = 1; i < strings.length; i++) {
+                    while (prefix.length > 0 && !strings[i].startsWith(prefix)) {
+                        prefix = prefix.slice(0, -1);
+                    }
+                    if (prefix.length === 0) break;
+                }
+                return prefix;
+            }
+
+            function executeCommand(commandLine, showOnly = false) {
                 // Add command to output (always show the prompt line, even for empty commands)
                 const cmdDiv = document.createElement('div');
                 cmdDiv.className = 'terminal-line';
-                cmdDiv.innerHTML = `<span class="prompt">kian@letta:~/kianjones.com$</span> ${commandLine}`;
+                const currentDir = currentPath === '/' ? '' : currentPath;
+                cmdDiv.innerHTML = `<span class="prompt">kian@letta:~/kianjones.com${currentDir}$</span> ${commandLine}`;
                 
                 // Insert before the input line
                 const inputLine = document.querySelector('.terminal-input-line');
                 terminalOutput.insertBefore(cmdDiv, inputLine);
+                
+                // If showOnly is true (for tab completion), don't execute
+                if (showOnly) return;
                 
                 // If empty command, just add new prompt
                 if (!commandLine.trim()) {
@@ -599,11 +810,22 @@ sub-second response times and 99.9% uptime.`
                     terminalOutput.insertBefore(resultDiv, inputLine);
                 }
 
+                // Update the input prompt only if directory changed
+                if (cmd === 'cd' && !result) {
+                    updatePrompt();
+                }
+
                 // Scroll to bottom and maintain input focus
                 setTimeout(() => {
                     terminalOutput.scrollTop = terminalOutput.scrollHeight;
                     terminalInput.focus();
                 }, 0);
+            }
+
+            function updatePrompt() {
+                const promptElement = document.querySelector('.terminal-input-line .prompt');
+                const currentDir = currentPath === '/' ? '' : currentPath;
+                promptElement.textContent = `kian@letta:~/kianjones.com${currentDir}$`;
             }
 
             // Cursor blinking
