@@ -72,35 +72,8 @@
                                         <span class="folder-icon">📁</span>
                                         <span class="folder-name">posts/</span>
                                     </div>
-                                    <div class="folder-content">
-                                        <div class="file" onclick="loadFile('scaling-agents')">
-                                            <span class="file-icon">🚀</span>
-                                            <span class="file-name">scaling-ai-agents.md</span>
-                                        </div>
-                                        <div class="file" onclick="loadFile('observability')">
-                                            <span class="file-icon">📊</span>
-                                            <span class="file-name">observability-agents.md</span>
-                                        </div>
-                                        <div class="file" onclick="loadFile('networking')">
-                                            <span class="file-icon">🌐</span>
-                                            <span class="file-name">network-architecture.md</span>
-                                        </div>
-                                        <div class="file" onclick="loadFile('gpu-infra')">
-                                            <span class="file-icon">⚡</span>
-                                            <span class="file-name">gpu-infrastructure.md</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="folder">
-                                    <div class="folder-header" onclick="toggleFolder(this)">
-                                        <span class="folder-icon">📁</span>
-                                        <span class="folder-name">projects/</span>
-                                    </div>
-                                    <div class="folder-content">
-                                        <div class="file" onclick="loadFile('letta-infra')">
-                                            <span class="file-icon">🏗️</span>
-                                            <span class="file-name">letta-infrastructure.md</span>
-                                        </div>
+                                    <div class="folder-content" id="posts-folder-content">
+                                        <!-- Posts will be loaded dynamically -->
                                     </div>
                                 </div>
                             </div>
@@ -231,21 +204,70 @@
         </div>
 
         <script>
-            // File content storage
-            const fileContent = {
-                'readme': `<h1>Kian Jones</h1>
+            // Posts configuration
+            const POSTS_CONFIG = [
+                {
+                    id: '2021-language-learning-review',
+                    title: '2021 Language Learning Review',
+                    folder: '2021 Language Learning Review',
+                    filename: '2021-language-learning-review.html',
+                    date: '2021-01-10',
+                    icon: '🗣️'
+                },
+                {
+                    id: '2022-resolutions-part-1-end-of-year-review', 
+                    title: '2022 Resolutions Part 1 End of Year Review',
+                    folder: '2022 Resolutions Part 1 End of Year Review',
+                    filename: '2021-year-end-review.html',
+                    date: '2021-01-03',
+                    icon: '📅'
+                }
+            ];
 
+            // Function to load post content dynamically
+            async function loadPostContent(postConfig) {
+                try {
+                    const postUrl = `posts/${encodeURIComponent(postConfig.folder)}/${postConfig.filename}`;
+                    console.log('Loading post from:', postUrl);
+                    const response = await fetch(postUrl);
+                    
+                    if (!response.ok) {
+                        throw new Error(`HTTP ${response.status}`);
+                    }
+                    
+                    const html = await response.text();
+                    
+                    // Extract content div
+                    const parser = new DOMParser();
+                    const doc = parser.parseFromString(html, 'text/html');
+                    const contentDiv = doc.querySelector('.content');
+                    
+                    if (contentDiv) {
+                        let content = contentDiv.innerHTML;
+                        // Fix image paths
+                        const postDir = `posts/${encodeURIComponent(postConfig.folder)}/`;
+                        content = content.replace(/src="(?!http|\/)/g, `src="${postDir}`);
+                        return content;
+                    }
+                    
+                    return `<h1>${postConfig.title}</h1><p>Content could not be loaded. <a href="${postUrl}" target="_blank">View original post →</a></p>`;
+                    
+                } catch (error) {
+                    console.error('Failed to load post:', error);
+                    return `<h1>${postConfig.title}</h1><p>Error loading post content. <a href="posts/${encodeURIComponent(postConfig.folder)}/${postConfig.filename}" target="_blank">View original post →</a></p>`;
+                }
+            }
+
+            // Static content
+            const staticContent = {
+                'readme': `<h1>Kian Jones</h1>
 <p><strong>Infrastructure Engineer @ <a href="https://letta.com">Letta</a></strong><br>
 Building the backbone for next-generation AI agents</p>
-
 <h2>About</h2>
-
 <p>Infrastructure specialist with deep expertise in cloud architecture, networking, 
 and observability. Currently architecting scalable systems that enable AI agents 
 to operate reliably at massive scale.</p>
-
 <h2>Experience</h2>
-
 <ul>
 <li><strong>Letta</strong> - Infrastructure Engineer (AI Agent Platform)</li>
 <li><strong>Covariant</strong> - Cloud & Infrastructure</li>
@@ -255,61 +277,41 @@ to operate reliably at massive scale.</p>
 <li><strong>Environment Canada</strong> - Systems Engineering</li>
 <li><strong>SurveyMonkey</strong> - Backend Infrastructure</li>
 </ul>
-
 <h2>Expertise</h2>
-
 <h3>🏗️ Cloud Architecture</h3>
 <p>AWS, GCP, Kubernetes, Terraform, Infrastructure as Code</p>
-
 <h3>📊 Observability</h3>
 <p>Monitoring, Logging, Distributed Tracing, Performance Metrics</p>
-
 <h3>🌐 Networking</h3>
 <p>Load Balancing, CDN, Service Mesh, Network Security</p>
-
 <h3>🤖 AI Infrastructure</h3>
 <p>GPU Clusters, Model Serving, Agent Orchestration, Auto-scaling</p>
-
 <h2>Current Focus</h2>
-
 <p>Building the infrastructure that powers thousands of concurrent AI agents at Letta.
 From Kubernetes orchestration to observability systems, creating the foundation
 for the future of AI agent interactions.</p>
-
 <hr>
 <p><em>Navigate using the file explorer → or try the terminal below ↓</em></p>`,
-                
                 'bio': `<h1>Bio</h1>
-
 <h2>Kian Jones - Infrastructure Engineer</h2>
-
 <p>Currently building the foundational systems that power AI agents at Letta. 
 Passionate about creating robust, scalable infrastructure that enables the 
 next generation of artificial intelligence to operate seamlessly.</p>
-
 <h3>Background</h3>
-
 <p>With extensive experience across cloud platforms, networking, and observability,
 I specialize in designing systems that can handle massive scale while maintaining
 reliability and performance.</p>
-
 <h3>Philosophy</h3>
-
 <p>Great infrastructure is invisible - it just works. My focus is on building
 systems that developers and AI agents can rely on, allowing them to focus
 on innovation rather than operational concerns.</p>`,
-
                 'contact': `<h1>Contact</h1>
-
 <h2>Get in Touch</h2>
-
 <p><strong>Email</strong>: <a href="mailto:kian@kianjones.com">kian@kianjones.com</a><br>
 <strong>LinkedIn</strong>: <a href="https://linkedin.com/in/kianjones">linkedin.com/in/kianjones</a><br>
 <strong>GitHub</strong>: <a href="https://github.com/kianjones">github.com/kianjones</a><br>
 <strong>Twitter</strong>: <a href="https://twitter.com/kianjones">@kianjones</a></p>
-
 <h3>Open to Discuss</h3>
-
 <ul>
 <li>Infrastructure architecture and scaling challenges</li>
 <li>AI/ML platform engineering opportunities</li>
@@ -317,154 +319,135 @@ on innovation rather than operational concerns.</p>`,
 <li>Observability and monitoring strategies</li>
 <li>Open source contributions</li>
 </ul>
-
 <hr>
 <p><em>Always happy to talk about infrastructure, AI agents, and building scalable systems!</em></p>`,
-
-                'scaling-agents': `# Scaling AI Agent Infrastructure
-
-*Coming Soon - Technical Deep Dive*
-
-## Overview
-
-How we built cloud infrastructure to handle thousands of concurrent AI agents 
-at Letta. From Kubernetes orchestration to auto-scaling strategies.
-
-## Topics Covered
-
-- Container orchestration for agent workloads
-- Auto-scaling strategies for unpredictable traffic
-- Resource management and cost optimization
-- Performance monitoring and alerting
-
-*This post is currently in development. Check back soon!*`,
-
-                'observability': `# Observability for Agent Systems  
-
-*Coming Soon - Monitoring Guide*
-
-## Overview
-
-Building comprehensive monitoring, logging, and tracing for AI agent platforms. 
-How to debug distributed agent conversations and track system health.
-
-## Key Areas
-
-- Distributed tracing for agent conversations
-- Custom metrics for agent performance
-- Log aggregation and analysis
-- Real-time alerting systems
-
-*This post is currently in development. Check back soon!*`,
-
-                'networking': `# Network Architecture for AI Agents
-
-*Coming Soon - Architecture Guide*
-
-## Overview
-
-Designing network topologies, load balancing, and service mesh configurations 
-for high-throughput AI agent communication.
-
-## Topics
-
-- Service mesh implementation
-- Load balancing strategies  
-- Network security for agent traffic
-- Performance optimization
-
-*This post is currently in development. Check back soon!*`,
-
-                'gpu-infra': `# GPU Infrastructure Management
-
-*Coming Soon - Hardware Guide*
-
-## Overview
-
-Managing GPU clusters for AI agent workloads. Resource scheduling, cost 
-optimization, and performance tuning for ML inference at scale.
-
-## Coverage
-
-- GPU cluster management
-- Resource scheduling algorithms
-- Cost optimization strategies
-- Performance benchmarking
-
-*This post is currently in development. Check back soon!*`,
-
-                'letta-infra': `# Letta Infrastructure Project
-
-## Overview
-
-Building the scalable infrastructure backbone for Letta's AI agent platform.
-
-### Responsibilities
-
-- Kubernetes cluster management and optimization
-- CI/CD pipeline design and implementation  
-- Monitoring and observability systems
-- Cost optimization and resource management
-
-### Technologies
-
-- **Cloud**: AWS, GCP
-- **Orchestration**: Kubernetes, Docker
-- **Monitoring**: Prometheus, Grafana, Jaeger
-- **IaC**: Terraform, Helm
-
-### Impact
-
-Enabling thousands of concurrent AI agent conversations while maintaining 
-sub-second response times and 99.9% uptime.`
+                'letta-infra': `<h1>Letta Infrastructure Project</h1>
+<h2>Overview</h2>
+<p>Building the scalable infrastructure backbone for Letta's AI agent platform.</p>
+<h3>Responsibilities</h3>
+<ul>
+<li>Kubernetes cluster management and optimization</li>
+<li>CI/CD pipeline design and implementation</li>
+<li>Monitoring and observability systems</li>
+<li>Cost optimization and resource management</li>
+</ul>
+<h3>Technologies</h3>
+<ul>
+<li><strong>Cloud</strong>: AWS, GCP</li>
+<li><strong>Orchestration</strong>: Kubernetes, Docker</li>
+<li><strong>Monitoring</strong>: Prometheus, Grafana, Jaeger</li>
+<li><strong>IaC</strong>: Terraform, Helm</li>
+</ul>
+<h3>Impact</h3>
+<p>Enabling thousands of concurrent AI agent conversations while maintaining 
+sub-second response times and 99.9% uptime.</p>`
             };
 
             // Load file function
-            function loadFile(fileName) {
-                const content = fileContent[fileName] || 'File not found';
+            async function loadFile(fileName) {
                 const editorContent = document.getElementById('editor-content');
                 
                 // Remove active class from all files
                 document.querySelectorAll('.file').forEach(f => f.classList.remove('active'));
                 
                 // Add active class to clicked file
-                event.target.closest('.file').classList.add('active');
+                if (event) {
+                    event.target.closest('.file').classList.add('active');
+                }
+                
+                // Check if it's a dynamic post
+                const postConfig = POSTS_CONFIG.find(post => post.id === fileName);
+                let content = '';
+                let displayName = fileName;
+                let icon = '📄';
+                
+                if (postConfig) {
+                    // It's a dynamic post
+                    displayName = postConfig.title;
+                    icon = postConfig.icon;
+                    
+                    // Show loading
+                    editorContent.innerHTML = '<p>Loading post...</p>';
+                    
+                    try {
+                        content = await loadPostContent(postConfig);
+                    } catch (error) {
+                        console.error('Failed to load post:', error);
+                        content = `<h1>${postConfig.title}</h1><p>Error loading post content.</p>`;
+                    }
+                } else {
+                    // Static content
+                    content = staticContent[fileName] || 'File not found';
+                    
+                    // Set display names and icons for static files
+                    const staticNames = {
+                        'readme': 'README.md',
+                        'bio': 'bio.md',
+                        'contact': 'contact.md',
+                        'letta-infra': 'letta-infrastructure.md'
+                    };
+                    
+                    const staticIcons = {
+                        'readme': '📄',
+                        'bio': '👤',
+                        'contact': '📧',
+                        'letta-infra': '🏗️'
+                    };
+                    
+                    displayName = staticNames[fileName] || fileName;
+                    icon = staticIcons[fileName] || '📄';
+                }
                 
                 // Update tab
                 const tabName = document.querySelector('.tab-name');
                 const tabIcon = document.querySelector('.tab-icon');
-                const icons = {
-                    'readme': '📄',
-                    'bio': '👤', 
-                    'contact': '📧',
-                    'scaling-agents': '🚀',
-                    'observability': '📊',
-                    'networking': '🌐',
-                    'gpu-infra': '⚡',
-                    'letta-infra': '🏗️'
-                };
-                const names = {
-                    'readme': 'README.md',
-                    'bio': 'bio.md',
-                    'contact': 'contact.md', 
-                    'scaling-agents': 'scaling-ai-agents.md',
-                    'observability': 'observability-agents.md',
-                    'networking': 'network-architecture.md',
-                    'gpu-infra': 'gpu-infrastructure.md',
-                    'letta-infra': 'letta-infrastructure.md'
-                };
                 
-                tabIcon.textContent = icons[fileName] || '📄';
-                tabName.textContent = names[fileName] || fileName;
+                tabIcon.textContent = icon;
+                tabName.textContent = displayName;
                 
                 // Update title bar
-                document.querySelector('.title-bar-center').textContent = names[fileName] || fileName;
+                document.querySelector('.title-bar-center').textContent = displayName;
                 
                 // Update content
                 editorContent.innerHTML = content;
                 
                 // Update line numbers after content change
                 updateLineNumbers();
+            }
+
+            // Initialize posts sidebar
+            function initializePosts() {
+                console.log('Initializing posts sidebar...');
+                
+                const postsContainer = document.getElementById('posts-folder-content');
+                if (!postsContainer) {
+                    console.error('Posts container not found!');
+                    return;
+                }
+                
+                // Clear existing content
+                postsContainer.innerHTML = '';
+                
+                // Add posts from config
+                POSTS_CONFIG.forEach(post => {
+                    console.log('Adding post:', post.title);
+                    
+                    const fileDiv = document.createElement('div');
+                    fileDiv.className = 'file';
+                    fileDiv.onclick = () => {
+                        console.log('Clicking post:', post.id);
+                        loadFile(post.id);
+                    };
+                    
+                    fileDiv.innerHTML = `
+                        <span class="file-icon">${post.icon}</span>
+                        <span class="file-name">${post.title}</span>
+                    `;
+                    
+                    postsContainer.appendChild(fileDiv);
+                });
+                
+                console.log('Posts sidebar initialized with', POSTS_CONFIG.length, 'posts');
             }
 
             // Toggle folder function
@@ -484,34 +467,60 @@ sub-second response times and 99.9% uptime.`
                 }
             }
 
+            // Function to update line numbers for current content
+            function updateLineNumbers() {
+                const editorContent = document.getElementById('editor-content');
+                const content = editorContent.innerHTML;
+                
+                // Count actual rendered lines by creating a temporary element
+                const tempDiv = document.createElement('div');
+                tempDiv.innerHTML = content;
+                tempDiv.style.cssText = 'position: absolute; left: -9999px; top: -9999px; width: auto; height: auto; white-space: pre-wrap; font-family: Monaco, monospace; font-size: 14px; line-height: 1.5;';
+                document.body.appendChild(tempDiv);
+                
+                // Get the actual height and calculate lines
+                const lineHeight = parseInt(window.getComputedStyle(tempDiv).lineHeight);
+                const totalHeight = tempDiv.offsetHeight;
+                const lines = Math.max(1, Math.ceil(totalHeight / lineHeight));
+                
+                document.body.removeChild(tempDiv);
+                
+                // Update line numbers
+                const lineNumbers = document.querySelector('.line-numbers');
+                lineNumbers.innerHTML = '';
+                for(let i = 1; i <= lines; i++) {
+                    const lineDiv = document.createElement('div');
+                    lineDiv.className = 'line-number';
+                    lineDiv.textContent = i;
+                    lineNumbers.appendChild(lineDiv);
+                }
+            }
+
             // Terminal functionality
             const terminalInput = document.getElementById('terminal-input');
             const terminalOutput = document.getElementById('terminal-output');
             
-            // File system structure
-            const fileSystem = {
-                '/': {
-                    'README.md': { type: 'file', content: 'readme' },
-                    'bio.md': { type: 'file', content: 'bio' },
-                    'contact.md': { type: 'file', content: 'contact' },
-                    'posts/': {
-                        type: 'directory',
-                        children: {
-                            'scaling-ai-agents.md': { type: 'file', content: 'scaling-agents' },
-                            'observability-agents.md': { type: 'file', content: 'observability' },
-                            'network-architecture.md': { type: 'file', content: 'networking' },
-                            'gpu-infrastructure.md': { type: 'file', content: 'gpu-infra' }
-                        }
-                    },
-                    'projects/': {
-                        type: 'directory',
-                        children: {
-                            'letta-infrastructure.md': { type: 'file', content: 'letta-infra' }
+            // Generate file system structure dynamically
+            function generateFileSystem() {
+                const postsChildren = {};
+                POSTS_CONFIG.forEach(post => {
+                    postsChildren[post.title] = { type: 'file', content: post.id };
+                });
+                
+                return {
+                    '/': {
+                        'README.md': { type: 'file', content: 'readme' },
+                        'bio.md': { type: 'file', content: 'bio' },
+                        'contact.md': { type: 'file', content: 'contact' },
+                        'posts/': {
+                            type: 'directory',
+                            children: postsChildren
                         }
                     }
-                }
-            };
-
+                };
+            }
+            
+            let fileSystem = generateFileSystem();
             let currentPath = '/';
 
             const commands = {
@@ -607,7 +616,7 @@ sub-second response times and 99.9% uptime.`
                         return `cat: ${file}: Is a directory`;
                     }
                     
-                    const content = fileContent[fileObj.content];
+                    const content = staticContent[fileObj.content];
                     return content || `cat: ${file}: No such file or directory`;
                 }
             };
@@ -625,9 +634,8 @@ sub-second response times and 99.9% uptime.`
                         const isDir = entryObj && entryObj.type === 'directory';
                         const permissions = isDir ? 'drwxr-xr-x' : '-rw-r--r--';
                         const size = isDir ? '0' : '1024';
-                        const icon = isDir ? '' : '';
                         
-                        return `${permissions}  1 kian  staff  ${size.padStart(4)} Dec 20 10:30 ${entry}${icon}`;
+                        return `${permissions}  1 kian  staff  ${size.padStart(4)} Dec 20 10:30 ${entry}`;
                     });
                     return lines.join('\n');
                 } else {
@@ -707,153 +715,9 @@ sub-second response times and 99.9% uptime.`
                 return current;
             }
 
-            // Tab completion functionality
-            function getCompletions(partial) {
-                const parts = partial.split(' ');
-                const command = parts[0];
-                const currentArg = parts[parts.length - 1] || '';
-                
-                if (parts.length === 1) {
-                    // Complete command names
-                    const commandNames = Object.keys(commands);
-                    return commandNames.filter(cmd => cmd.startsWith(partial));
-                }
-                
-                if (command === 'ls' || command === 'cd' || command === 'cat') {
-                    // Complete file/directory names
-                    const dirPath = currentArg.includes('/') 
-                        ? currentArg.substring(0, currentArg.lastIndexOf('/') + 1)
-                        : '';
-                    const fileName = currentArg.includes('/') 
-                        ? currentArg.substring(currentArg.lastIndexOf('/') + 1)
-                        : currentArg;
-                    
-                    const searchPath = resolvePath(currentPath, dirPath || '.');
-                    const dirContents = getDirectoryContents(searchPath);
-                    
-                    if (!dirContents || dirContents.type === 'file') return [];
-                    
-                    let entries = Object.keys(dirContents.children || dirContents).filter(entry => {
-                        if (command === 'cd') {
-                            // Only directories for cd
-                            const entryObj = (dirContents.children || dirContents)[entry];
-                            return entryObj.type === 'directory' && entry.startsWith(fileName);
-                        }
-                        return entry.startsWith(fileName);
-                    });
-                    
-                    // Add . and .. for directory navigation
-                    if (command === 'cd' || command === 'ls') {
-                        const dotEntries = [];
-                        if ('.'.startsWith(fileName)) dotEntries.push('.');
-                        if ('..'.startsWith(fileName) && currentPath !== '/') dotEntries.push('..');
-                        entries = [...dotEntries, ...entries];
-                    }
-                    
-                    return entries.map(entry => dirPath + entry);
-                }
-                
-                return [];
-            }
-
             // Command history
             let commandHistory = [];
             let historyIndex = -1;
-
-            terminalInput.addEventListener('keydown', (e) => {
-                if (e.key === 'Enter') {
-                    e.preventDefault();
-                    const command = terminalInput.value.trim();
-                    executeCommand(command);
-                    if (command) {
-                        commandHistory.push(command);
-                    }
-                    historyIndex = commandHistory.length;
-                    terminalInput.value = '';
-                    // Ensure cursor stays at the beginning
-                    setTimeout(() => {
-                        terminalInput.focus();
-                    }, 0);
-                } else if (e.key === 'Tab') {
-                    e.preventDefault();
-                    const currentInput = terminalInput.value;
-                    const completions = getCompletions(currentInput);
-                    
-                    if (completions.length === 1) {
-                        // Single completion - auto-complete
-                        const parts = currentInput.split(' ');
-                        parts[parts.length - 1] = completions[0];
-                        terminalInput.value = parts.join(' ');
-                        // Move cursor to end
-                        setTimeout(() => {
-                            terminalInput.setSelectionRange(terminalInput.value.length, terminalInput.value.length);
-                        }, 0);
-                    } else if (completions.length > 1) {
-                        // Multiple completions - show them
-                        executeCommand(currentInput, true); // Show command but don't execute
-                        const resultDiv = document.createElement('div');
-                        resultDiv.className = 'output';
-                        resultDiv.textContent = completions.join('  ');
-                        
-                        const inputLine = document.querySelector('.terminal-input-line');
-                        terminalOutput.insertBefore(resultDiv, inputLine);
-                        
-                        // Find common prefix
-                        const commonPrefix = getCommonPrefix(completions);
-                        const parts = currentInput.split(' ');
-                        const lastPart = parts[parts.length - 1];
-                        
-                        if (commonPrefix.length > lastPart.length) {
-                            parts[parts.length - 1] = commonPrefix;
-                            terminalInput.value = parts.join(' ');
-                        }
-                        
-                        setTimeout(() => {
-                            terminalOutput.scrollTop = terminalOutput.scrollHeight;
-                            terminalInput.focus();
-                            terminalInput.setSelectionRange(terminalInput.value.length, terminalInput.value.length);
-                        }, 0);
-                    }
-                } else if (e.key === 'ArrowUp') {
-                    e.preventDefault();
-                    if (historyIndex > 0) {
-                        historyIndex--;
-                        terminalInput.value = commandHistory[historyIndex];
-                        // Move cursor to end
-                        setTimeout(() => {
-                            terminalInput.setSelectionRange(terminalInput.value.length, terminalInput.value.length);
-                        }, 0);
-                    }
-                } else if (e.key === 'ArrowDown') {
-                    e.preventDefault();
-                    if (historyIndex < commandHistory.length - 1) {
-                        historyIndex++;
-                        terminalInput.value = commandHistory[historyIndex];
-                    } else {
-                        historyIndex = commandHistory.length;
-                        terminalInput.value = '';
-                    }
-                    // Move cursor to end
-                    setTimeout(() => {
-                        terminalInput.setSelectionRange(terminalInput.value.length, terminalInput.value.length);
-                    }, 0);
-                }
-            });
-
-            // Helper function to find common prefix for tab completion
-            function getCommonPrefix(strings) {
-                if (strings.length === 0) return '';
-                if (strings.length === 1) return strings[0];
-                
-                let prefix = strings[0];
-                for (let i = 1; i < strings.length; i++) {
-                    while (prefix.length > 0 && !strings[i].startsWith(prefix)) {
-                        prefix = prefix.slice(0, -1);
-                    }
-                    if (prefix.length === 0) break;
-                }
-                return prefix;
-            }
 
             function executeCommand(commandLine, showOnly = false) {
                 // Add command to output (always show the prompt line, even for empty commands)
@@ -914,343 +778,56 @@ sub-second response times and 99.9% uptime.`
                 promptElement.textContent = `kian@letta:~/kianjones.com${currentDir}$`;
             }
 
-            // Cursor blinking
-            let cursor = true;
-            setInterval(() => {
-                const cursorEl = document.getElementById('cursor');
-                if(cursor) {
-                    cursorEl.style.opacity = 0;
-                    cursor = false;
-                } else {
-                    cursorEl.style.opacity = 1;
-                    cursor = true;
+            terminalInput.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    const command = terminalInput.value.trim();
+                    executeCommand(command);
+                    if (command) {
+                        commandHistory.push(command);
+                    }
+                    historyIndex = commandHistory.length;
+                    terminalInput.value = '';
+                    // Ensure cursor stays at the beginning
+                    setTimeout(() => {
+                        terminalInput.focus();
+                    }, 0);
+                } else if (e.key === 'ArrowUp') {
+                    e.preventDefault();
+                    if (historyIndex > 0) {
+                        historyIndex--;
+                        terminalInput.value = commandHistory[historyIndex];
+                        // Move cursor to end
+                        setTimeout(() => {
+                            terminalInput.setSelectionRange(terminalInput.value.length, terminalInput.value.length);
+                        }, 0);
+                    }
+                } else if (e.key === 'ArrowDown') {
+                    e.preventDefault();
+                    if (historyIndex < commandHistory.length - 1) {
+                        historyIndex++;
+                        terminalInput.value = commandHistory[historyIndex];
+                    } else {
+                        historyIndex = commandHistory.length;
+                        terminalInput.value = '';
+                    }
+                    // Move cursor to end
+                    setTimeout(() => {
+                        terminalInput.setSelectionRange(terminalInput.value.length, terminalInput.value.length);
+                    }, 0);
                 }
-            }, 530);
+            });
 
             // Terminal click to focus
             document.querySelector('.terminal-content').addEventListener('click', (e) => {
                 terminalInput.focus();
             });
 
-
-            // Panel Resizing
-            let isResizing = false;
-            let currentResizer = null;
-
-            // Sidebar resize
-            document.querySelector('.sidebar-resize').addEventListener('mousedown', (e) => {
-                isResizing = true;
-                currentResizer = 'sidebar';
-                document.addEventListener('mousemove', handleResize);
-                document.addEventListener('mouseup', stopResize);
-                e.preventDefault();
-            });
-
-            // Terminal resize
-            document.querySelector('.terminal-resize').addEventListener('mousedown', (e) => {
-                isResizing = true;
-                currentResizer = 'terminal';
-                document.addEventListener('mousemove', handleResize);
-                document.addEventListener('mouseup', stopResize);
-                e.preventDefault();
-            });
-
-            function handleResize(e) {
-                if (!isResizing) return;
-
-                if (currentResizer === 'sidebar') {
-                    const sidebar = document.querySelector('.sidebar');
-                    const newWidth = e.clientX;
-                    if (newWidth >= 200 && newWidth <= 500) {
-                        sidebar.style.width = newWidth + 'px';
-                    }
-                } else if (currentResizer === 'terminal') {
-                    const terminal = document.querySelector('.terminal-panel');
-                    const newHeight = window.innerHeight - e.clientY;
-                    if (newHeight >= 150 && newHeight <= 400) {
-                        terminal.style.height = newHeight + 'px';
-                    }
-                }
-            }
-
-            function stopResize() {
-                isResizing = false;
-                currentResizer = null;
-                document.removeEventListener('mousemove', handleResize);
-                document.removeEventListener('mouseup', stopResize);
-            }
-
-            // Theme Switcher
-            const themes = [
-                { name: 'Purple', class: '', icon: '🟣' },
-                { name: 'Orange', class: 'theme-orange', icon: '🟠' },
-                { name: 'Green', class: 'theme-green', icon: '🟢' },
-                { name: 'Red', class: 'theme-red', icon: '🔴' },
-                { name: 'Cyan', class: 'theme-cyan', icon: '🔵' },
-                { name: 'Yellow', class: 'theme-yellow', icon: '🟡' }
-            ];
-            
-            let currentTheme = 0;
-            
-            // Theme switcher dropdown functionality
-            document.getElementById('theme-switcher').addEventListener('click', (e) => {
-                e.stopPropagation();
-                const dropdown = document.getElementById('theme-dropdown');
-                dropdown.classList.toggle('show');
-                updateActiveTheme();
-            });
-            
-            // Handle theme selection
-            document.querySelectorAll('.theme-option').forEach(option => {
-                option.addEventListener('click', (e) => {
-                    const themeIndex = parseInt(e.target.dataset.theme);
-                    applyTheme(themeIndex);
-                    document.getElementById('theme-dropdown').classList.remove('show');
-                });
-            });
-            
-            // Close dropdown when clicking outside
-            document.addEventListener('click', () => {
-                document.getElementById('theme-dropdown').classList.remove('show');
-            });
-            
-            function applyTheme(themeIndex) {
-                // Remove current theme
-                document.body.className = '';
-                
-                currentTheme = themeIndex;
-                const theme = themes[currentTheme];
-                
-                // Apply new theme
-                if (theme.class) {
-                    document.body.className = theme.class;
-                }
-                
-                // Store theme preference
-                localStorage.setItem('theme', currentTheme.toString());
-                updateActiveTheme();
-            }
-            
-            function updateActiveTheme() {
-                document.querySelectorAll('.theme-option').forEach((option, index) => {
-                    option.classList.toggle('active', index === currentTheme);
-                });
-            }
-            
-            // Load saved theme
-            const savedTheme = localStorage.getItem('theme');
-            if (savedTheme) {
-                applyTheme(parseInt(savedTheme));
-            }
-
-            // Custom Scrollbar System
-            class CustomScrollbar {
-                constructor(container, content, scrollbar, thumb) {
-                    this.container = container;
-                    this.content = content;
-                    this.scrollbar = scrollbar;
-                    this.thumb = thumb;
-                    this.isDragging = false;
-                    this.startY = 0;
-                    this.startScrollTop = 0;
-                    
-                    this.init();
-                }
-                
-                init() {
-                    // Mouse wheel scrolling
-                    this.container.addEventListener('wheel', (e) => {
-                        e.preventDefault();
-                        const delta = e.deltaY;
-                        this.scroll(delta);
-                    });
-                    
-                    // Thumb dragging
-                    this.thumb.addEventListener('mousedown', (e) => {
-                        e.preventDefault();
-                        this.isDragging = true;
-                        this.startY = e.clientY;
-                        this.startScrollTop = this.content.scrollTop;
-                        this.thumb.classList.add('dragging');
-                        document.body.style.userSelect = 'none';
-                        
-                        const handleMouseMove = (e) => {
-                            if (!this.isDragging) return;
-                            e.preventDefault();
-                            
-                            const deltaY = e.clientY - this.startY;
-                            const scrollbarHeight = this.scrollbar.clientHeight;
-                            const thumbHeight = this.thumb.offsetHeight;
-                            const maxScrollTop = this.content.scrollHeight - this.content.clientHeight;
-                            
-                            if (maxScrollTop <= 0) return;
-                            
-                            const trackHeight = scrollbarHeight - thumbHeight;
-                            const scrollRatio = deltaY / trackHeight;
-                            const newScrollTop = this.startScrollTop + (scrollRatio * maxScrollTop);
-                            
-                            
-                            this.content.scrollTop = Math.max(0, Math.min(maxScrollTop, newScrollTop));
-                            this.updateThumbPosition();
-                            this.syncLineNumbers();
-                        };
-                        
-                        const handleMouseUp = () => {
-                            this.isDragging = false;
-                            this.thumb.classList.remove('dragging');
-                            document.removeEventListener('mousemove', handleMouseMove);
-                            document.removeEventListener('mouseup', handleMouseUp);
-                            document.body.style.userSelect = '';
-                        };
-                        
-                        document.addEventListener('mousemove', handleMouseMove);
-                        document.addEventListener('mouseup', handleMouseUp);
-                    });
-                    
-                    // Track clicking
-                    this.scrollbar.addEventListener('click', (e) => {
-                        if (e.target === this.scrollbar) {
-                            const rect = this.scrollbar.getBoundingClientRect();
-                            const clickY = e.clientY - rect.top;
-                            const thumbHeight = this.thumb.offsetHeight;
-                            const trackHeight = this.scrollbar.offsetHeight;
-                            
-                            const scrollRatio = (clickY - thumbHeight / 2) / (trackHeight - thumbHeight);
-                            const maxScroll = this.content.scrollHeight - this.content.clientHeight;
-                            
-                            this.content.scrollTop = scrollRatio * maxScroll;
-                            this.updateThumbPosition();
-                            this.syncLineNumbers();
-                        }
-                    });
-                    
-                    // Initial update
-                    this.updateScrollbar();
-                    
-                    // Mark as initialized and show
-                    setTimeout(() => {
-                        this.scrollbar.classList.add('initialized');
-                    }, 50);
-                    
-                    // Content change observer
-                    const observer = new MutationObserver(() => {
-                        this.updateScrollbar();
-                    });
-                    observer.observe(this.content, { childList: true, subtree: true });
-                }
-                
-                scroll(delta) {
-                    const maxScroll = this.content.scrollHeight - this.content.clientHeight;
-                    let newScrollTop = this.content.scrollTop + delta;
-                    
-                    if (newScrollTop < 0) newScrollTop = 0;
-                    if (newScrollTop > maxScroll) newScrollTop = maxScroll;
-                    
-                    this.content.scrollTop = newScrollTop;
-                    this.updateThumbPosition();
-                    this.syncLineNumbers();
-                }
-                
-                
-                syncLineNumbers() {
-                    // Only sync for editor content, not terminal
-                    if (this.content.id === 'editor-content') {
-                        const lineNumbers = document.querySelector('.line-numbers');
-                        if (lineNumbers) {
-                            lineNumbers.scrollTop = this.content.scrollTop;
-                        }
-                    }
-                }
-                
-                updateScrollbar() {
-                    const contentHeight = this.content.scrollHeight;
-                    const containerHeight = this.content.clientHeight;
-                    
-                    if (contentHeight <= containerHeight) {
-                        this.scrollbar.style.display = 'none';
-                        return;
-                    }
-                    
-                    this.scrollbar.style.display = 'block';
-                    
-                    const thumbRatio = containerHeight / contentHeight;
-                    const minThumbHeight = 30;
-                    const thumbHeight = Math.max(minThumbHeight, thumbRatio * this.scrollbar.offsetHeight);
-                    
-                    this.thumb.style.height = thumbHeight + 'px';
-                    this.updateThumbPosition();
-                }
-                
-                updateThumbPosition() {
-                    const contentHeight = this.content.scrollHeight;
-                    const containerHeight = this.content.clientHeight;
-                    const scrollTop = this.content.scrollTop;
-                    const trackHeight = this.scrollbar.offsetHeight;
-                    const thumbHeight = this.thumb.offsetHeight;
-                    
-                    const scrollRatio = scrollTop / (contentHeight - containerHeight);
-                    const thumbTop = scrollRatio * (trackHeight - thumbHeight);
-                    
-                    this.thumb.style.top = thumbTop + 'px';
-                }
-            }
-            
-            // Initialize custom scrollbars
-            const initScrollbars = () => {
-                // Editor scrollbar
-                const editorContainer = document.querySelector('.scroll-container');
-                const editorContent = document.getElementById('editor-content');
-                const editorScrollbar = document.getElementById('editor-scrollbar');
-                const editorThumb = document.getElementById('editor-thumb');
-                
-                
-                if (editorContainer && editorContent && editorScrollbar && editorThumb) {
-                    new CustomScrollbar(editorContainer, editorContent, editorScrollbar, editorThumb);
-                }
-                
-                // Terminal scrollbar
-                const terminalContainer = document.querySelector('.terminal-content .scroll-container');
-                const terminalContent = document.getElementById('terminal-output');
-                const terminalScrollbar = document.getElementById('terminal-scrollbar');
-                const terminalThumb = document.getElementById('terminal-thumb');
-                
-                
-                if (terminalContainer && terminalContent && terminalScrollbar && terminalThumb) {
-                    new CustomScrollbar(terminalContainer, terminalContent, terminalScrollbar, terminalThumb);
-                }
-            };
-
-            // Function to update line numbers for current content
-            function updateLineNumbers() {
-                const editorContent = document.getElementById('editor-content');
-                const content = editorContent.innerHTML;
-                
-                // Count actual rendered lines by creating a temporary element
-                const tempDiv = document.createElement('div');
-                tempDiv.innerHTML = content;
-                tempDiv.style.cssText = 'position: absolute; left: -9999px; top: -9999px; width: auto; height: auto; white-space: pre-wrap; font-family: Monaco, monospace; font-size: 14px; line-height: 1.5;';
-                document.body.appendChild(tempDiv);
-                
-                // Get the actual height and calculate lines
-                const lineHeight = parseInt(window.getComputedStyle(tempDiv).lineHeight);
-                const totalHeight = tempDiv.offsetHeight;
-                const lines = Math.max(1, Math.ceil(totalHeight / lineHeight));
-                
-                document.body.removeChild(tempDiv);
-                
-                // Update line numbers
-                const lineNumbers = document.querySelector('.line-numbers');
-                lineNumbers.innerHTML = '';
-                for(let i = 1; i <= lines; i++) {
-                    const lineDiv = document.createElement('div');
-                    lineDiv.className = 'line-number';
-                    lineDiv.textContent = i;
-                    lineNumbers.appendChild(lineDiv);
-                }
-            }
-
             // Initialize
             document.addEventListener('DOMContentLoaded', () => {
+                // Initialize posts sidebar
+                initializePosts();
+                
                 // Update line numbers for the default README content
                 updateLineNumbers();
                 
@@ -1259,11 +836,6 @@ sub-second response times and 99.9% uptime.`
                 
                 // Show help command on load
                 executeCommand('help');
-                
-                // Initialize custom scrollbars with longer delay to ensure DOM is ready
-                setTimeout(() => {
-                    initScrollbars();
-                }, 500);
             });
         </script>
         

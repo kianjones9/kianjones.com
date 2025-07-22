@@ -1,0 +1,1949 @@
+<!doctype html>
+
+<html lang="en">
+    
+    <head>
+        <meta charset="utf-8">
+
+        <title>kianjones.com - Infrastructure Engineer</title>
+        <meta name="description" content="Kian Jones - Infrastructure Engineer @ Letta, building systems for AI agents">
+        
+        <link rel="stylesheet" href="style.css">
+        
+    </head>
+    
+    <body>
+        
+        <div class="ide-container">
+            <!-- Title Bar -->
+            <div class="title-bar">
+                <div class="title-bar-left">
+                    <span class="window-controls">
+                        <span class="control close"></span>
+                        <span class="control minimize"></span>
+                        <span class="control maximize"></span>
+                    </span>
+                    <span class="app-title">kianjones.com - VS Code</span>
+                </div>
+                <div class="title-bar-center">README.md</div>
+                <div class="title-bar-right">
+                    <div class="theme-switcher-container">
+                        <button id="theme-switcher" class="theme-button">🎨</button>
+                        <div id="theme-dropdown" class="theme-dropdown">
+                            <div class="theme-option" data-theme="0">🟣 Purple</div>
+                            <div class="theme-option" data-theme="1">🟠 Orange</div>
+                            <div class="theme-option" data-theme="2">🟢 Green</div>
+                            <div class="theme-option" data-theme="3">🔴 Red</div>
+                            <div class="theme-option" data-theme="4">🔵 Cyan</div>
+                            <div class="theme-option" data-theme="5">🟡 Yellow</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main IDE Layout -->
+            <div class="ide-main">
+                <!-- Sidebar -->
+                <div class="sidebar">
+                    <div class="sidebar-header">
+                        <div class="sidebar-title">EXPLORER</div>
+                    </div>
+                    <div class="file-tree">
+                        <div class="folder open">
+                            <div class="folder-header" onclick="toggleFolder(this)">
+                                <span class="folder-icon">📁</span>
+                                <span class="folder-name">kianjones.com</span>
+                            </div>
+                            <div class="folder-content">
+                                <div class="file active" onclick="loadFile('readme')">
+                                    <span class="file-icon">📄</span>
+                                    <span class="file-name">README.md</span>
+                                </div>
+                                <div class="file" onclick="loadFile('bio')">
+                                    <span class="file-icon">👤</span>
+                                    <span class="file-name">bio.md</span>
+                                </div>
+                                <div class="file" onclick="loadFile('contact')">
+                                    <span class="file-icon">📧</span>
+                                    <span class="file-name">contact.md</span>
+                                </div>
+                                <div class="folder">
+                                    <div class="folder-header" onclick="toggleFolder(this)">
+                                        <span class="folder-icon">📁</span>
+                                        <span class="folder-name">posts/</span>
+                                    </div>
+                                    <div class="folder-content" id="posts-folder-content">
+                                        <!-- Posts will be loaded dynamically -->
+                                    </div>
+                                </div>
+                                <div class="folder">
+                                    <div class="folder-header" onclick="toggleFolder(this)">
+                                        <span class="folder-icon">📁</span>
+                                        <span class="folder-name">projects/</span>
+                                    </div>
+                                    <div class="folder-content">
+                                        <div class="file" onclick="loadFile('letta-infra')">
+                                            <span class="file-icon">🏗️</span>
+                                            <span class="file-name">letta-infrastructure.md</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Sidebar Resize Handle -->
+                <div class="resize-handle sidebar-resize"></div>
+
+                <!-- Content Area -->
+                <div class="content-area">
+                    <div class="tab-bar">
+                        <div class="tab active">
+                            <span class="tab-icon">📄</span>
+                            <span class="tab-name">README.md</span>
+                            <span class="tab-close">×</span>
+                        </div>
+                    </div>
+                    <div class="editor">
+                        <div class="line-numbers">
+                            <div class="line-number">1</div>
+                            <div class="line-number">2</div>
+                            <div class="line-number">3</div>
+                            <div class="line-number">4</div>
+                            <div class="line-number">5</div>
+                            <div class="line-number">6</div>
+                            <div class="line-number">7</div>
+                            <div class="line-number">8</div>
+                            <div class="line-number">9</div>
+                            <div class="line-number">10</div>
+                            <div class="line-number">11</div>
+                            <div class="line-number">12</div>
+                            <div class="line-number">13</div>
+                            <div class="line-number">14</div>
+                            <div class="line-number">15</div>
+                            <div class="line-number">16</div>
+                            <div class="line-number">17</div>
+                            <div class="line-number">18</div>
+                            <div class="line-number">19</div>
+                            <div class="line-number">20</div>
+                        </div>
+                        <div class="scroll-container">
+                            <div class="editor-content scroll-content" id="editor-content">
+                                <h1>Kian Jones</h1>
+
+                                <p><strong>Infrastructure Engineer @ <a href="https://letta.com">Letta</a></strong><br>
+                                Building the backbone for next-generation AI agents</p>
+
+                                <h2>About</h2>
+
+                                <p>Infrastructure specialist with deep expertise in cloud architecture, networking, 
+                                and observability. Currently architecting scalable systems that enable AI agents 
+                                to operate reliably at massive scale.</p>
+
+                                <h2>Experience</h2>
+
+                                <ul>
+                                <li><strong>Letta</strong> - Infrastructure Engineer (AI Agent Platform)</li>
+                                <li><strong>Covariant</strong> - Cloud & Infrastructure</li>
+                                <li><strong>Meta</strong> - Platform Engineering</li>
+                                <li><strong>Nokia</strong> - Network Infrastructure</li>
+                                <li><strong>CENGN</strong> - Research & Development</li>
+                                <li><strong>Environment Canada</strong> - Systems Engineering</li>
+                                <li><strong>SurveyMonkey</strong> - Backend Infrastructure</li>
+                                </ul>
+
+                                <h2>Expertise</h2>
+
+                                <h3>🏗️ Cloud Architecture</h3>
+                                <p>AWS, GCP, Kubernetes, Terraform, Infrastructure as Code</p>
+
+                                <h3>📊 Observability</h3>
+                                <p>Monitoring, Logging, Distributed Tracing, Performance Metrics</p>
+
+                                <h3>🌐 Networking</h3>
+                                <p>Load Balancing, CDN, Service Mesh, Network Security</p>
+
+                                <h3>🤖 AI Infrastructure</h3>
+                                <p>GPU Clusters, Model Serving, Agent Orchestration, Auto-scaling</p>
+
+                                <h2>Current Focus</h2>
+
+                                <p>Building the infrastructure that powers thousands of concurrent AI agents at Letta.
+                                From Kubernetes orchestration to observability systems, creating the foundation
+                                for the future of AI agent interactions.</p>
+
+                                <hr>
+                                <p><em>Navigate using the file explorer → or try the terminal below ↓</em></p>
+                            </div>
+                            <div class="custom-scrollbar" id="editor-scrollbar">
+                                <div class="custom-scrollbar-thumb" id="editor-thumb"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Terminal Resize Handle -->
+            <div class="resize-handle terminal-resize"></div>
+
+            <!-- Terminal Panel -->
+            <div class="terminal-panel">
+                <div class="terminal-header">
+                    <div class="terminal-tabs">
+                        <div class="terminal-tab active">
+                            <span class="terminal-icon">⚡</span>
+                            <span>Terminal</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="terminal-content">
+                    <div class="scroll-container">
+                        <div class="terminal-output scroll-content" id="terminal-output">
+                            <div class="terminal-input-line">
+                                <span class="prompt">kian@letta:~/kianjones.com$</span>
+                                <span class="input-container">
+                                    <input type="text" id="terminal-input" placeholder="" />
+                                </span>
+                            </div>
+                        </div>
+                        <div class="custom-scrollbar" id="terminal-scrollbar">
+                            <div class="custom-scrollbar-thumb" id="terminal-thumb"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            // Posts configuration
+            const POSTS_CONFIG = [
+                {
+                    id: '2021-language-learning-review',
+                    title: '2021 Language Learning Review',
+                    folder: '2021 Language Learning Review',
+                    filename: '2021-language-learning-review.html',
+                    date: '2021-01-10',
+                    icon: '🗣️'
+                },
+                {
+                    id: '2022-resolutions-part-1-end-of-year-review', 
+                    title: '2022 Resolutions Part 1 End of Year Review',
+                    folder: '2022 Resolutions Part 1 End of Year Review',
+                    filename: '2021-year-end-review.html',
+                    date: '2021-01-03',
+                    icon: '📅'
+                }
+            ];
+
+            // Function to load post content dynamically
+            async function loadPostContent(postConfig) {
+                try {
+                    const postUrl = `posts/${encodeURIComponent(postConfig.folder)}/${postConfig.filename}`;
+                    console.log('Loading post from:', postUrl);
+                    const response = await fetch(postUrl);
+                    
+                    if (!response.ok) {
+                        throw new Error(`HTTP ${response.status}`);
+                    }
+                    
+                    const html = await response.text();
+                    
+                    // Extract content div
+                    const parser = new DOMParser();
+                    const doc = parser.parseFromString(html, 'text/html');
+                    const contentDiv = doc.querySelector('.content');
+                    
+                    if (contentDiv) {
+                        let content = contentDiv.innerHTML;
+                        // Fix image paths
+                        const postDir = `posts/${encodeURIComponent(postConfig.folder)}/`;
+                        content = content.replace(/src="(?!http|\/)/g, `src="${postDir}`);
+                        return content;
+                    }
+                    
+                    return `<h1>${postConfig.title}</h1><p>Content could not be loaded. <a href="${postUrl}" target="_blank">View original post →</a></p>`;
+                    
+                } catch (error) {
+                    console.error('Failed to load post:', error);
+                    return `<h1>${postConfig.title}</h1><p>Error loading post content. <a href="posts/${encodeURIComponent(postConfig.folder)}/${postConfig.filename}" target="_blank">View original post →</a></p>`;
+                }
+            }
+
+            // File content storage
+            const fileContent = {
+                'readme': `<h1>Kian Jones</h1>
+
+<p><strong>Infrastructure Engineer @ <a href="https://letta.com">Letta</a></strong><br>
+Building the backbone for next-generation AI agents</p>
+
+<h2>About</h2>
+
+<p>Infrastructure specialist with deep expertise in cloud architecture, networking, 
+and observability. Currently architecting scalable systems that enable AI agents 
+to operate reliably at massive scale.</p>
+
+<h2>Experience</h2>
+
+<ul>
+<li><strong>Letta</strong> - Infrastructure Engineer (AI Agent Platform)</li>
+<li><strong>Covariant</strong> - Cloud & Infrastructure</li>
+<li><strong>Meta</strong> - Platform Engineering</li>
+<li><strong>Nokia</strong> - Network Infrastructure</li>
+<li><strong>CENGN</strong> - Research & Development</li>
+<li><strong>Environment Canada</strong> - Systems Engineering</li>
+<li><strong>SurveyMonkey</strong> - Backend Infrastructure</li>
+</ul>
+
+<h2>Expertise</h2>
+
+<h3>🏗️ Cloud Architecture</h3>
+<p>AWS, GCP, Kubernetes, Terraform, Infrastructure as Code</p>
+
+<h3>📊 Observability</h3>
+<p>Monitoring, Logging, Distributed Tracing, Performance Metrics</p>
+
+<h3>🌐 Networking</h3>
+<p>Load Balancing, CDN, Service Mesh, Network Security</p>
+
+<h3>🤖 AI Infrastructure</h3>
+<p>GPU Clusters, Model Serving, Agent Orchestration, Auto-scaling</p>
+
+<h2>Current Focus</h2>
+
+<p>Building the infrastructure that powers thousands of concurrent AI agents at Letta.
+From Kubernetes orchestration to observability systems, creating the foundation
+for the future of AI agent interactions.</p>
+
+<hr>
+<p><em>Navigate using the file explorer → or try the terminal below ↓</em></p>`,
+                
+                'bio': `<h1>Bio</h1>
+
+<h2>Kian Jones - Infrastructure Engineer</h2>
+
+<p>Currently building the foundational systems that power AI agents at Letta. 
+Passionate about creating robust, scalable infrastructure that enables the 
+next generation of artificial intelligence to operate seamlessly.</p>
+
+<h3>Background</h3>
+
+<p>With extensive experience across cloud platforms, networking, and observability,
+I specialize in designing systems that can handle massive scale while maintaining
+reliability and performance.</p>
+
+<h3>Philosophy</h3>
+
+<p>Great infrastructure is invisible - it just works. My focus is on building
+systems that developers and AI agents can rely on, allowing them to focus
+on innovation rather than operational concerns.</p>`,
+
+                'contact': `<h1>Contact</h1>
+
+<h2>Get in Touch</h2>
+
+<p><strong>Email</strong>: <a href="mailto:kian@kianjones.com">kian@kianjones.com</a><br>
+<strong>LinkedIn</strong>: <a href="https://linkedin.com/in/kianjones">linkedin.com/in/kianjones</a><br>
+<strong>GitHub</strong>: <a href="https://github.com/kianjones">github.com/kianjones</a><br>
+<strong>Twitter</strong>: <a href="https://twitter.com/kianjones">@kianjones</a></p>
+
+<h3>Open to Discuss</h3>
+
+<ul>
+<li>Infrastructure architecture and scaling challenges</li>
+<li>AI/ML platform engineering opportunities</li>
+<li>Cloud-native system design</li>
+<li>Observability and monitoring strategies</li>
+<li>Open source contributions</li>
+</ul>
+
+<hr>
+<p><em>Always happy to talk about infrastructure, AI agents, and building scalable systems!</em></p>`,
+
+                'letta-infra': `# Letta Infrastructure Project
+
+## Overview
+
+Building the scalable infrastructure backbone for Letta's AI agent platform.
+
+### Responsibilities
+
+- Kubernetes cluster management and optimization
+- CI/CD pipeline design and implementation  
+- Monitoring and observability systems
+- Cost optimization and resource management
+
+### Technologies
+
+- **Cloud**: AWS, GCP
+- **Orchestration**: Kubernetes, Docker
+- **Monitoring**: Prometheus, Grafana, Jaeger
+- **IaC**: Terraform, Helm
+
+### Impact
+
+Enabling thousands of concurrent AI agent conversations while maintaining 
+sub-second response times and 99.9% uptime.`,
+                '2021-language-learning-review': `
+		<h1 class="page-title">2021 Language Learning Review</h1>
+		<article id="8ad8e9d9-af24-4b23-873e-1587b1a2df8f" class="page sans">
+			<div class="page-body">
+				<p id="121a3604-2188-4fcc-a9e1-2a3a774d8a00" class="">In 2021, I was finally able to do what I had been
+					trying to do since high school: make at least some progress in learning a foreign language.</p>
+				<p id="d11804df-df91-43ec-8a21-d1ee382aa9d9" class="">I think what finally allowed me to do this was
+					having my career in a good place, and being able to justify for once in my, deprioritizing my career
+					in favour of other interests or passions. Don't get me wrong! I am still putting in the effort to
+					meet my self-imposed success criteria with school work, it's just that so far, that hasn't required
+					so much time that it encroaches on my efforts in other places in my life.</p>
+				<h2 id="62043658-24c6-4f9d-8973-6d161b71e033" class="">Language choice</h2>
+				<p id="1637b978-228f-46cd-baf2-5feeea2f6b3d" class="">I had previously tried and failed at learning
+					several languages, including but not limited to Swedish, Farsi, Arabic, and Korean, but never with
+					much success. With this new found time to commit to my pursuit of multilingualism, I reviewed the
+					languages I was interested in learning.</p>
+				<p id="7d2e0197-6ff8-461f-a1c1-963975256090" class="">To decide, I looked inside myself and examined my
+					own motivation for learning languages. I found I cared a lot more about actually conversing with
+					native speakers, hearing their stories, telling them mine, etc. That's why I chose Arabic! I have a
+					storied history with Arabic speakers, including friends from high school, ex-girlfriends, and my
+					college roommate. In fact, the city I live in has so many Arab residents, the area around my high
+					school is literally called <a
+						href="https://ottawa.ctvnews.ca/worries-over-lebanese-community-street-signs-1.471281">little
+						Lebanon</a>, with city-issued street signs and everything!</p>
+				<h3>Language Comparison</h3>
+				<table id="d2a717d9-a920-46ef-8f2d-312a2f8963c3" class="simple-table">
+					<tbody>
+						<tr id="00b7a1bb-77f6-4bca-8166-e2713be088a1">
+							<td id="JCyR">Language</td>
+							<td id="ZSIB">Pros</td>
+							<td id="q:Ak">Cons</td>
+						</tr>
+						<tr id="64f32b88-cdd7-4787-b2c3-24659842256c">
+							<td id="JCyR">French</td>
+							<td id="ZSIB">Developing native level fluency in the other official language of my country.
+								Already have some experience.
+							</td>
+							<td id="q:Ak">Something I can work on just by consuming more content in this language. i.e.
+								I don't necessarily need to give this my focus to improve </td>
+						</tr>
+						<tr id="fa728361-f93c-4fd9-9dc6-e6a5ac23b934">
+							<td id="JCyR">Arabic</td>
+							<td id="ZSIB">I have a lot of friends who speak Arabic</td>
+							<td id="q:Ak">It's hard?</td>
+						</tr>
+						<tr id="2717f5d6-846d-4cce-a7a3-ca7f0af20fe7">
+							<td id="JCyR">Korean</td>
+							<td id="ZSIB">I already studied the basics in a course at school one semester</td>
+							<td id="q:Ak">I had chosen Korean class because it fit best with my course time table. That
+								alone is not sufficient motivation to learn such a difficult language</td>
+						</tr>
+						<tr id="58651da7-0fb6-4992-9f84-a10c27dfe407">
+							<td id="JCyR">Farsi</td>
+							<td id="ZSIB">Significant in my heritage and culture </td>
+							<td id="q:Ak">I don't know that many people who speak Farsi, even as a Persian person</td>
+						</tr>
+						<tr id="c4883ab5-d77b-494c-a33f-1ade5c4dcd99">
+							<td id="JCyR">Vietnamese</td>
+							<td id="ZSIB">I have friends who speak, love the food and culture, want to visit the country
+							</td>
+							<td id="q:Ak">TONES seem hard :( ... Will have to circle back</td>
+						</tr>
+					</tbody>
+				</table>
+				<h2 id="8d7f96dd-ce9f-446c-b2e7-5e7ad3c0a78f" class="">The Story of Arabs in Ottawa</h2>
+				<p id="ed875f5f-5325-45e1-b1db-df36652b132b" class="">Canada tends to have a lot of Arab immigrants
+					based on having French as an official language, and many Arab countries having had a significant
+					French language influence. For instance, in the case of Syria and Lebanon, the <a
+						href="https://en.wikipedia.org/wiki/Mandate_for_Syria_and_the_Lebanon">Mandate for Syria and
+						Lebanon</a>, established by the League of Nations.</p>
+				<p id="d9e154e3-d9fc-4b34-ab05-21eb3b66b56f" class="">The mass immigration of the Lebanese specifically
+					occurred during the Lebanese civil war. <a
+						href="https://en.wikipedia.org/wiki/Lebanese_Canadians">Wikipedia says</a>:</p>
+				<p id="f4b8bfb7-b530-4b98-be9a-2acefec6e1a2" class="">The greatest influx of Lebanese was during
+					the Lebanese Civil War (1975-1990), and this period saw a number of Lebanon's wealthiest and
+					best educated move to Canada to flee the violence in their homeland. Canada and Australia were the
+					only Western countries to set up special programs to enable Lebanese to more easily emigrate. Canada
+					set up an office in Cyprus to process Lebanese refugees.</p>
+				<p id="b959f147-1cf7-461a-8658-74d7e104edee" class="">
+				</p>
+				<p id="81c7c31e-a76c-47f4-a926-73e41d474870" class="">The Canadian Arab Institute published <a
+						href="https://static1.squarespace.com/static/5e09162ecf041b5662cf6fc4/t/5e612b069ec4736c3ce69259/1583426310941/The+Canadian+Arab+Community+in+Ottawa-Gatineau.pdf">a
+						fantastic report</a> looking at the 2011 Census statistics and reporting insights regarding the
+					Canadian-Arab community in the Ottawa-Gatineau region (among other things). </p>
+				<p id="0efe2f42-5c12-4e9f-a521-be9b869c6533" class="">This report lists Ottawa-Gatineau as the 3rd
+					largest population of those self-identifying as Canadian Arab, accounting for 10% of Canadian-Arabs.
+					In fact, those self-identifying as Canadian-Arab constitute 6% of the population of Ottawa-Gatineau.
+				</p>
+				<p id="974df6e0-1f64-4bd8-9f3b-4f660b6f1657" class="">I hope it's clear that in Ottawa, Arabic would be
+					a language in which I could often speak with native speakers. I'll remind you, this is a major point
+					of interest and motivation for me. Thus I decided I would learn Arabic!</p>
+				<p id="627e60a8-b8a0-49cd-8396-5da3e08eb409" class="">
+				</p>
+				<h2 id="5e570d71-0b64-4fae-9387-61756cde8ea1" class="">Learning Arabic: Meta Learning</h2>
+				<p id="5f25c119-48ad-4415-9950-2894dbf6d31a" class="">In Scott Young's book <em>Ultra-learning</em>, he
+					describes the concept of learning <em>about</em> how to learn a subject as "meta-learning". Time
+					should
+					be spent to learn how to most effectively learn a subject. For me, this meant learning a lot of
+					Arabic speaking countries, the Arabic that is spoken there, and the culture, as well as finding
+					resources to learn from.</p>
+				<h3 id="79da1bf5-c680-456a-8409-6d1b01930582" class="">Dialect Due Diligence</h3>
+				<p id="29fcf97d-8762-4d01-8102-30fbc6186f97" class="">If you are unaware, Arabic is a language with many
+					dialects. Arabs typically learn the colloquial dialect of Arabic spoken in their country at home,
+					and then learn Modern Standard Arabic (MSA) at school. Arabs speaking different colloquial dialects
+					may have some understanding of each other depending on the similarities of their dialects (whose
+					even to say where you draw the line between dialects), but would typically choose to communicate in
+					MSA. MSA is used in literature, academia, mass media, legislation, etc. so it is often perceived as
+					less authentic and raw, and tends to sound more formal.</p>
+				<p id="908c2a6b-7b2a-434c-ba84-01968076c665" class="">The general consensus is that you should learn
+					both if you really want to be fluent and communicate effectively, since there is a need to know both
+					to fully embrace the culture, communicate with others, and consume content from the Arab world.
+					For example, there would be an Egyptian movie, where the dialogue is in the Egyptian dialect, but if
+					you chose to enable subtitles, you'd find they are written in MSA!</p>
+				<p id="03172316-8c97-46e5-bd2f-d3dac45a5b1c" class="">As a language learner, you have to choose to begin
+					studying either MSA, or a colloquial dialect (you could do it at the same time but that's a future
+					post).
+					Most learners typically begin with MSA, and then pick up a more localized dialect later.
+					They often choose Egyptian because Egypt produces a lot of the media in the Arab world, in
+					particular, movies are often in the Egyptian dialect. Most Arabs have at least some understanding of
+					the Egyptian dialect because of its prevalence in film. Thus if you are an Arabic learner, you can
+					probably get the best bang for your buck with Egyptian Arabic.</p>
+				<p id="5fe30882-0782-4de6-8e0b-03e4a1b5b046" class="">However, in recent years, there has been a rising
+					popularity among Arabic learners, in starting your journey with a dialect, and then moving on to
+					MSA, similar to how actual Arabs would learn. </p>
+				<p id="625a8e99-0cb7-45b8-8175-f8e6a727c8a7" class="">When I reviewed my motivations for learning, I
+					realized my primary goal wasn't to read Arab news, or watch Egyptian films, but to talk with people.
+					To make real human connections with native speakers.</p>
+				<p id="6ae66c34-a312-4052-b59c-ed2d35605e99" class="">So which dialect would best facilitate
+					conversations between me and native speakers? Well, take a look at the population of different Arab
+					diaspora in Ottawa:</p>
+				<div class="image-interrupt image-interrupt-horizontal">
+					<img src="posts/2021%20Language%20Learning%20Review/Untitled.png" />
+				</div>
+				<p id="7185759b-02b3-4065-b2ee-2f1cf2265c01" class="">In case it isn't obvious, I decided to learn the
+					Levantine dialect, which is spoken in Lebanon and Syria, Palestine, and Jordan.</p>
+				<p id="7f165f10-5518-479a-9764-514c5db02503" class="">Growing up in Ottawa, I know of so many Arabic
+					speakers who can help me in my journey, and they are disproportionately Lebanese! </p>
+				<h3 id="0f18e41c-8e59-40fd-a375-6d7ce6a0db2a" class="">Resource Research</h3>
+				<p id="f53cb056-221e-4a68-a7e2-4cfe62cd4515" class="">When I was first beginning my Arabic studies I
+					used the Mango Languages app, which is in my opinion the best language learning app I've used! It's
+					a paid service that almost anyone can get access to for free through their school, local library,
+					etc.</p>
+				<div class="image-interrupt image-interrupt-horizontal">
+					<img src="posts/2021%20Language%20Learning%20Review/./Untitled%201.png" />
+				</div>
+				<p id="d0531d98-45b2-49d9-b5a9-2e469fc0f824" class="">Mango's app utilizes colour to show word-for-word
+					translations, and gives you lots of repetition for each phrase. It also has very high quality audio,
+					given in different voices (helps with oral comprehension).</p>
+				<p id="2a8bf7aa-d0a0-49d9-abca-06f9c787e4cb" class="">Once I decided to get serious and really commit, I
+					diversified my learning resources.</p>
+				<p id="9d3bbaed-0df8-40c4-8de8-a39d178b9bf1" class="">Specifically I committed to introducing <em>at
+						least</em> 20 new cards per day in Anki (and reviewing old cards of course). I used <a
+						href="https://ankiweb.net/shared/info/133807911">this Anki deck</a> which has been pretty good
+					in terms of its consistency (just make sure you sort the cards in the order you want to learn them,
+					i.e. first by tag:Basic, then tag:Advanced). <a
+						href="https://www.reddit.com/r/Anki/comments/k8vpcm/comment/gf31znf/?utm_source=share&amp;utm_medium=web2x&amp;context=3">Reddit
+						post on how to order cards</a>.</p>
+				<p id="8cd5bf64-4fbd-4c71-9819-ee107890f4fd" class="">I also ordered <a
+						href="http://thriftbooks.com/w/eastern-arabic_majed-f-said_frank-a-rice/1190184/">this textbook
+						on Thriftbooks.com</a>. Although the vocabulary is transliterated and outdated, it's been
+					excellent for learning Grammar. It covers plenty of topics, including some really nuanced concepts
+					like certain pronunciations, consonant clusters, etc. as well as the standard verb conjugation,
+					pluralization, etc.</p>
+				<p id="63aef107-c886-4482-aa58-85d9f18e15a1" class="">In terms of actually outputting, most of my
+					speaking practice has been with my
+					teacher on <a href="http://italki.com">Italki</a>. I think I'd like to get into writing in the next
+					year.</p>
+				<p id="ecdf2732-1ca0-4ec2-8fb0-57e5c3d50603" class="">Additionally, recently I have been using <a
+						href="http://lingq.com">Lingq</a>. It's also a paid service, but in my opinion this cost is
+					justified since they have written content in the Levantine dialect. Essentially, it lowers the
+					threshold for "comprehensible input"
+					(more on that in my 2022 language goal setting post coming soon (; ) and allows you to translate
+					wards in your target language and
+					keep track of the words you know, how often you've seen them, etc. One thing to keep in mind
+					especially if you're learning a
+					colloquial dialect is the lack of written content in them. I haven't used it too long, but
+					I definitely enjoy it so far.</p>
+				<h2 id="07374bd5-26e1-41fd-9de1-ad70afad09a7" class="">Now the Good Stuff: The Data!</h2>
+				<p id="d318b4bb-9f0d-4f10-a62b-ba66e4531296" class="">I tracked my progress while learning Arabic over
+					the
+					last few months, tracking the time I spent working on different activities. I definitely foresee a
+					future blog post discussing time tracking, especially as it pertains to language learning, so keep
+					an eye out for that. I also have some stats automatically collected from Anki, but that might be a
+					follow up post.</p>
+				<p id="92ee5e36-0062-415e-8a8f-77d1f293ebbd" class="">After I got serious (final week of August) and I
+					had been studying for a couple months, I decided to give myself a goal. I decided I wanted to reach
+					150 hours of study by the end of 2021. I had some progress prior to setting that goal, but it worked
+					out to about an hour a day (128 more hours in 130 days). I ended up getting Covid during the last
+					week of the year, so I only hit 140 hours, but still proud of this accomplishment nevertheless.</p>
+				<h3 id="512f9ae6-a3d1-4cdd-b04f-66b4eaed3743" class="">Time spent by Activity</h3>
+				<p id="50402ae8-4f95-4181-97a3-84e42af7502e" class="">I tracked my time in an application called <a
+						href="http://track.toggl.com">toggl</a>, where I would log how much time I spent doing different
+					activities. I didn't make too great an effort to track the times at which I was studying. This was a
+					conscious choice, since even something as little as that can make me give up on something like this.
+					I wanted to make this as easy as possible to start doing.</p>
+				<p id="dd5a6946-cd74-4251-a18a-a8ecefc48560" class="">First, I graphed the total time I spent studying,
+					grouped by activity, to view how much time I spent doing each activity.</p>
+				<div class="image-interrupt image-interrupt-horizontal">
+					<img src="posts/2021%20Language%20Learning%20Review/./41c4b584-fef3-4b32-89ba-79492ff8af9f.png" />
+				</div>
+				<p id="687c59c0-efd4-4d04-8e68-94c1a51fa291" class="">And yes, I did some colour matching ;)</p>
+				<p id="6708d76c-338e-446c-9c6f-c1da31385983" class="">This is my first time succeeding at language
+					learning, so don't use this as a blueprint, but rather a data point off which to base you own study
+					strategy.</p>
+				<p id="67d5dd54-f038-47de-a048-d6d6d6a0fbb4" class="">In raw numbers:</p>
+				<table id="1fcf47b4-6354-4716-a1e7-4dbfc6242d0d" class="simple-table">
+					<tbody>
+						<tr>
+							<td id="uDt?">Activity</td>
+							<td id="[pAN">Time studied</td>
+						</tr>
+						<tr style="color:#0059b1">
+							<td id="uDt?">anki</td>
+							<td id="[pAN">2d 14H 15M 0S</td>
+						</tr>
+						<tr style="color: #4fce5d">
+							<td id="uDt?">friends</td>
+							<td id="[pAN">3H 45M 0S</td>
+						</tr>
+						<tr style="color: #ff4338">
+							<td id="uDt?">italki</td>
+							<td id="[pAN">15H 30M 0S</td>
+						</tr>
+						<tr style="color: #338fff">
+							<td id="uDt?">lingq</td>
+							<td id="[pAN">12H 15M 0S</td>
+						</tr>
+						<tr style="color: #f6883b">
+							<td id="uDt?">mango</td>
+							<td id="[pAN">23H 30M 0S</td>
+						</tr>
+						<tr style="color: #e50914">
+							<td id="uDt?">netflix</td>
+							<td id="[pAN">15M 0S</td>
+						</tr>
+						<tr style="color: #1db954">
+							<td id="uDt?">podcast</td>
+							<td id="[pAN">10H 45M 0S</td>
+						</tr>
+						<tr style="color: #008575">
+							<td id="uDt?">textbook</td>
+							<td id="[pAN">11H 45M 0S</td>
+						</tr>
+					</tbody>
+				</table>
+				<h3 id="5546e2ac-7668-4791-b650-56d3fc3e384b" class="">Time Spent by Core Competency Developed</h3>
+				<p id="b023b804-08af-406f-b7f7-3718e13e5374" class="">If you tag the activities with which of the 4 core
+					competencies of language learning developed while doing them, my breakdown looks something like
+					this:</p>
+				<div class="image-interrupt image-interrupt-horizontal">
+					<img src="posts/2021%20Language%20Learning%20Review/./6b770509-129a-41a5-a5e7-f6239f009a10.png" />
+				</div>
+				<p id="8bc54d30-0889-4d23-8263-032b41237bbe" class="">When thinking about how to divide my time between
+					different skills, I often reference <a
+						href="https://www.reddit.com/r/languagelearning/comments/5tjjcr/i_made_a_language_study_schedule_template_what_do/">this
+						reddit </a>post, which provides suggested breakdowns depending on time available for you to
+					study:</p>
+				<div class="image-interrupt-horizontal image-interrupt">
+					<img src="posts/2021%20Language%20Learning%20Review/./Untitled%202.png" />
+				</div>
+				<p id="8f848da6-f2c1-472d-abc0-405655a03db9" class="">Based on my breakdown, I'd like to spend some more
+					time synthesizing and expressing ideas in Arabic, whether that's writing or speaking.</p>
+				<p id="864af593-ce84-4e74-9ece-8ece0577a1e2" class="">I don't mind the investment in vocabulary, since
+					that includes using Lingq, however I found online that you should aim for a retention rate of
+					80%-90% in Anki, and my current retention rate is 100% for Mature cards and 99% for young cards.
+				</p>
+				<div class="image-interrupt image-interrupt-horizontal">
+					<img src="posts/2021%20Language%20Learning%20Review/./Untitled%203.png" />
+				</div>
+				<p id="29111a2b-fb6d-46d5-953d-36a9b90d5b5f" class="">This isn't a bad thing, it simply means that I
+					have some room to improve towards optimal use of my time. I'd like to either increase the number of
+					new cards I do each day (Have to spend more time on Anki), or increase the time interval (show me
+					card less frequently, overall study time on Anki decreases). If I choose the latter option, I can
+					defer my freed up time to comprehension focused activities, as that's where I feel I am the most
+					lacking.</p>
+				<p id="89e61dcb-a293-4fc7-be01-a441d92b46d3" class="">Therefore, in 2022, I'd like to focus less on
+					learning through Anki (Rote memorization), but to begin to lean on my comprehension skills (reading
+					and listening) to acquire vocabulary, and practice production (oral and written) to improve my
+					ability to synthesize speech in Arabic. </p>
+				<h3 id="9e2b6b11-e2d9-4517-b9cc-4ee04e2c6b89" class="">General Trends</h3>
+				<p id="8c5fa2e9-bda4-43e2-84bf-56e90e34c8ce" class="">Tracking my time in Toggl Track, I looked at the
+					time spent over my learning period, bucketed into weekly bins, and found what appears to be a
+					somewhat trimodal distribution. </p>
+				<div class="image-interrupt image-interrupt-horizontal">
+					<img src="posts/2021%20Language%20Learning%20Review/./Untitled%204.png" />
+				</div>
+				<p id="23dad9c2-e0c5-444b-99c9-2417d1aa8fe8" class="">You can see I consistently did heavier studying
+					when I had more free time: when school caught up to me in September, after midterms in late October,
+					and finally after final exams in mid December (Minus a few hours in the last week of the year thanks
+					to Covid).</p>
+				<p id="48f4721a-b1ee-4fe1-a95d-aabc0cd6210d" class="">I also framed this same data as progress toward my
+					150 hour goal:</p>
+				<div class="image-interrupt image-interrupt-horizontal">
+					<img src="posts/2021%20Language%20Learning%20Review/./Untitled%205.png" />
+				</div>
+				<p id="239804c1-2bb7-408d-8c57-10a007503013" class="">The thick straight black line here represents the
+					average studying needed per day to reach my goal, and the thin squiggly line is the cumulative total
+					number of hours I have studied.</p>
+				<p id="6facace9-c3cd-4625-a55f-5e3288fcc450" class="">What I find most telling about this graph is how
+					learning rate can fluctuate a lot, but rendered negligible by your consistency over time. In this
+					case, I was sometimes ahead of schedule, and sometimes behind, but still ended up in about the same
+					place. This got me thinking. What were the lengths of the periods in which I was behind or ahead of
+					schedule?</p>
+				<p id="d314c6f4-1815-4fca-a615-d13ccbbf38b2" class="">57 days! The longest period for which I was
+					"behind schedule" was 57 days. This is really cool, but moreover, it should be used as a motivator.
+					It's so easy to fall behind, or not quite hit your short-term goals. I personally struggle to work
+					towards long-term goals without obvious short-term progress. But if I can continue for 57 days,
+					almost 2 months, without keeping up with the pace I've set for myself, but ultimately end up in the
+					same place, then next time I start to fall behind in my short-term goals, I won't feel nearly as
+					disappointed, or demotivated. A true testament to the power of consistency.</p>
+				<h2>Conclusion</h2>
+				<p>
+					All in all, I’m really happy with my progress so far, and really proud for sticking to my goals for
+					so long. Really excited for what’s to come, which I will be outlining in my next post describing my
+					2022 language learning goals!
+				</p>
+			</div>
+		</article>
+
+	`,
+                '2022-resolutions-part-1-end-of-year-review': `
+		<h1>2022 Resolutions Part 1: End of Year Review</h1>
+		<article>
+			<div>
+				<h2>Goals from 2021</h2>
+				<p>Without any review, I already know one improvement to my process will be to review more frequently
+					throughout
+					the year to mitigate mission drift over the course of the year, and to adjust or change goal if
+					needed.</p>
+				<p>Last year I said I wanted to be the type of person who...</p>
+				<ol start="1" type="1">
+					<li>Is healthy</li>
+				</ol>
+				<ol start="2" type="1">
+					<li>Has a successful career</li>
+				</ol>
+				<ol start="3" type="1">
+					<li>Speaks foreign languages</li>
+				</ol>
+				<h2>2021 at a Glance</h2>
+				<p>I defined my focus for 2021 to be health, since I had lined up my internship at Facebook for the
+					coming
+					summer, and I felt I didn&rsquo;t have enough time to commit to learning languages at the time.</p>
+				<p>Over the span of 2021, I slowly shifted my focus from health, to language learning. This is not
+					inherently a
+					bad thing, in fact I would say it has helped to form my thoughts on the identity I am forging. I
+					believe the
+					difference comes down to notoriety, in that I desire to be someone who is relatively good health,
+					but not to
+					the extent that it detracts from the other aspects of my life. Let me elaborate. Although I wish to
+					be in
+					good health, I don&rsquo;t desire to be, for example, known for being outdoorsy, or very fit. Health
+					is
+					important to me in the capacity of further and better enabling myself to become the person I want to
+					be and
+					to pursue my other interests.</p>
+				<p>Examples of what I mean:</p>
+				<ul>
+					<li>Exercise leading to better sleep and even general improvements to daily comportment and mood
+					</li>
+				</ul>
+				<ul>
+					<li>Less time and energy wasted, for instance, efficiently and proactively dealing with anxiety,
+						thoughts,
+						or emotions</li>
+				</ul>
+				<ul>
+					<li>Mitigating risk of medical issues, or even extending my lifespan (maybe a bit of an extreme
+						example (; )
+					</li>
+				</ul>
+				<p>To phrase it in a way which is more qualitative/quantitative: I want to participate in healthy
+					activities to
+					improve my life elsewhere. It is was my intention to at least begin by trying to capture some of the
+					low
+					hanging fruit, where I could get the highest return on investment of my time.</p>
+				<p>Examples of low hanging fruit:</p>
+				<ul>
+					<li>Staying hydrated</li>
+				</ul>
+				<ul>
+					<li>SOME exercising (e.g. 3 times a week)</li>
+				</ul>
+				<ul>
+					<li>Relatively healthy eating (e.g. cutting back on junk, eating more vegetables, more complete and
+						consistent meals.)</li>
+				</ul>
+				<p>Another quote from my goal setting last January: &ldquo;I have identified sub-goals, which each
+					correlate to
+					a different aspect of what I view as a healthy lifestyle. Alongside each sub-goal, I have identified
+					the
+					system I will use to reach that sub-goal.&rdquo;</p>
+				<p>These aspects of a healthy lifestyle are as follows:</p>
+				<ul>
+					<li>Sleep</li>
+				</ul>
+				<ul>
+					<li>Exercise</li>
+				</ul>
+				<ul>
+					<li>Eating</li>
+				</ul>
+				<ul>
+					<li>Hygiene</li>
+				</ul>
+				<ul>
+					<li>Mindfulness</li>
+				</ul>
+				<p>Let the review begin!</p>
+				<h2>Per-sub-goal Review</h2>
+				<h3>Sleep</h3>
+				<p>Sleep was something I was just starting to understand better when I set last year&rsquo;s goals.
+					Officially,
+					my sleep sub-goal was to &ldquo;give myself the opportunity to sleep up to 10 hours every
+					night.&rdquo;</p>
+				<p>As you&rsquo;ll see with my other sub-goals (or as you may know of me as a person), I tend to bite
+					off more
+					than I can chew. This definitely applies here. Firstly, ten hours is a lot more than you think. To
+					give
+					yourself the opportunity to sleep that long requires at least half a day. Secondly, it&rsquo;s hard
+					to
+					effectively measure the impact.</p>
+				<div class="image-interrupt image-interrupt-horizontal">
+					<div>
+						<img src="posts/2022%20Resolutions%20Part%201%20End%20of%20Year%20Review/Productivity_vs._Minutes_Slept.png"
+							alt="" />
+					</div>
+					<div>
+						<img src="posts/2022%20Resolutions%20Part%201%20End%20of%20Year%20Review/Energy_vs._Minutes_Slept.png"
+							alt="" />
+					</div>
+				</div>
+				<p>Results of an admittedly very anecdotal study of my own sleep I did in 2020.</p>
+				<p>The single greatest insight in this aspect of my life has been consistency. After about a week of
+					consistently waking at the same time, it becomes exponentially easier to have healthy sleep habits.
+					The best
+					example of this from the past year is a small time slice during which I was alone at home, just me
+					and my
+					wonderful puppy dog Talla. Talla is key to this story, since she has a pre-existing sleep pattern of
+					rising
+					between 7-8am and going to sleep between 10-11pm. Being forced to wake up at a consistent time,
+					regardless
+					of what time I went to bed, gradually put me into a position where I was consistently waking up at
+					8am (not
+					tired), and becoming tired initially at 9pm. This (relatively) early fatigue, was a useful signal to
+					me to
+					begin winding down for bed, and encouraged going to bed early, since I actually felt tired!</p>
+				<p>In 2022, I&rsquo;d like to have an alarm set to rise at a consistent time every morning, which I
+					commit not
+					to change, no matter what time I go to sleep. Too often did I have this intention, but with only a
+					soft
+					requirement, enabling me to push back my morning alarm in favour of getting a fuller sleep, at the
+					expense
+					of consistency. I believe I would be happier if I committed to a more structured approach. This may
+					involve
+					setting boundaries with myself and other around me and being disciplined about sticking to them.</p>
+				<p>Saw <a
+						href="https://www.reddit.com/r/dataisbeautiful/comments/r4upsc/oc_my_gf_and_i_tracked_the_effect_of_10_different/">this
+						reddit post</a> with excellent sleep improving suggestions:
+				</p>
+				<p>Overall, I would consider this sub-goal successful since I was more cognizant of my sleep habits,
+					learned
+					about my body, and made an effort to get more sleep.</p>
+				<h3>Exercise</h3>
+				<p>Exercise is definitely a sub-goal in which I&rsquo;d like to improve. Exercise performed as part of
+					Ultimate
+					and as a byproduct of moving in with my mother full-time, living with a dog that needs walking, lead
+					to me
+					sometimes rigorous, somewhat consistent, exercise.</p>
+				<p>I did have a brief phase during the summer (when I was not working IIRC) where I was cycling or even
+					running
+					everyday. However little, I&rsquo;m still proud since it&rsquo;s never been something I tried. I can
+					definitely see why people struggle to build an exercise habit!</p>
+				<div class="image-interrupt image-interrupt-vertical">
+					<div>
+						<img src="posts/2022%20Resolutions%20Part%201%20End%20of%20Year%20Review/IMG_5999.png"
+							alt="" />
+					</div>
+					<div>
+						<img src="posts/2022%20Resolutions%20Part%201%20End%20of%20Year%20Review/IMG_6001.png"
+							alt="" />
+					</div>
+				</div>
+				<p>To improve my work done toward this sub-goal, I think a small commitment on my part to being more
+					deliberate
+					and intentional in getting daily exercise would go a long way.</p>
+				<h3>Eating</h3>
+				<p>In January 2021, I decided I wanted to...</p>
+				<ul>
+					<li>Eat 3 discrete meals per day</li>
+				</ul>
+				<ul>
+					<li>Eat minimal junk food</li>
+				</ul>
+				<ul>
+					<li>Stay well hydrated</li>
+				</ul>
+				<p>And in January 2022 I can safely say... I did not stick to this sub-goal at all! I did only recently
+					improve
+					my hydration game, mostly because I got a new water bottle (<a
+						href="https://www.parksproject.us/products/power-to-the-parks-shrooms-insulated-water-bottle">https://www.parksproject.us/products/power-to-the-parks-shrooms-insulated-water-bottle</a>)
+					which is insulated and bigger than my previous water bottle (32oz).</p>
+
+				<h3>Hygiene</h3>
+				<p>Since being in lockdown because of Covid-19, my typical routine has been interrupted. The biggest
+					repercussion of this interruption has been that my habit of brushing my teeth every morning on my
+					way out of
+					the house had fallen by the wayside. Embarrassingly enough, I still struggle to do this every
+					morning but
+					hey, sometimes is better than never!</p>
+				<p>Of notable improvement has been flossing. I have been flossing everyday for the last couple months,
+					sometimes
+					even multiple times per day. Very happy about this improvement, and motivated to get back into
+					morning
+					brushing.</p>
+				<div class="image-interrupt image-interrupt-vertical">
+					<img src="posts/2022%20Resolutions%20Part%201%20End%20of%20Year%20Review/backpack-kid-backpack-kid-dance.gif"
+						alt="" />
+				</div>
+				<h3>Mindfulness</h3>
+				<p>Mindfulness, similarly to my exercise sub-goal, is another place I saw some improvement, but not to
+					the level
+					I&rsquo;d like. I had set out to... journal everyday?? Definitely didn&rsquo;t manage that! And talk
+					about
+					low hanging fruit, I didn&rsquo;t even finish the headspace series on Netflix!</p>
+				<p>I had some wins in this category though. I had 15 therapy sessions. I even practiced a bit of yoga
+					and
+					meditation this year. I&rsquo;d like to get back to the meditation and yoga more in this next year,
+					even if
+					only part of falling asleep and as port of a workout respectively.</p>
+				<div class="image-interrupt image-interrupt-horizontal">
+					<iframe width="560" height="315" src="https://www.youtube.com/embed/ZP34IA0d8LI"
+						title="YouTube video player" frameborder="0"
+						allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+						allowfullscreen></iframe>
+				</div>
+				<p>Watched this video like 100 times. Funny enough she&rsquo;s actually a yogi in Ottawa!</p>
+				<p>Overall, I think I&rsquo;ve developed a better ability to recognize behaviour and thought patterns
+					I&rsquo;d
+					like to change, and I hope to build on that in the new year by making the effort to change my
+					default when I
+					notice that pattern.</p>
+				<h2>Summary</h2>
+				<p>2021 was an awesome year, and I believe reviewing my goals and progress towards them more frequently
+					throughout the year would lead to less mission drift, and in turn, a higher rate of success in
+					achieving my
+					goals.</p>
+				<div class="image-interrupt">
+					<img src="posts/2022%20Resolutions%20Part%201%20End%20of%20Year%20Review/subgoal-stisfaction.png"
+						alt="" />
+				</div>
+				<p>This radar plot shows how I rank my satisfaction with my progress in each of the sub-goals reviewed
+					above on
+					a scale from 1 to 5.</p>
+				<p>Stay tuned for a follow up post reviewing my language learning process in 2021, and 2022 resolutions
+					part 2
+					which will discuss my goals for 2022.</p>
+			</div>
+		</article>
+	`
+            };
+
+            // Load file function
+            async function loadFile(fileName) {
+                const editorContent = document.getElementById('editor-content');
+                
+                // Remove active class from all files
+                document.querySelectorAll('.file').forEach(f => f.classList.remove('active'));
+                
+                // Add active class to clicked file
+                if (event) {
+                    event.target.closest('.file').classList.add('active');
+                }
+                
+                // Check if it's a dynamic post
+                const postConfig = POSTS_CONFIG.find(post => post.id === fileName);
+                let content = '';
+                let displayName = fileName;
+                let icon = '📄';
+                
+                if (postConfig) {
+                    // It's a dynamic post
+                    displayName = postConfig.title;
+                    icon = postConfig.icon;
+                    
+                    // Show loading
+                    editorContent.innerHTML = '<p>Loading post...</p>';
+                    
+                    try {
+                        content = await loadPostContent(postConfig);
+                    } catch (error) {
+                        console.error('Failed to load post:', error);
+                        content = `<h1>${postConfig.title}</h1><p>Error loading post content.</p>`;
+                    }
+                } else {
+                    // Static content
+                    const staticContent = {
+                        'readme': `<h1>Kian Jones</h1>
+<p><strong>Infrastructure Engineer @ <a href="https://letta.com">Letta</a></strong><br>
+Building the backbone for next-generation AI agents</p>
+<h2>About</h2>
+<p>Infrastructure specialist with deep expertise in cloud architecture, networking, 
+and observability. Currently architecting scalable systems that enable AI agents 
+to operate reliably at massive scale.</p>
+<h2>Experience</h2>
+<ul>
+<li><strong>Letta</strong> - Infrastructure Engineer (AI Agent Platform)</li>
+<li><strong>Covariant</strong> - Cloud & Infrastructure</li>
+<li><strong>Meta</strong> - Platform Engineering</li>
+<li><strong>Nokia</strong> - Network Infrastructure</li>
+<li><strong>CENGN</strong> - Research & Development</li>
+<li><strong>Environment Canada</strong> - Systems Engineering</li>
+<li><strong>SurveyMonkey</strong> - Backend Infrastructure</li>
+</ul>
+<h2>Expertise</h2>
+<h3>🏗️ Cloud Architecture</h3>
+<p>AWS, GCP, Kubernetes, Terraform, Infrastructure as Code</p>
+<h3>📊 Observability</h3>
+<p>Monitoring, Logging, Distributed Tracing, Performance Metrics</p>
+<h3>🌐 Networking</h3>
+<p>Load Balancing, CDN, Service Mesh, Network Security</p>
+<h3>🤖 AI Infrastructure</h3>
+<p>GPU Clusters, Model Serving, Agent Orchestration, Auto-scaling</p>
+<h2>Current Focus</h2>
+<p>Building the infrastructure that powers thousands of concurrent AI agents at Letta.
+From Kubernetes orchestration to observability systems, creating the foundation
+for the future of AI agent interactions.</p>
+<hr>
+<p><em>Navigate using the file explorer → or try the terminal below ↓</em></p>`,
+                        'bio': `<h1>Bio</h1>
+<h2>Kian Jones - Infrastructure Engineer</h2>
+<p>Currently building the foundational systems that power AI agents at Letta. 
+Passionate about creating robust, scalable infrastructure that enables the 
+next generation of artificial intelligence to operate seamlessly.</p>
+<h3>Background</h3>
+<p>With extensive experience across cloud platforms, networking, and observability,
+I specialize in designing systems that can handle massive scale while maintaining
+reliability and performance.</p>
+<h3>Philosophy</h3>
+<p>Great infrastructure is invisible - it just works. My focus is on building
+systems that developers and AI agents can rely on, allowing them to focus
+on innovation rather than operational concerns.</p>`,
+                        'contact': `<h1>Contact</h1>
+<h2>Get in Touch</h2>
+<p><strong>Email</strong>: <a href="mailto:kian@kianjones.com">kian@kianjones.com</a><br>
+<strong>LinkedIn</strong>: <a href="https://linkedin.com/in/kianjones">linkedin.com/in/kianjones</a><br>
+<strong>GitHub</strong>: <a href="https://github.com/kianjones">github.com/kianjones</a><br>
+<strong>Twitter</strong>: <a href="https://twitter.com/kianjones">@kianjones</a></p>
+<h3>Open to Discuss</h3>
+<ul>
+<li>Infrastructure architecture and scaling challenges</li>
+<li>AI/ML platform engineering opportunities</li>
+<li>Cloud-native system design</li>
+<li>Observability and monitoring strategies</li>
+<li>Open source contributions</li>
+</ul>
+<hr>
+<p><em>Always happy to talk about infrastructure, AI agents, and building scalable systems!</em></p>`,
+                        'letta-infra': `# Letta Infrastructure Project
+## Overview
+Building the scalable infrastructure backbone for Letta's AI agent platform.
+### Responsibilities
+- Kubernetes cluster management and optimization
+- CI/CD pipeline design and implementation  
+- Monitoring and observability systems
+- Cost optimization and resource management
+### Technologies
+- **Cloud**: AWS, GCP
+- **Orchestration**: Kubernetes, Docker
+- **Monitoring**: Prometheus, Grafana, Jaeger
+- **IaC**: Terraform, Helm
+### Impact
+Enabling thousands of concurrent AI agent conversations while maintaining 
+sub-second response times and 99.9% uptime.`
+                    };
+                    
+                    content = staticContent[fileName] || 'File not found';
+                    
+                    // Set display names and icons for static files
+                    const staticNames = {
+                        'readme': 'README.md',
+                        'bio': 'bio.md',
+                        'contact': 'contact.md',
+                        'letta-infra': 'letta-infrastructure.md'
+                    };
+                    
+                    const staticIcons = {
+                        'readme': '📄',
+                        'bio': '👤',
+                        'contact': '📧',
+                        'letta-infra': '🏗️'
+                    };
+                    
+                    displayName = staticNames[fileName] || fileName;
+                    icon = staticIcons[fileName] || '📄';
+                }
+                
+                // Update tab
+                const tabName = document.querySelector('.tab-name');
+                const tabIcon = document.querySelector('.tab-icon');
+                
+                tabIcon.textContent = icon;
+                tabName.textContent = displayName;
+                
+                // Update title bar
+                document.querySelector('.title-bar-center').textContent = displayName;
+                
+                // Update content
+                editorContent.innerHTML = content;
+                
+                // Update line numbers after content change
+                updateLineNumbers();
+            }
+
+
+            // Toggle folder function
+            function toggleFolder(header) {
+                const folder = header.closest('.folder');
+                const content = folder.querySelector('.folder-content');
+                const icon = header.querySelector('.folder-icon');
+                
+                if(folder.classList.contains('open')) {
+                    folder.classList.remove('open');
+                    content.style.display = 'none';
+                    icon.textContent = '📁';
+                } else {
+                    folder.classList.add('open');
+                    content.style.display = 'block'; 
+                    icon.textContent = '📂';
+                }
+            }
+
+            // Terminal functionality
+            const terminalInput = document.getElementById('terminal-input');
+            const terminalOutput = document.getElementById('terminal-output');
+            
+            // Generate file system structure dynamically
+            function generateFileSystem() {
+                const postsChildren = {};
+                POSTS_CONFIG.forEach(post => {
+                    postsChildren[post.title] = { type: 'file', content: post.id };
+                });
+                
+                return {
+                    '/': {
+                        'README.md': { type: 'file', content: 'readme' },
+                        'bio.md': { type: 'file', content: 'bio' },
+                        'contact.md': { type: 'file', content: 'contact' },
+                        'posts/': {
+                            type: 'directory',
+                            children: postsChildren
+                        },
+                        'projects/': {
+                            type: 'directory',
+                            children: {
+                                'letta-infrastructure.md': { type: 'file', content: 'letta-infra' }
+                            }
+                        }
+                    }
+                };
+            }
+            
+            let fileSystem = generateFileSystem();
+
+            let currentPath = '/';
+
+            const commands = {
+                help: () => `Available commands:
+  ls [-al] [dir] - list files in directory
+                   -a  show all files (including . and ..)
+                   -l  long format with details
+  cat <file>     - show file content  
+  clear          - clear terminal
+  whoami         - show user info
+  pwd            - current directory
+  cd <dir>       - change directory`,
+                
+                ls: (...args) => {
+                    let flags = [];
+                    let target = '.';
+                    
+                    // Parse arguments to separate flags from directory
+                    for (const arg of args) {
+                        if (arg && arg.startsWith('-')) {
+                            flags.push(...arg.slice(1).split(''));
+                        } else if (arg) {
+                            target = arg;
+                        }
+                    }
+                    
+                    const targetPath = resolvePath(currentPath, target);
+                    const dirObj = getDirectoryContents(targetPath);
+                    
+                    if (!dirObj) {
+                        return `ls: ${target}: No such file or directory`;
+                    }
+                    
+                    if (dirObj.type === 'file') {
+                        return formatLsOutput([target.split('/').pop()], flags);
+                    }
+                    
+                    // Get entries from the correct location
+                    let entries;
+                    if (dirObj.children) {
+                        entries = Object.keys(dirObj.children);
+                    } else {
+                        entries = Object.keys(dirObj).filter(key => key !== 'type');
+                    }
+                    
+                    // Add hidden entries if -a flag is present
+                    if (flags.includes('a')) {
+                        entries = ['.', '..', ...entries];
+                    }
+                    
+                    entries.sort();
+                    return formatLsOutput(entries, flags, dirObj);
+                },
+
+                cd: (dir = '/') => {
+                    const newPath = resolvePath(currentPath, dir);
+                    const dirObj = getDirectoryContents(newPath);
+                    
+                    if (!dirObj) {
+                        return `cd: ${dir}: No such file or directory`;
+                    }
+                    
+                    if (dirObj.type === 'file') {
+                        return `cd: ${dir}: Not a directory`;
+                    }
+                    
+                    currentPath = newPath;
+                    return '';
+                },
+                
+                pwd: () => `/home/kian/kianjones.com${currentPath === '/' ? '' : currentPath}`,
+                
+                whoami: () => `kian - Infrastructure Engineer @ Letta`,
+                
+                clear: () => {
+                    terminalOutput.innerHTML = '';
+                    return '';
+                },
+                
+                cat: (file) => {
+                    if (!file) {
+                        return 'cat: missing file operand';
+                    }
+                    
+                    const filePath = resolvePath(currentPath, file);
+                    const fileObj = getDirectoryContents(filePath);
+                    
+                    if (!fileObj) {
+                        return `cat: ${file}: No such file or directory`;
+                    }
+                    
+                    if (fileObj.type === 'directory') {
+                        return `cat: ${file}: Is a directory`;
+                    }
+                    
+                    const content = fileContent[fileObj.content];
+                    return content || `cat: ${file}: No such file or directory`;
+                }
+            };
+
+            // Format ls output based on flags
+            function formatLsOutput(entries, flags, dirObj = null) {
+                if (flags.includes('l')) {
+                    // Long format
+                    const lines = entries.map(entry => {
+                        if (entry === '.' || entry === '..') {
+                            return `drwxr-xr-x  1 kian  staff    0 Dec 20 10:30 ${entry}`;
+                        }
+                        
+                        const entryObj = dirObj && dirObj.children ? dirObj.children[entry] : null;
+                        const isDir = entryObj && entryObj.type === 'directory';
+                        const permissions = isDir ? 'drwxr-xr-x' : '-rw-r--r--';
+                        const size = isDir ? '0' : '1024';
+                        const icon = isDir ? '' : '';
+                        
+                        return `${permissions}  1 kian  staff  ${size.padStart(4)} Dec 20 10:30 ${entry}${icon}`;
+                    });
+                    return lines.join('\n');
+                } else {
+                    // Simple format
+                    return entries.join('  ') || '';
+                }
+            }
+
+            // Helper functions for file system navigation
+            function resolvePath(current, target) {
+                if (target === '.') return current;
+                if (target === '..') {
+                    const parts = current.split('/').filter(p => p);
+                    if (parts.length === 0) return '/';
+                    parts.pop();
+                    return parts.length === 0 ? '/' : '/' + parts.join('/');
+                }
+                if (target.startsWith('/')) return target;
+                
+                const currentParts = current === '/' ? [] : current.split('/').filter(p => p);
+                const targetParts = target.split('/').filter(p => p);
+                
+                // Process .. and . in the target path
+                const resolvedParts = [...currentParts];
+                for (const part of targetParts) {
+                    if (part === '.') {
+                        continue; // Stay in current directory
+                    } else if (part === '..') {
+                        if (resolvedParts.length > 0) {
+                            resolvedParts.pop(); // Go up one level
+                        }
+                    } else {
+                        resolvedParts.push(part);
+                    }
+                }
+                
+                return resolvedParts.length === 0 ? '/' : '/' + resolvedParts.join('/');
+            }
+
+            function getDirectoryContents(path) {
+                if (path === '/') return fileSystem['/'];
+                
+                const parts = path.split('/').filter(p => p);
+                let current = fileSystem['/'];
+                
+                for (const part of parts) {
+                    // Try both with and without trailing slash
+                    const dirKey = part + '/';
+                    const fileKey = part;
+                    
+                    // Check in children first (for directories)
+                    if (current.children) {
+                        if (current.children[dirKey]) {
+                            current = current.children[dirKey];
+                            continue;
+                        }
+                        if (current.children[fileKey]) {
+                            current = current.children[fileKey];
+                            continue;
+                        }
+                    }
+                    
+                    // Check in current level
+                    if (current[dirKey]) {
+                        current = current[dirKey];
+                        continue;
+                    }
+                    if (current[fileKey]) {
+                        current = current[fileKey];
+                        continue;
+                    }
+                    
+                    // Not found
+                    return null;
+                }
+                
+                return current;
+            }
+
+            // Tab completion functionality
+            function getCompletions(partial) {
+                const parts = partial.split(' ');
+                const command = parts[0];
+                const currentArg = parts[parts.length - 1] || '';
+                
+                if (parts.length === 1) {
+                    // Complete command names
+                    const commandNames = Object.keys(commands);
+                    return commandNames.filter(cmd => cmd.startsWith(partial));
+                }
+                
+                if (command === 'ls' || command === 'cd' || command === 'cat') {
+                    // Complete file/directory names
+                    const dirPath = currentArg.includes('/') 
+                        ? currentArg.substring(0, currentArg.lastIndexOf('/') + 1)
+                        : '';
+                    const fileName = currentArg.includes('/') 
+                        ? currentArg.substring(currentArg.lastIndexOf('/') + 1)
+                        : currentArg;
+                    
+                    const searchPath = resolvePath(currentPath, dirPath || '.');
+                    const dirContents = getDirectoryContents(searchPath);
+                    
+                    if (!dirContents || dirContents.type === 'file') return [];
+                    
+                    let entries = Object.keys(dirContents.children || dirContents).filter(entry => {
+                        if (command === 'cd') {
+                            // Only directories for cd
+                            const entryObj = (dirContents.children || dirContents)[entry];
+                            return entryObj.type === 'directory' && entry.startsWith(fileName);
+                        }
+                        return entry.startsWith(fileName);
+                    });
+                    
+                    // Add . and .. for directory navigation
+                    if (command === 'cd' || command === 'ls') {
+                        const dotEntries = [];
+                        if ('.'.startsWith(fileName)) dotEntries.push('.');
+                        if ('..'.startsWith(fileName) && currentPath !== '/') dotEntries.push('..');
+                        entries = [...dotEntries, ...entries];
+                    }
+                    
+                    return entries.map(entry => dirPath + entry);
+                }
+                
+                return [];
+            }
+
+            // Command history
+            let commandHistory = [];
+            let historyIndex = -1;
+
+            terminalInput.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    const command = terminalInput.value.trim();
+                    executeCommand(command);
+                    if (command) {
+                        commandHistory.push(command);
+                    }
+                    historyIndex = commandHistory.length;
+                    terminalInput.value = '';
+                    // Ensure cursor stays at the beginning
+                    setTimeout(() => {
+                        terminalInput.focus();
+                    }, 0);
+                } else if (e.key === 'Tab') {
+                    e.preventDefault();
+                    const currentInput = terminalInput.value;
+                    const completions = getCompletions(currentInput);
+                    
+                    if (completions.length === 1) {
+                        // Single completion - auto-complete
+                        const parts = currentInput.split(' ');
+                        parts[parts.length - 1] = completions[0];
+                        terminalInput.value = parts.join(' ');
+                        // Move cursor to end
+                        setTimeout(() => {
+                            terminalInput.setSelectionRange(terminalInput.value.length, terminalInput.value.length);
+                        }, 0);
+                    } else if (completions.length > 1) {
+                        // Multiple completions - show them
+                        executeCommand(currentInput, true); // Show command but don't execute
+                        const resultDiv = document.createElement('div');
+                        resultDiv.className = 'output';
+                        resultDiv.textContent = completions.join('  ');
+                        
+                        const inputLine = document.querySelector('.terminal-input-line');
+                        terminalOutput.insertBefore(resultDiv, inputLine);
+                        
+                        // Find common prefix
+                        const commonPrefix = getCommonPrefix(completions);
+                        const parts = currentInput.split(' ');
+                        const lastPart = parts[parts.length - 1];
+                        
+                        if (commonPrefix.length > lastPart.length) {
+                            parts[parts.length - 1] = commonPrefix;
+                            terminalInput.value = parts.join(' ');
+                        }
+                        
+                        setTimeout(() => {
+                            terminalOutput.scrollTop = terminalOutput.scrollHeight;
+                            terminalInput.focus();
+                            terminalInput.setSelectionRange(terminalInput.value.length, terminalInput.value.length);
+                        }, 0);
+                    }
+                } else if (e.key === 'ArrowUp') {
+                    e.preventDefault();
+                    if (historyIndex > 0) {
+                        historyIndex--;
+                        terminalInput.value = commandHistory[historyIndex];
+                        // Move cursor to end
+                        setTimeout(() => {
+                            terminalInput.setSelectionRange(terminalInput.value.length, terminalInput.value.length);
+                        }, 0);
+                    }
+                } else if (e.key === 'ArrowDown') {
+                    e.preventDefault();
+                    if (historyIndex < commandHistory.length - 1) {
+                        historyIndex++;
+                        terminalInput.value = commandHistory[historyIndex];
+                    } else {
+                        historyIndex = commandHistory.length;
+                        terminalInput.value = '';
+                    }
+                    // Move cursor to end
+                    setTimeout(() => {
+                        terminalInput.setSelectionRange(terminalInput.value.length, terminalInput.value.length);
+                    }, 0);
+                }
+            });
+
+            // Helper function to find common prefix for tab completion
+            function getCommonPrefix(strings) {
+                if (strings.length === 0) return '';
+                if (strings.length === 1) return strings[0];
+                
+                let prefix = strings[0];
+                for (let i = 1; i < strings.length; i++) {
+                    while (prefix.length > 0 && !strings[i].startsWith(prefix)) {
+                        prefix = prefix.slice(0, -1);
+                    }
+                    if (prefix.length === 0) break;
+                }
+                return prefix;
+            }
+
+            function executeCommand(commandLine, showOnly = false) {
+                // Add command to output (always show the prompt line, even for empty commands)
+                const cmdDiv = document.createElement('div');
+                cmdDiv.className = 'terminal-line';
+                const currentDir = currentPath === '/' ? '' : currentPath;
+                cmdDiv.innerHTML = `<span class="prompt">kian@letta:~/kianjones.com${currentDir}$</span> ${commandLine}`;
+                
+                // Insert before the input line
+                const inputLine = document.querySelector('.terminal-input-line');
+                terminalOutput.insertBefore(cmdDiv, inputLine);
+                
+                // If showOnly is true (for tab completion), don't execute
+                if (showOnly) return;
+                
+                // If empty command, just add new prompt
+                if (!commandLine.trim()) {
+                    return;
+                }
+
+                // Parse and execute
+                const parts = commandLine.split(' ');
+                const cmd = parts[0];
+                const args = parts.slice(1);
+
+                let result = '';
+                if (commands[cmd]) {
+                    result = commands[cmd](...args);
+                } else {
+                    result = `bash: ${cmd}: command not found`;
+                }
+
+                if (result) {
+                    const resultDiv = document.createElement('div');
+                    resultDiv.className = 'output';
+                    resultDiv.textContent = result;
+                    
+                    // Insert before the input line
+                    const inputLine = document.querySelector('.terminal-input-line');
+                    terminalOutput.insertBefore(resultDiv, inputLine);
+                }
+
+                // Update the input prompt only if directory changed
+                if (cmd === 'cd' && !result) {
+                    updatePrompt();
+                }
+
+                // Scroll to bottom and maintain input focus
+                setTimeout(() => {
+                    terminalOutput.scrollTop = terminalOutput.scrollHeight;
+                    terminalInput.focus();
+                }, 0);
+            }
+
+            function updatePrompt() {
+                const promptElement = document.querySelector('.terminal-input-line .prompt');
+                const currentDir = currentPath === '/' ? '' : currentPath;
+                promptElement.textContent = `kian@letta:~/kianjones.com${currentDir}$`;
+            }
+
+            // Cursor blinking
+            let cursor = true;
+            setInterval(() => {
+                const cursorEl = document.getElementById('cursor');
+                if(cursor) {
+                    cursorEl.style.opacity = 0;
+                    cursor = false;
+                } else {
+                    cursorEl.style.opacity = 1;
+                    cursor = true;
+                }
+            }, 530);
+
+            // Terminal click to focus
+            document.querySelector('.terminal-content').addEventListener('click', (e) => {
+                terminalInput.focus();
+            });
+
+
+            // Panel Resizing
+            let isResizing = false;
+            let currentResizer = null;
+
+            // Sidebar resize
+            document.querySelector('.sidebar-resize').addEventListener('mousedown', (e) => {
+                isResizing = true;
+                currentResizer = 'sidebar';
+                document.addEventListener('mousemove', handleResize);
+                document.addEventListener('mouseup', stopResize);
+                e.preventDefault();
+            });
+
+            // Terminal resize
+            document.querySelector('.terminal-resize').addEventListener('mousedown', (e) => {
+                isResizing = true;
+                currentResizer = 'terminal';
+                document.addEventListener('mousemove', handleResize);
+                document.addEventListener('mouseup', stopResize);
+                e.preventDefault();
+            });
+
+            function handleResize(e) {
+                if (!isResizing) return;
+
+                if (currentResizer === 'sidebar') {
+                    const sidebar = document.querySelector('.sidebar');
+                    const newWidth = e.clientX;
+                    if (newWidth >= 200 && newWidth <= 500) {
+                        sidebar.style.width = newWidth + 'px';
+                    }
+                } else if (currentResizer === 'terminal') {
+                    const terminal = document.querySelector('.terminal-panel');
+                    const newHeight = window.innerHeight - e.clientY;
+                    if (newHeight >= 150 && newHeight <= 400) {
+                        terminal.style.height = newHeight + 'px';
+                    }
+                }
+            }
+
+            function stopResize() {
+                isResizing = false;
+                currentResizer = null;
+                document.removeEventListener('mousemove', handleResize);
+                document.removeEventListener('mouseup', stopResize);
+            }
+
+            // Theme Switcher
+            const themes = [
+                { name: 'Purple', class: '', icon: '🟣' },
+                { name: 'Orange', class: 'theme-orange', icon: '🟠' },
+                { name: 'Green', class: 'theme-green', icon: '🟢' },
+                { name: 'Red', class: 'theme-red', icon: '🔴' },
+                { name: 'Cyan', class: 'theme-cyan', icon: '🔵' },
+                { name: 'Yellow', class: 'theme-yellow', icon: '🟡' }
+            ];
+            
+            let currentTheme = 0;
+            
+            // Theme switcher dropdown functionality
+            document.getElementById('theme-switcher').addEventListener('click', (e) => {
+                e.stopPropagation();
+                const dropdown = document.getElementById('theme-dropdown');
+                dropdown.classList.toggle('show');
+                updateActiveTheme();
+            });
+            
+            // Handle theme selection
+            document.querySelectorAll('.theme-option').forEach(option => {
+                option.addEventListener('click', (e) => {
+                    const themeIndex = parseInt(e.target.dataset.theme);
+                    applyTheme(themeIndex);
+                    document.getElementById('theme-dropdown').classList.remove('show');
+                });
+            });
+            
+            // Close dropdown when clicking outside
+            document.addEventListener('click', () => {
+                document.getElementById('theme-dropdown').classList.remove('show');
+            });
+            
+            function applyTheme(themeIndex) {
+                // Remove current theme
+                document.body.className = '';
+                
+                currentTheme = themeIndex;
+                const theme = themes[currentTheme];
+                
+                // Apply new theme
+                if (theme.class) {
+                    document.body.className = theme.class;
+                }
+                
+                // Store theme preference
+                localStorage.setItem('theme', currentTheme.toString());
+                updateActiveTheme();
+            }
+            
+            function updateActiveTheme() {
+                document.querySelectorAll('.theme-option').forEach((option, index) => {
+                    option.classList.toggle('active', index === currentTheme);
+                });
+            }
+            
+            // Load saved theme
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme) {
+                applyTheme(parseInt(savedTheme));
+            }
+
+            // Custom Scrollbar System
+            class CustomScrollbar {
+                constructor(container, content, scrollbar, thumb) {
+                    this.container = container;
+                    this.content = content;
+                    this.scrollbar = scrollbar;
+                    this.thumb = thumb;
+                    this.isDragging = false;
+                    this.startY = 0;
+                    this.startScrollTop = 0;
+                    
+                    this.init();
+                }
+                
+                init() {
+                    // Mouse wheel scrolling
+                    this.container.addEventListener('wheel', (e) => {
+                        e.preventDefault();
+                        const delta = e.deltaY;
+                        this.scroll(delta);
+                    });
+                    
+                    // Thumb dragging
+                    this.thumb.addEventListener('mousedown', (e) => {
+                        e.preventDefault();
+                        this.isDragging = true;
+                        this.startY = e.clientY;
+                        this.startScrollTop = this.content.scrollTop;
+                        this.thumb.classList.add('dragging');
+                        document.body.style.userSelect = 'none';
+                        
+                        const handleMouseMove = (e) => {
+                            if (!this.isDragging) return;
+                            e.preventDefault();
+                            
+                            const deltaY = e.clientY - this.startY;
+                            const scrollbarHeight = this.scrollbar.clientHeight;
+                            const thumbHeight = this.thumb.offsetHeight;
+                            const maxScrollTop = this.content.scrollHeight - this.content.clientHeight;
+                            
+                            if (maxScrollTop <= 0) return;
+                            
+                            const trackHeight = scrollbarHeight - thumbHeight;
+                            const scrollRatio = deltaY / trackHeight;
+                            const newScrollTop = this.startScrollTop + (scrollRatio * maxScrollTop);
+                            
+                            
+                            this.content.scrollTop = Math.max(0, Math.min(maxScrollTop, newScrollTop));
+                            this.updateThumbPosition();
+                            this.syncLineNumbers();
+                        };
+                        
+                        const handleMouseUp = () => {
+                            this.isDragging = false;
+                            this.thumb.classList.remove('dragging');
+                            document.removeEventListener('mousemove', handleMouseMove);
+                            document.removeEventListener('mouseup', handleMouseUp);
+                            document.body.style.userSelect = '';
+                        };
+                        
+                        document.addEventListener('mousemove', handleMouseMove);
+                        document.addEventListener('mouseup', handleMouseUp);
+                    });
+                    
+                    // Track clicking
+                    this.scrollbar.addEventListener('click', (e) => {
+                        if (e.target === this.scrollbar) {
+                            const rect = this.scrollbar.getBoundingClientRect();
+                            const clickY = e.clientY - rect.top;
+                            const thumbHeight = this.thumb.offsetHeight;
+                            const trackHeight = this.scrollbar.offsetHeight;
+                            
+                            const scrollRatio = (clickY - thumbHeight / 2) / (trackHeight - thumbHeight);
+                            const maxScroll = this.content.scrollHeight - this.content.clientHeight;
+                            
+                            this.content.scrollTop = scrollRatio * maxScroll;
+                            this.updateThumbPosition();
+                            this.syncLineNumbers();
+                        }
+                    });
+                    
+                    // Initial update
+                    this.updateScrollbar();
+                    
+                    // Mark as initialized and show
+                    setTimeout(() => {
+                        this.scrollbar.classList.add('initialized');
+                    }, 50);
+                    
+                    // Content change observer
+                    const observer = new MutationObserver(() => {
+                        this.updateScrollbar();
+                    });
+                    observer.observe(this.content, { childList: true, subtree: true });
+                }
+                
+                scroll(delta) {
+                    const maxScroll = this.content.scrollHeight - this.content.clientHeight;
+                    let newScrollTop = this.content.scrollTop + delta;
+                    
+                    if (newScrollTop < 0) newScrollTop = 0;
+                    if (newScrollTop > maxScroll) newScrollTop = maxScroll;
+                    
+                    this.content.scrollTop = newScrollTop;
+                    this.updateThumbPosition();
+                    this.syncLineNumbers();
+                }
+                
+                
+                syncLineNumbers() {
+                    // Only sync for editor content, not terminal
+                    if (this.content.id === 'editor-content') {
+                        const lineNumbers = document.querySelector('.line-numbers');
+                        if (lineNumbers) {
+                            lineNumbers.scrollTop = this.content.scrollTop;
+                        }
+                    }
+                }
+                
+                updateScrollbar() {
+                    const contentHeight = this.content.scrollHeight;
+                    const containerHeight = this.content.clientHeight;
+                    
+                    if (contentHeight <= containerHeight) {
+                        this.scrollbar.style.display = 'none';
+                        return;
+                    }
+                    
+                    this.scrollbar.style.display = 'block';
+                    
+                    const thumbRatio = containerHeight / contentHeight;
+                    const minThumbHeight = 30;
+                    const thumbHeight = Math.max(minThumbHeight, thumbRatio * this.scrollbar.offsetHeight);
+                    
+                    this.thumb.style.height = thumbHeight + 'px';
+                    this.updateThumbPosition();
+                }
+                
+                updateThumbPosition() {
+                    const contentHeight = this.content.scrollHeight;
+                    const containerHeight = this.content.clientHeight;
+                    const scrollTop = this.content.scrollTop;
+                    const trackHeight = this.scrollbar.offsetHeight;
+                    const thumbHeight = this.thumb.offsetHeight;
+                    
+                    const scrollRatio = scrollTop / (contentHeight - containerHeight);
+                    const thumbTop = scrollRatio * (trackHeight - thumbHeight);
+                    
+                    this.thumb.style.top = thumbTop + 'px';
+                }
+            }
+            
+            // Initialize custom scrollbars
+            const initScrollbars = () => {
+                // Editor scrollbar
+                const editorContainer = document.querySelector('.scroll-container');
+                const editorContent = document.getElementById('editor-content');
+                const editorScrollbar = document.getElementById('editor-scrollbar');
+                const editorThumb = document.getElementById('editor-thumb');
+                
+                
+                if (editorContainer && editorContent && editorScrollbar && editorThumb) {
+                    new CustomScrollbar(editorContainer, editorContent, editorScrollbar, editorThumb);
+                }
+                
+                // Terminal scrollbar
+                const terminalContainer = document.querySelector('.terminal-content .scroll-container');
+                const terminalContent = document.getElementById('terminal-output');
+                const terminalScrollbar = document.getElementById('terminal-scrollbar');
+                const terminalThumb = document.getElementById('terminal-thumb');
+                
+                
+                if (terminalContainer && terminalContent && terminalScrollbar && terminalThumb) {
+                    new CustomScrollbar(terminalContainer, terminalContent, terminalScrollbar, terminalThumb);
+                }
+            };
+
+            // Function to update line numbers for current content
+            function updateLineNumbers() {
+                const editorContent = document.getElementById('editor-content');
+                const content = editorContent.innerHTML;
+                
+                // Count actual rendered lines by creating a temporary element
+                const tempDiv = document.createElement('div');
+                tempDiv.innerHTML = content;
+                tempDiv.style.cssText = 'position: absolute; left: -9999px; top: -9999px; width: auto; height: auto; white-space: pre-wrap; font-family: Monaco, monospace; font-size: 14px; line-height: 1.5;';
+                document.body.appendChild(tempDiv);
+                
+                // Get the actual height and calculate lines
+                const lineHeight = parseInt(window.getComputedStyle(tempDiv).lineHeight);
+                const totalHeight = tempDiv.offsetHeight;
+                const lines = Math.max(1, Math.ceil(totalHeight / lineHeight));
+                
+                document.body.removeChild(tempDiv);
+                
+                // Update line numbers
+                const lineNumbers = document.querySelector('.line-numbers');
+                lineNumbers.innerHTML = '';
+                for(let i = 1; i <= lines; i++) {
+                    const lineDiv = document.createElement('div');
+                    lineDiv.className = 'line-number';
+                    lineDiv.textContent = i;
+                    lineNumbers.appendChild(lineDiv);
+                }
+            }
+
+            // Initialize posts sidebar
+            function initializePosts() {
+                console.log('Initializing posts sidebar...');
+                console.log('POSTS_CONFIG:', POSTS_CONFIG);
+                
+                const postsContainer = document.getElementById('posts-folder-content');
+                console.log('Posts container:', postsContainer);
+                
+                if (!postsContainer) {
+                    console.error('Posts container not found!');
+                    return;
+                }
+                
+                // Clear existing content
+                postsContainer.innerHTML = '';
+                
+                // Add posts from config
+                POSTS_CONFIG.forEach(post => {
+                    console.log('Adding post:', post.title);
+                    
+                    const fileDiv = document.createElement('div');
+                    fileDiv.className = 'file';
+                    fileDiv.onclick = () => {
+                        console.log('Clicking post:', post.id);
+                        loadFile(post.id);
+                    };
+                    
+                    fileDiv.innerHTML = `
+                        <span class="file-icon">${post.icon}</span>
+                        <span class="file-name">${post.title}</span>
+                    `;
+                    
+                    postsContainer.appendChild(fileDiv);
+                });
+                
+                console.log('Posts sidebar initialized with', POSTS_CONFIG.length, 'posts');
+            }
+
+            // Initialize
+            document.addEventListener('DOMContentLoaded', () => {
+                // Initialize posts sidebar
+                initializePosts();
+                
+                // Update line numbers for the default README content
+                updateLineNumbers();
+                
+                // Focus terminal input
+                terminalInput.focus();
+                
+                // Show help command on load
+                executeCommand('help');
+                
+                // Initialize custom scrollbars with longer delay to ensure DOM is ready
+                setTimeout(() => {
+                    initScrollbars();
+                }, 500);
+            });
+        </script>
+        
+    </body>
+
+</html>
