@@ -27,7 +27,17 @@
                 </div>
                 <div class="title-bar-center">README.md</div>
                 <div class="title-bar-right">
-                    <button id="theme-switcher" class="theme-button">🎨</button>
+                    <div class="theme-switcher-container">
+                        <button id="theme-switcher" class="theme-button">🎨</button>
+                        <div id="theme-dropdown" class="theme-dropdown">
+                            <div class="theme-option" data-theme="0">🟣 Purple</div>
+                            <div class="theme-option" data-theme="1">🟠 Orange</div>
+                            <div class="theme-option" data-theme="2">🟢 Green</div>
+                            <div class="theme-option" data-theme="3">🔴 Red</div>
+                            <div class="theme-option" data-theme="4">🔵 Cyan</div>
+                            <div class="theme-option" data-theme="5">🟡 Yellow</div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -672,12 +682,33 @@ sub-second response times and 99.9% uptime.`
             
             let currentTheme = 0;
             
-            document.getElementById('theme-switcher').addEventListener('click', () => {
+            // Theme switcher dropdown functionality
+            document.getElementById('theme-switcher').addEventListener('click', (e) => {
+                e.stopPropagation();
+                const dropdown = document.getElementById('theme-dropdown');
+                dropdown.classList.toggle('show');
+                updateActiveTheme();
+            });
+            
+            // Handle theme selection
+            document.querySelectorAll('.theme-option').forEach(option => {
+                option.addEventListener('click', (e) => {
+                    const themeIndex = parseInt(e.target.dataset.theme);
+                    applyTheme(themeIndex);
+                    document.getElementById('theme-dropdown').classList.remove('show');
+                });
+            });
+            
+            // Close dropdown when clicking outside
+            document.addEventListener('click', () => {
+                document.getElementById('theme-dropdown').classList.remove('show');
+            });
+            
+            function applyTheme(themeIndex) {
                 // Remove current theme
                 document.body.className = '';
                 
-                // Move to next theme
-                currentTheme = (currentTheme + 1) % themes.length;
+                currentTheme = themeIndex;
                 const theme = themes[currentTheme];
                 
                 // Apply new theme
@@ -685,22 +716,21 @@ sub-second response times and 99.9% uptime.`
                     document.body.className = theme.class;
                 }
                 
-                // Update button icon
-                document.getElementById('theme-switcher').textContent = theme.icon;
-                
                 // Store theme preference
                 localStorage.setItem('theme', currentTheme.toString());
-            });
+                updateActiveTheme();
+            }
+            
+            function updateActiveTheme() {
+                document.querySelectorAll('.theme-option').forEach((option, index) => {
+                    option.classList.toggle('active', index === currentTheme);
+                });
+            }
             
             // Load saved theme
             const savedTheme = localStorage.getItem('theme');
             if (savedTheme) {
-                currentTheme = parseInt(savedTheme);
-                const theme = themes[currentTheme];
-                if (theme.class) {
-                    document.body.className = theme.class;
-                }
-                document.getElementById('theme-switcher').textContent = theme.icon;
+                applyTheme(parseInt(savedTheme));
             }
 
             // Custom Scrollbar System
