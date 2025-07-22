@@ -1,4 +1,48 @@
-/* VS Code IDE Layout */
+/* VS Code IDE Layout - Themeable */
+:root {
+    /* Purple/Magenta Theme (default) */
+    --accent-primary: #8b5cf6;
+    --accent-secondary: #a78bfa;
+    --accent-terminal: #ec4899;
+    --active-bg: #2a1a2a;
+}
+
+/* Theme Variations */
+.theme-orange {
+    --accent-primary: #f59e0b;
+    --accent-secondary: #fbbf24;
+    --accent-terminal: #fb923c;
+    --active-bg: #2a1f0f;
+}
+
+.theme-green {
+    --accent-primary: #10b981;
+    --accent-secondary: #34d399;
+    --accent-terminal: #00ff88;
+    --active-bg: #0f2a1f;
+}
+
+.theme-red {
+    --accent-primary: #ef4444;
+    --accent-secondary: #f87171;
+    --accent-terminal: #ff6b6b;
+    --active-bg: #2a0f0f;
+}
+
+.theme-cyan {
+    --accent-primary: #06b6d4;
+    --accent-secondary: #38bdf8;
+    --accent-terminal: #00d4ff;
+    --active-bg: #0f1f2a;
+}
+
+.theme-yellow {
+    --accent-primary: #eab308;
+    --accent-secondary: #facc15;
+    --accent-terminal: #ffd700;
+    --active-bg: #2a2a0f;
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -7,8 +51,8 @@
 
 body {
     font-family: 'Segoe UI', 'Monaco', 'Cascadia Code', monospace;
-    background-color: #1e1e1e;
-    color: #cccccc;
+    background-color: #000000;
+    color: #ffffff;
     overflow: hidden;
     height: 100vh;
 }
@@ -17,18 +61,18 @@ body {
     height: 100vh;
     display: flex;
     flex-direction: column;
-    background-color: #1e1e1e;
+    background-color: #000000;
 }
 
 /* Title Bar */
 .title-bar {
     height: 35px;
-    background-color: #323233;
+    background-color: #111111;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    border-bottom: 1px solid #2d2d30;
-    color: #cccccc;
+    border-bottom: 1px solid #333333;
+    color: #ffffff;
     font-size: 13px;
 }
 
@@ -71,35 +115,61 @@ body {
     font-weight: 500;
 }
 
+.title-bar-right {
+    display: flex;
+    align-items: center;
+    padding-right: 8px;
+}
+
+.theme-button {
+    background: none;
+    border: 1px solid #333333;
+    color: #ffffff;
+    padding: 4px 8px;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.2s ease;
+}
+
+.theme-button:hover {
+    background-color: #222222;
+    border-color: #666666;
+}
+
 /* Main IDE Layout */
 .ide-main {
     flex: 1;
     display: flex;
     overflow: hidden;
+    position: relative;
 }
 
 /* Sidebar */
 .sidebar {
     width: 300px;
-    background-color: #252526;
-    border-right: 1px solid #2d2d30;
+    background-color: #0a0a0a;
+    border-right: 1px solid #333333;
     display: flex;
     flex-direction: column;
+    position: relative;
+    min-width: 200px;
+    max-width: 500px;
 }
 
 .sidebar-header {
     height: 35px;
-    background-color: #2d2d30;
+    background-color: #111111;
     display: flex;
     align-items: center;
     padding: 0 12px;
-    border-bottom: 1px solid #3e3e42;
+    border-bottom: 1px solid #333333;
 }
 
 .sidebar-title {
     font-size: 11px;
     font-weight: 600;
-    color: #cccccc;
+    color: #ffffff;
     letter-spacing: 0.5px;
 }
 
@@ -152,12 +222,13 @@ body {
 }
 
 .file:hover {
-    background-color: #2a2d2e;
+    background-color: #1a1a1a;
 }
 
 .file.active {
-    background-color: #094771;
+    background-color: var(--active-bg);
     color: #ffffff;
+    border-left: 3px solid var(--accent-primary);
 }
 
 .file-icon {
@@ -174,13 +245,14 @@ body {
     flex: 1;
     display: flex;
     flex-direction: column;
-    background-color: #1e1e1e;
+    background-color: #000000;
+    position: relative;
 }
 
 .tab-bar {
     height: 35px;
-    background-color: #2d2d30;
-    border-bottom: 1px solid #3e3e42;
+    background-color: #111111;
+    border-bottom: 1px solid #333333;
     display: flex;
     align-items: center;
 }
@@ -198,8 +270,8 @@ body {
 }
 
 .tab.active {
-    background-color: #1e1e1e;
-    border-bottom: 2px solid #007acc;
+    background-color: #000000;
+    border-bottom: 3px solid var(--accent-primary);
 }
 
 .tab-icon {
@@ -236,19 +308,19 @@ body {
 .editor {
     flex: 1;
     display: flex;
-    background-color: #1e1e1e;
-    overflow: auto;
+    background-color: #000000;
+    overflow: hidden;
 }
 
 .line-numbers {
-    background-color: #1e1e1e;
-    color: #858585;
+    background-color: #0a0a0a;
+    color: var(--accent-secondary);
     font-family: 'Cascadia Code', 'Monaco', monospace;
     font-size: 14px;
     padding: 16px 8px;
     text-align: right;
     min-width: 50px;
-    border-right: 1px solid #2d2d30;
+    border-right: 1px solid var(--accent-primary);
     user-select: none;
 }
 
@@ -263,8 +335,9 @@ body {
     font-family: 'Cascadia Code', 'Monaco', monospace;
     font-size: 14px;
     line-height: 19px;
-    color: #d4d4d4;
-    overflow: auto;
+    color: #ffffff;
+    overflow-y: auto;
+    overflow-x: hidden;
 }
 
 .editor-content pre {
@@ -280,57 +353,63 @@ body {
     padding: 0;
 }
 
-/* Markdown Styling in Editor */
+/* Markdown Styling in Editor - Minimal High Contrast with Blue Accents */
 .editor-content h1 {
-    color: #4ec9b0;
+    color: #ffffff;
     font-size: 24px;
     margin: 16px 0;
-    font-weight: 600;
+    font-weight: 700;
 }
 
 .editor-content h2 {
-    color: #4ec9b0;
+    color: var(--accent-secondary);
     font-size: 20px;
     margin: 14px 0;
     font-weight: 600;
 }
 
 .editor-content h3 {
-    color: #4ec9b0;
+    color: var(--accent-primary);
     font-size: 16px;
     margin: 12px 0;
     font-weight: 600;
 }
 
 .editor-content strong {
-    color: #dcdcaa;
-    font-weight: 600;
+    color: var(--accent-secondary);
+    font-weight: 700;
 }
 
 .editor-content a {
-    color: #4fc1ff;
+    color: var(--accent-secondary);
     text-decoration: none;
+    font-weight: 600;
 }
 
 .editor-content a:hover {
+    color: var(--accent-primary);
     text-decoration: underline;
 }
 
 /* Terminal Panel */
 .terminal-panel {
     height: 250px;
-    background-color: #1e1e1e;
-    border-top: 1px solid #2d2d30;
+    background-color: #000000;
+    border-top: 1px solid #333333;
     display: flex;
     flex-direction: column;
+    min-height: 150px;
+    max-height: 400px;
+    position: relative;
 }
 
 .terminal-header {
     height: 35px;
-    background-color: #2d2d30;
+    background-color: #111111;
     display: flex;
     align-items: center;
     padding: 0 12px;
+    cursor: pointer;
 }
 
 .terminal-tabs {
@@ -348,8 +427,9 @@ body {
 }
 
 .terminal-tab.active {
-    background-color: #1e1e1e;
-    border-bottom: 2px solid #007acc;
+    background-color: #000000;
+    border-bottom: 3px solid var(--accent-terminal);
+    color: #ffffff;
 }
 
 .terminal-icon {
@@ -359,13 +439,14 @@ body {
 
 .terminal-content {
     flex: 1;
-    background-color: #0c0c0c;
+    background-color: #000000;
     padding: 8px 12px;
     font-family: 'Cascadia Code', 'Monaco', monospace;
     font-size: 14px;
     overflow-y: auto;
     display: flex;
     flex-direction: column;
+    cursor: text;
 }
 
 .terminal-output {
@@ -381,13 +462,13 @@ body {
 }
 
 .prompt {
-    color: #4fc1ff;
+    color: var(--accent-terminal);
     margin-right: 8px;
     font-weight: 600;
 }
 
 .output {
-    color: #cccccc;
+    color: #ffffff;
     margin: 2px 0;
     white-space: pre-wrap;
     font-family: 'Cascadia Code', 'Monaco', monospace;
@@ -399,15 +480,23 @@ body {
     margin-top: 4px;
 }
 
+.input-container {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
 #terminal-input {
     flex: 1;
     background: transparent;
     border: none;
-    color: #cccccc;
+    color: #ffffff;
     font-family: 'Cascadia Code', 'Monaco', monospace;
     font-size: 14px;
     margin-left: 8px;
     outline: none;
+    width: 100%;
 }
 
 #terminal-input::placeholder {
@@ -415,33 +504,61 @@ body {
 }
 
 .cursor {
-    color: #4fc1ff;
+    color: var(--accent-terminal);
     font-weight: bold;
-    margin-left: 2px;
+    position: absolute;
+    pointer-events: none;
+}
+
+/* Resize Handles */
+.resize-handle {
+    background-color: transparent;
+    position: relative;
+    z-index: 10;
+}
+
+.sidebar-resize {
+    width: 4px;
+    cursor: col-resize;
+    background-color: var(--accent-primary);
+}
+
+.sidebar-resize:hover {
+    background-color: var(--accent-secondary);
+}
+
+.terminal-resize {
+    height: 4px;
+    cursor: row-resize;
+    background-color: var(--accent-terminal);
+}
+
+.terminal-resize:hover {
+    background-color: var(--accent-terminal);
+    opacity: 0.8;
 }
 
 /* Scrollbars */
 ::-webkit-scrollbar {
-    width: 14px;
-    height: 14px;
+    width: 12px;
+    height: 12px;
 }
 
 ::-webkit-scrollbar-track {
-    background: #1e1e1e;
+    background: #000000;
 }
 
 ::-webkit-scrollbar-thumb {
-    background: #424242;
-    border-radius: 10px;
-    border: 3px solid #1e1e1e;
+    background: #333333;
+    border-radius: 6px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background: #4f4f4f;
+    background: #555555;
 }
 
 ::-webkit-scrollbar-corner {
-    background: #1e1e1e;
+    background: #000000;
 }
 
 /* Responsive Design */

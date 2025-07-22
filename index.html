@@ -26,7 +26,9 @@
                     <span class="app-title">kianjones.com - VS Code</span>
                 </div>
                 <div class="title-bar-center">README.md</div>
-                <div class="title-bar-right"></div>
+                <div class="title-bar-right">
+                    <button id="theme-switcher" class="theme-button">🎨</button>
+                </div>
             </div>
 
             <!-- Main IDE Layout -->
@@ -95,6 +97,9 @@
                         </div>
                     </div>
                 </div>
+                
+                <!-- Sidebar Resize Handle -->
+                <div class="resize-handle sidebar-resize"></div>
 
                 <!-- Content Area -->
                 <div class="content-area">
@@ -178,6 +183,9 @@ for the future of AI agent interactions.
                     </div>
                 </div>
             </div>
+            
+            <!-- Terminal Resize Handle -->
+            <div class="resize-handle terminal-resize"></div>
 
             <!-- Terminal Panel -->
             <div class="terminal-panel">
@@ -211,8 +219,10 @@ drwxr-xr-x  2 kian  staff   64 Jul 21 19:50 projects</div>
                     </div>
                     <div class="terminal-input-line">
                         <span class="prompt">kian@letta:~/kianjones.com$</span>
-                        <input type="text" id="terminal-input" placeholder="Type a command..." />
-                        <span class="cursor" id="cursor">▊</span>
+                        <span class="input-container">
+                            <input type="text" id="terminal-input" placeholder="Type a command..." />
+                            <span class="cursor" id="cursor">▊</span>
+                        </span>
                     </div>
                 </div>
             </div>
@@ -563,10 +573,124 @@ sub-second response times and 99.9% uptime.`
                 }
             }, 530);
 
+            // Terminal click to focus and cursor positioning
+            document.querySelector('.terminal-content').addEventListener('click', (e) => {
+                terminalInput.focus();
+                updateCursorPosition();
+            });
+
+            // Update cursor position
+            function updateCursorPosition() {
+                const inputValue = terminalInput.value;
+                const cursor = document.getElementById('cursor');
+                const inputRect = terminalInput.getBoundingClientRect();
+                const canvas = document.createElement('canvas');
+                const context = canvas.getContext('2d');
+                context.font = '14px "Cascadia Code", "Monaco", monospace';
+                const textWidth = context.measureText(inputValue).width;
+                
+                cursor.style.left = (8 + textWidth) + 'px';
+            }
+
+            // Update cursor on input
+            terminalInput.addEventListener('input', updateCursorPosition);
+            terminalInput.addEventListener('keyup', updateCursorPosition);
+
+            // Panel Resizing
+            let isResizing = false;
+            let currentResizer = null;
+
+            // Sidebar resize
+            document.querySelector('.sidebar-resize').addEventListener('mousedown', (e) => {
+                isResizing = true;
+                currentResizer = 'sidebar';
+                document.addEventListener('mousemove', handleResize);
+                document.addEventListener('mouseup', stopResize);
+                e.preventDefault();
+            });
+
+            // Terminal resize
+            document.querySelector('.terminal-resize').addEventListener('mousedown', (e) => {
+                isResizing = true;
+                currentResizer = 'terminal';
+                document.addEventListener('mousemove', handleResize);
+                document.addEventListener('mouseup', stopResize);
+                e.preventDefault();
+            });
+
+            function handleResize(e) {
+                if (!isResizing) return;
+
+                if (currentResizer === 'sidebar') {
+                    const sidebar = document.querySelector('.sidebar');
+                    const newWidth = e.clientX;
+                    if (newWidth >= 200 && newWidth <= 500) {
+                        sidebar.style.width = newWidth + 'px';
+                    }
+                } else if (currentResizer === 'terminal') {
+                    const terminal = document.querySelector('.terminal-panel');
+                    const newHeight = window.innerHeight - e.clientY;
+                    if (newHeight >= 150 && newHeight <= 400) {
+                        terminal.style.height = newHeight + 'px';
+                    }
+                }
+            }
+
+            function stopResize() {
+                isResizing = false;
+                currentResizer = null;
+                document.removeEventListener('mousemove', handleResize);
+                document.removeEventListener('mouseup', stopResize);
+            }
+
+            // Theme Switcher
+            const themes = [
+                { name: 'Purple', class: '', icon: '🟣' },
+                { name: 'Orange', class: 'theme-orange', icon: '🟠' },
+                { name: 'Green', class: 'theme-green', icon: '🟢' },
+                { name: 'Red', class: 'theme-red', icon: '🔴' },
+                { name: 'Cyan', class: 'theme-cyan', icon: '🔵' },
+                { name: 'Yellow', class: 'theme-yellow', icon: '🟡' }
+            ];
+            
+            let currentTheme = 0;
+            
+            document.getElementById('theme-switcher').addEventListener('click', () => {
+                // Remove current theme
+                document.body.className = '';
+                
+                // Move to next theme
+                currentTheme = (currentTheme + 1) % themes.length;
+                const theme = themes[currentTheme];
+                
+                // Apply new theme
+                if (theme.class) {
+                    document.body.className = theme.class;
+                }
+                
+                // Update button icon
+                document.getElementById('theme-switcher').textContent = theme.icon;
+                
+                // Store theme preference
+                localStorage.setItem('theme', currentTheme.toString());
+            });
+            
+            // Load saved theme
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme) {
+                currentTheme = parseInt(savedTheme);
+                const theme = themes[currentTheme];
+                if (theme.class) {
+                    document.body.className = theme.class;
+                }
+                document.getElementById('theme-switcher').textContent = theme.icon;
+            }
+
             // Initialize
             document.addEventListener('DOMContentLoaded', () => {
                 // Focus terminal input
                 terminalInput.focus();
+                updateCursorPosition();
             });
         </script>
         
