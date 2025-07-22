@@ -5,8 +5,8 @@
     <head>
         <meta charset="utf-8">
 
-        <title>kianjones.com - Home</title>
-        <meta name="kianjones.com - Home" content="The personal site of Kian Jones">
+        <title>kianjones.com - Infrastructure Engineer</title>
+        <meta name="description" content="Kian Jones - Infrastructure Engineer @ Letta, building systems for AI agents">
         
         <link rel="stylesheet" href="style.css">
         
@@ -14,35 +14,560 @@
     
     <body>
         
-        <nav>
-            <a href="./resources.html">Resources</a>
-            <a href="./posts.html">Posts</a>
-            <a href="./index.html">Home</a>
-            <span id="prompt">root@KianOS:~$</span>
-            <span id="cursor">▊</span>
-            
-        </nav>
+        <div class="ide-container">
+            <!-- Title Bar -->
+            <div class="title-bar">
+                <div class="title-bar-left">
+                    <span class="window-controls">
+                        <span class="control close"></span>
+                        <span class="control minimize"></span>
+                        <span class="control maximize"></span>
+                    </span>
+                    <span class="app-title">kianjones.com - VS Code</span>
+                </div>
+                <div class="title-bar-center">README.md</div>
+                <div class="title-bar-right"></div>
+            </div>
 
-        <div class="content">
-            <br>
-            <p>Building the infra to support the next generation of AI agents @ <a href="https://letta.com">Letta</a></p>
-            <!-- <p><a href="https://ietf.org">IETF Contributor</a> - BMP</p> -->
-            <p>Previously @ Covariant, Meta, Nokia, CENGN, Environment Canada, and SurveyMonkey</p>
+            <!-- Main IDE Layout -->
+            <div class="ide-main">
+                <!-- Sidebar -->
+                <div class="sidebar">
+                    <div class="sidebar-header">
+                        <div class="sidebar-title">EXPLORER</div>
+                    </div>
+                    <div class="file-tree">
+                        <div class="folder open">
+                            <div class="folder-header" onclick="toggleFolder(this)">
+                                <span class="folder-icon">📁</span>
+                                <span class="folder-name">kianjones.com</span>
+                            </div>
+                            <div class="folder-content">
+                                <div class="file active" onclick="loadFile('readme')">
+                                    <span class="file-icon">📄</span>
+                                    <span class="file-name">README.md</span>
+                                </div>
+                                <div class="file" onclick="loadFile('bio')">
+                                    <span class="file-icon">👤</span>
+                                    <span class="file-name">bio.md</span>
+                                </div>
+                                <div class="file" onclick="loadFile('contact')">
+                                    <span class="file-icon">📧</span>
+                                    <span class="file-name">contact.md</span>
+                                </div>
+                                <div class="folder">
+                                    <div class="folder-header" onclick="toggleFolder(this)">
+                                        <span class="folder-icon">📁</span>
+                                        <span class="folder-name">posts/</span>
+                                    </div>
+                                    <div class="folder-content">
+                                        <div class="file" onclick="loadFile('scaling-agents')">
+                                            <span class="file-icon">🚀</span>
+                                            <span class="file-name">scaling-ai-agents.md</span>
+                                        </div>
+                                        <div class="file" onclick="loadFile('observability')">
+                                            <span class="file-icon">📊</span>
+                                            <span class="file-name">observability-agents.md</span>
+                                        </div>
+                                        <div class="file" onclick="loadFile('networking')">
+                                            <span class="file-icon">🌐</span>
+                                            <span class="file-name">network-architecture.md</span>
+                                        </div>
+                                        <div class="file" onclick="loadFile('gpu-infra')">
+                                            <span class="file-icon">⚡</span>
+                                            <span class="file-name">gpu-infrastructure.md</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="folder">
+                                    <div class="folder-header" onclick="toggleFolder(this)">
+                                        <span class="folder-icon">📁</span>
+                                        <span class="folder-name">projects/</span>
+                                    </div>
+                                    <div class="folder-content">
+                                        <div class="file" onclick="loadFile('letta-infra')">
+                                            <span class="file-icon">🏗️</span>
+                                            <span class="file-name">letta-infrastructure.md</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
+                <!-- Content Area -->
+                <div class="content-area">
+                    <div class="tab-bar">
+                        <div class="tab active">
+                            <span class="tab-icon">📄</span>
+                            <span class="tab-name">README.md</span>
+                            <span class="tab-close">×</span>
+                        </div>
+                    </div>
+                    <div class="editor">
+                        <div class="line-numbers">
+                            <div class="line-number">1</div>
+                            <div class="line-number">2</div>
+                            <div class="line-number">3</div>
+                            <div class="line-number">4</div>
+                            <div class="line-number">5</div>
+                            <div class="line-number">6</div>
+                            <div class="line-number">7</div>
+                            <div class="line-number">8</div>
+                            <div class="line-number">9</div>
+                            <div class="line-number">10</div>
+                            <div class="line-number">11</div>
+                            <div class="line-number">12</div>
+                            <div class="line-number">13</div>
+                            <div class="line-number">14</div>
+                            <div class="line-number">15</div>
+                            <div class="line-number">16</div>
+                            <div class="line-number">17</div>
+                            <div class="line-number">18</div>
+                            <div class="line-number">19</div>
+                            <div class="line-number">20</div>
+                        </div>
+                        <div class="editor-content" id="editor-content">
+                            <div id="readme-content">
+<pre><code># Kian Jones
+
+**Infrastructure Engineer @ [Letta](https://letta.com)**  
+Building the backbone for next-generation AI agents
+
+## About
+
+Infrastructure specialist with deep expertise in cloud architecture, networking, 
+and observability. Currently architecting scalable systems that enable AI agents 
+to operate reliably at massive scale.
+
+## Experience
+
+- **Letta** - Infrastructure Engineer (AI Agent Platform)
+- **Covariant** - Cloud & Infrastructure  
+- **Meta** - Platform Engineering
+- **Nokia** - Network Infrastructure
+- **CENGN** - Research & Development
+- **Environment Canada** - Systems Engineering
+- **SurveyMonkey** - Backend Infrastructure
+
+## Expertise
+
+### 🏗️ Cloud Architecture
+AWS, GCP, Kubernetes, Terraform, Infrastructure as Code
+
+### 📊 Observability  
+Monitoring, Logging, Distributed Tracing, Performance Metrics
+
+### 🌐 Networking
+Load Balancing, CDN, Service Mesh, Network Security
+
+### 🤖 AI Infrastructure
+GPU Clusters, Model Serving, Agent Orchestration, Auto-scaling
+
+## Current Focus
+
+Building the infrastructure that powers thousands of concurrent AI agents at Letta.
+From Kubernetes orchestration to observability systems, creating the foundation
+for the future of AI agent interactions.
+
+---
+*Navigate using the file explorer → or try the terminal below ↓*</code></pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Terminal Panel -->
+            <div class="terminal-panel">
+                <div class="terminal-header">
+                    <div class="terminal-tabs">
+                        <div class="terminal-tab active">
+                            <span class="terminal-icon">⚡</span>
+                            <span>Terminal</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="terminal-content">
+                    <div class="terminal-output" id="terminal-output">
+                        <div class="terminal-line">
+                            <span class="prompt">kian@letta:~/kianjones.com$</span>
+                            <span>echo "Welcome to my interactive portfolio!"</span>
+                        </div>
+                        <div class="output">Welcome to my interactive portfolio!</div>
+                        <div class="terminal-line">
+                            <span class="prompt">kian@letta:~/kianjones.com$</span>
+                            <span>ls -la</span>
+                        </div>
+                        <div class="output">
+drwxr-xr-x  4 kian  staff  128 Jul 21 20:00 .
+drwxr-xr-x  3 kian  staff   96 Jul 21 19:30 ..
+-rw-r--r--  1 kian  staff 2341 Jul 21 20:00 README.md
+-rw-r--r--  1 kian  staff 1024 Jul 21 19:45 bio.md
+-rw-r--r--  1 kian  staff  512 Jul 21 19:45 contact.md
+drwxr-xr-x  5 kian  staff  160 Jul 21 19:50 posts
+drwxr-xr-x  2 kian  staff   64 Jul 21 19:50 projects</div>
+                    </div>
+                    <div class="terminal-input-line">
+                        <span class="prompt">kian@letta:~/kianjones.com$</span>
+                        <input type="text" id="terminal-input" placeholder="Type a command..." />
+                        <span class="cursor" id="cursor">▊</span>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <script>
-            var cursor = true;
-            var speed = 530;
+            // File content storage
+            const fileContent = {
+                'readme': `# Kian Jones
+
+**Infrastructure Engineer @ [Letta](https://letta.com)**  
+Building the backbone for next-generation AI agents
+
+## About
+
+Infrastructure specialist with deep expertise in cloud architecture, networking, 
+and observability. Currently architecting scalable systems that enable AI agents 
+to operate reliably at massive scale.
+
+## Experience
+
+- **Letta** - Infrastructure Engineer (AI Agent Platform)
+- **Covariant** - Cloud & Infrastructure  
+- **Meta** - Platform Engineering
+- **Nokia** - Network Infrastructure
+- **CENGN** - Research & Development
+- **Environment Canada** - Systems Engineering
+- **SurveyMonkey** - Backend Infrastructure
+
+## Expertise
+
+### 🏗️ Cloud Architecture
+AWS, GCP, Kubernetes, Terraform, Infrastructure as Code
+
+### 📊 Observability  
+Monitoring, Logging, Distributed Tracing, Performance Metrics
+
+### 🌐 Networking
+Load Balancing, CDN, Service Mesh, Network Security
+
+### 🤖 AI Infrastructure
+GPU Clusters, Model Serving, Agent Orchestration, Auto-scaling
+
+## Current Focus
+
+Building the infrastructure that powers thousands of concurrent AI agents at Letta.
+From Kubernetes orchestration to observability systems, creating the foundation
+for the future of AI agent interactions.
+
+---
+*Navigate using the file explorer → or try the terminal below ↓*`,
+                
+                'bio': `# Bio
+
+## Kian Jones - Infrastructure Engineer
+
+Currently building the foundational systems that power AI agents at Letta. 
+Passionate about creating robust, scalable infrastructure that enables the 
+next generation of artificial intelligence to operate seamlessly.
+
+### Background
+
+With extensive experience across cloud platforms, networking, and observability,
+I specialize in designing systems that can handle massive scale while maintaining
+reliability and performance.
+
+### Philosophy
+
+Great infrastructure is invisible - it just works. My focus is on building
+systems that developers and AI agents can rely on, allowing them to focus
+on innovation rather than operational concerns.`,
+
+                'contact': `# Contact
+
+## Get in Touch
+
+**Email**: [kian@kianjones.com](mailto:kian@kianjones.com)  
+**LinkedIn**: [linkedin.com/in/kianjones](https://linkedin.com/in/kianjones)  
+**GitHub**: [github.com/kianjones](https://github.com/kianjones)  
+**Twitter**: [@kianjones](https://twitter.com/kianjones)  
+
+### Open to Discuss
+
+- Infrastructure architecture and scaling challenges
+- AI/ML platform engineering opportunities  
+- Cloud-native system design
+- Observability and monitoring strategies
+- Open source contributions
+
+---
+*Always happy to talk about infrastructure, AI agents, and building scalable systems!*`,
+
+                'scaling-agents': `# Scaling AI Agent Infrastructure
+
+*Coming Soon - Technical Deep Dive*
+
+## Overview
+
+How we built cloud infrastructure to handle thousands of concurrent AI agents 
+at Letta. From Kubernetes orchestration to auto-scaling strategies.
+
+## Topics Covered
+
+- Container orchestration for agent workloads
+- Auto-scaling strategies for unpredictable traffic
+- Resource management and cost optimization
+- Performance monitoring and alerting
+
+*This post is currently in development. Check back soon!*`,
+
+                'observability': `# Observability for Agent Systems  
+
+*Coming Soon - Monitoring Guide*
+
+## Overview
+
+Building comprehensive monitoring, logging, and tracing for AI agent platforms. 
+How to debug distributed agent conversations and track system health.
+
+## Key Areas
+
+- Distributed tracing for agent conversations
+- Custom metrics for agent performance
+- Log aggregation and analysis
+- Real-time alerting systems
+
+*This post is currently in development. Check back soon!*`,
+
+                'networking': `# Network Architecture for AI Agents
+
+*Coming Soon - Architecture Guide*
+
+## Overview
+
+Designing network topologies, load balancing, and service mesh configurations 
+for high-throughput AI agent communication.
+
+## Topics
+
+- Service mesh implementation
+- Load balancing strategies  
+- Network security for agent traffic
+- Performance optimization
+
+*This post is currently in development. Check back soon!*`,
+
+                'gpu-infra': `# GPU Infrastructure Management
+
+*Coming Soon - Hardware Guide*
+
+## Overview
+
+Managing GPU clusters for AI agent workloads. Resource scheduling, cost 
+optimization, and performance tuning for ML inference at scale.
+
+## Coverage
+
+- GPU cluster management
+- Resource scheduling algorithms
+- Cost optimization strategies
+- Performance benchmarking
+
+*This post is currently in development. Check back soon!*`,
+
+                'letta-infra': `# Letta Infrastructure Project
+
+## Overview
+
+Building the scalable infrastructure backbone for Letta's AI agent platform.
+
+### Responsibilities
+
+- Kubernetes cluster management and optimization
+- CI/CD pipeline design and implementation  
+- Monitoring and observability systems
+- Cost optimization and resource management
+
+### Technologies
+
+- **Cloud**: AWS, GCP
+- **Orchestration**: Kubernetes, Docker
+- **Monitoring**: Prometheus, Grafana, Jaeger
+- **IaC**: Terraform, Helm
+
+### Impact
+
+Enabling thousands of concurrent AI agent conversations while maintaining 
+sub-second response times and 99.9% uptime.`
+            };
+
+            // Load file function
+            function loadFile(fileName) {
+                const content = fileContent[fileName] || 'File not found';
+                const editorContent = document.getElementById('editor-content');
+                
+                // Remove active class from all files
+                document.querySelectorAll('.file').forEach(f => f.classList.remove('active'));
+                
+                // Add active class to clicked file
+                event.target.closest('.file').classList.add('active');
+                
+                // Update tab
+                const tabName = document.querySelector('.tab-name');
+                const tabIcon = document.querySelector('.tab-icon');
+                const icons = {
+                    'readme': '📄',
+                    'bio': '👤', 
+                    'contact': '📧',
+                    'scaling-agents': '🚀',
+                    'observability': '📊',
+                    'networking': '🌐',
+                    'gpu-infra': '⚡',
+                    'letta-infra': '🏗️'
+                };
+                const names = {
+                    'readme': 'README.md',
+                    'bio': 'bio.md',
+                    'contact': 'contact.md', 
+                    'scaling-agents': 'scaling-ai-agents.md',
+                    'observability': 'observability-agents.md',
+                    'networking': 'network-architecture.md',
+                    'gpu-infra': 'gpu-infrastructure.md',
+                    'letta-infra': 'letta-infrastructure.md'
+                };
+                
+                tabIcon.textContent = icons[fileName] || '📄';
+                tabName.textContent = names[fileName] || fileName;
+                
+                // Update title bar
+                document.querySelector('.title-bar-center').textContent = names[fileName] || fileName;
+                
+                // Update content
+                editorContent.innerHTML = `<pre><code>${content}</code></pre>`;
+                
+                // Update line numbers
+                const lines = content.split('\n').length;
+                const lineNumbers = document.querySelector('.line-numbers');
+                lineNumbers.innerHTML = '';
+                for(let i = 1; i <= Math.max(lines, 20); i++) {
+                    const lineDiv = document.createElement('div');
+                    lineDiv.className = 'line-number';
+                    lineDiv.textContent = i;
+                    lineNumbers.appendChild(lineDiv);
+                }
+            }
+
+            // Toggle folder function
+            function toggleFolder(header) {
+                const folder = header.closest('.folder');
+                const content = folder.querySelector('.folder-content');
+                const icon = header.querySelector('.folder-icon');
+                
+                if(folder.classList.contains('open')) {
+                    folder.classList.remove('open');
+                    content.style.display = 'none';
+                    icon.textContent = '📁';
+                } else {
+                    folder.classList.add('open');
+                    content.style.display = 'block'; 
+                    icon.textContent = '📂';
+                }
+            }
+
+            // Terminal functionality
+            const terminalInput = document.getElementById('terminal-input');
+            const terminalOutput = document.getElementById('terminal-output');
+            
+            const commands = {
+                help: () => `Available commands:
+  ls          - list files
+  cat <file>  - show file content  
+  clear       - clear terminal
+  whoami      - show user info
+  pwd         - current directory`,
+                
+                ls: () => `README.md  bio.md  contact.md  posts/  projects/`,
+                
+                pwd: () => `/home/kian/kianjones.com`,
+                
+                whoami: () => `kian - Infrastructure Engineer @ Letta`,
+                
+                clear: () => {
+                    terminalOutput.innerHTML = '';
+                    return '';
+                },
+                
+                cat: (file) => {
+                    const fileMap = {
+                        'README.md': 'readme',
+                        'bio.md': 'bio', 
+                        'contact.md': 'contact'
+                    };
+                    const content = fileContent[fileMap[file]];
+                    return content || `cat: ${file}: No such file or directory`;
+                }
+            };
+
+            terminalInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    const command = terminalInput.value.trim();
+                    if (command) {
+                        executeCommand(command);
+                    }
+                    terminalInput.value = '';
+                }
+            });
+
+            function executeCommand(commandLine) {
+                // Add command to output
+                const cmdDiv = document.createElement('div');
+                cmdDiv.className = 'terminal-line';
+                cmdDiv.innerHTML = `<span class="prompt">kian@letta:~/kianjones.com$</span> ${commandLine}`;
+                terminalOutput.appendChild(cmdDiv);
+
+                // Parse and execute
+                const parts = commandLine.split(' ');
+                const cmd = parts[0];
+                const args = parts.slice(1);
+
+                let result = '';
+                if (commands[cmd]) {
+                    result = commands[cmd](...args);
+                } else {
+                    result = `bash: ${cmd}: command not found`;
+                }
+
+                if (result) {
+                    const resultDiv = document.createElement('div');
+                    resultDiv.className = 'output';
+                    resultDiv.textContent = result;
+                    terminalOutput.appendChild(resultDiv);
+                }
+
+                // Scroll to bottom
+                terminalOutput.scrollTop = terminalOutput.scrollHeight;
+            }
+
+            // Cursor blinking
+            let cursor = true;
             setInterval(() => {
-              if(cursor) {
-                document.getElementById('cursor').style.opacity = 0;
-                cursor = false;
-              } else {
-                document.getElementById('cursor').style.opacity = 1;
-                cursor = true;
-              }
-            }, speed);
+                const cursorEl = document.getElementById('cursor');
+                if(cursor) {
+                    cursorEl.style.opacity = 0;
+                    cursor = false;
+                } else {
+                    cursorEl.style.opacity = 1;
+                    cursor = true;
+                }
+            }, 530);
+
+            // Initialize
+            document.addEventListener('DOMContentLoaded', () => {
+                // Focus terminal input
+                terminalInput.focus();
+            });
         </script>
         
     </body>
