@@ -481,19 +481,8 @@ sub-second response times and 99.9% uptime.`
                 // Update content
                 editorContent.innerHTML = content;
                 
-                // Count HTML lines for line numbering (approximate)
-                const tempDiv = document.createElement('div');
-                tempDiv.innerHTML = content;
-                const textContent = tempDiv.textContent || tempDiv.innerText || '';
-                const lines = textContent.split('\n').length;
-                const lineNumbers = document.querySelector('.line-numbers');
-                lineNumbers.innerHTML = '';
-                for(let i = 1; i <= lines; i++) {
-                    const lineDiv = document.createElement('div');
-                    lineDiv.className = 'line-number';
-                    lineDiv.textContent = i;
-                    lineNumbers.appendChild(lineDiv);
-                }
+                // Update line numbers after content change
+                updateLineNumbers();
             }
 
             // Toggle folder function
@@ -780,6 +769,7 @@ sub-second response times and 99.9% uptime.`
                             
                             this.content.scrollTop = scrollRatio * maxScroll;
                             this.updateThumbPosition();
+                            this.syncLineNumbers();
                         }
                     });
                     
@@ -802,6 +792,7 @@ sub-second response times and 99.9% uptime.`
                     
                     this.content.scrollTop = newScrollTop;
                     this.updateThumbPosition();
+                    this.syncLineNumbers();
                 }
                 
                 handleDrag(e) {
@@ -818,6 +809,7 @@ sub-second response times and 99.9% uptime.`
                     
                     this.content.scrollTop = this.startScrollTop + (scrollRatio * maxScroll);
                     this.updateThumbPosition();
+                    this.syncLineNumbers();
                 }
                 
                 handleDragEnd() {
@@ -825,6 +817,16 @@ sub-second response times and 99.9% uptime.`
                     this.thumb.classList.remove('dragging');
                     document.removeEventListener('mousemove', this.handleDrag);
                     document.removeEventListener('mouseup', this.handleDragEnd);
+                }
+                
+                syncLineNumbers() {
+                    // Only sync for editor content, not terminal
+                    if (this.content.id === 'editor-content') {
+                        const lineNumbers = document.querySelector('.line-numbers');
+                        if (lineNumbers) {
+                            lineNumbers.scrollTop = this.content.scrollTop;
+                        }
+                    }
                 }
                 
                 updateScrollbar() {
@@ -883,8 +885,40 @@ sub-second response times and 99.9% uptime.`
                 }
             };
 
+            // Function to update line numbers for current content
+            function updateLineNumbers() {
+                const editorContent = document.getElementById('editor-content');
+                const content = editorContent.innerHTML;
+                
+                // Count actual rendered lines by creating a temporary element
+                const tempDiv = document.createElement('div');
+                tempDiv.innerHTML = content;
+                tempDiv.style.cssText = 'position: absolute; left: -9999px; top: -9999px; width: auto; height: auto; white-space: pre-wrap; font-family: Monaco, monospace; font-size: 14px; line-height: 1.5;';
+                document.body.appendChild(tempDiv);
+                
+                // Get the actual height and calculate lines
+                const lineHeight = parseInt(window.getComputedStyle(tempDiv).lineHeight);
+                const totalHeight = tempDiv.offsetHeight;
+                const lines = Math.max(1, Math.ceil(totalHeight / lineHeight));
+                
+                document.body.removeChild(tempDiv);
+                
+                // Update line numbers
+                const lineNumbers = document.querySelector('.line-numbers');
+                lineNumbers.innerHTML = '';
+                for(let i = 1; i <= lines; i++) {
+                    const lineDiv = document.createElement('div');
+                    lineDiv.className = 'line-number';
+                    lineDiv.textContent = i;
+                    lineNumbers.appendChild(lineDiv);
+                }
+            }
+
             // Initialize
             document.addEventListener('DOMContentLoaded', () => {
+                // Update line numbers for the default README content
+                updateLineNumbers();
+                
                 // Focus terminal input
                 terminalInput.focus();
                 updateCursorPosition();

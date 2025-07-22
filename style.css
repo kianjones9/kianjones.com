@@ -368,6 +368,8 @@ body {
     min-width: 50px;
     border-right: 1px solid var(--accent-primary);
     user-select: none;
+    overflow: hidden;
+    height: 100%;
 }
 
 .line-number {
