@@ -516,27 +516,54 @@ sub-second response times and 99.9% uptime.`
 
             const commands = {
                 help: () => `Available commands:
-  ls [dir]    - list files in directory
-  cat <file>  - show file content  
-  clear       - clear terminal
-  whoami      - show user info
-  pwd         - current directory
-  cd <dir>    - change directory`,
+  ls [-al] [dir] - list files in directory
+                   -a  show all files (including . and ..)
+                   -l  long format with details
+  cat <file>     - show file content  
+  clear          - clear terminal
+  whoami         - show user info
+  pwd            - current directory
+  cd <dir>       - change directory`,
                 
-                ls: (dir = '.') => {
-                    const targetPath = resolvePath(currentPath, dir);
+                ls: (...args) => {
+                    let flags = [];
+                    let target = '.';
+                    
+                    // Parse arguments to separate flags from directory
+                    for (const arg of args) {
+                        if (arg && arg.startsWith('-')) {
+                            flags.push(...arg.slice(1).split(''));
+                        } else if (arg) {
+                            target = arg;
+                        }
+                    }
+                    
+                    const targetPath = resolvePath(currentPath, target);
                     const dirObj = getDirectoryContents(targetPath);
                     
                     if (!dirObj) {
-                        return `ls: ${dir}: No such file or directory`;
+                        return `ls: ${target}: No such file or directory`;
                     }
                     
                     if (dirObj.type === 'file') {
-                        return path.basename(targetPath);
+                        return formatLsOutput([target.split('/').pop()], flags);
                     }
                     
-                    const entries = Object.keys(dirObj.children || {}).sort();
-                    return entries.join('  ') || '';
+                    // Get entries from the correct location
+                    let entries;
+                    if (dirObj.children) {
+                        entries = Object.keys(dirObj.children);
+                    } else {
+                        entries = Object.keys(dirObj).filter(key => key !== 'type');
+                    }
+                    
+                    // Add hidden entries if -a flag is present
+                    if (flags.includes('a')) {
+                        entries = ['.', '..', ...entries];
+                    }
+                    
+                    entries.sort();
+                    return formatLsOutput(entries, flags, dirObj);
                 },
 
                 cd: (dir = '/') => {
@@ -585,6 +612,30 @@ sub-second response times and 99.9% uptime.`
                 }
             };
 
+            // Format ls output based on flags
+            function formatLsOutput(entries, flags, dirObj = null) {
+                if (flags.includes('l')) {
+                    // Long format
+                    const lines = entries.map(entry => {
+                        if (entry === '.' || entry === '..') {
+                            return `drwxr-xr-x  1 kian  staff    0 Dec 20 10:30 ${entry}`;
+                        }
+                        
+                        const entryObj = dirObj && dirObj.children ? dirObj.children[entry] : null;
+                        const isDir = entryObj && entryObj.type === 'directory';
+                        const permissions = isDir ? 'drwxr-xr-x' : '-rw-r--r--';
+                        const size = isDir ? '0' : '1024';
+                        const icon = isDir ? '' : '';
+                        
+                        return `${permissions}  1 kian  staff  ${size.padStart(4)} Dec 20 10:30 ${entry}${icon}`;
+                    });
+                    return lines.join('\n');
+                } else {
+                    // Simple format
+                    return entries.join('  ') || '';
+                }
+            }
+
             // Helper functions for file system navigation
             function resolvePath(current, target) {
                 if (target === '.') return current;
@@ -592,15 +643,28 @@ sub-second response times and 99.9% uptime.`
                     const parts = current.split('/').filter(p => p);
                     if (parts.length === 0) return '/';
                     parts.pop();
-                    return '/' + parts.join('/');
+                    return parts.length === 0 ? '/' : '/' + parts.join('/');
                 }
                 if (target.startsWith('/')) return target;
                 
                 const currentParts = current === '/' ? [] : current.split('/').filter(p => p);
                 const targetParts = target.split('/').filter(p => p);
                 
-                const result = [...currentParts, ...targetParts];
-                return result.length === 0 ? '/' : '/' + result.join('/');
+                // Process .. and . in the target path
+                const resolvedParts = [...currentParts];
+                for (const part of targetParts) {
+                    if (part === '.') {
+                        continue; // Stay in current directory
+                    } else if (part === '..') {
+                        if (resolvedParts.length > 0) {
+                            resolvedParts.pop(); // Go up one level
+                        }
+                    } else {
+                        resolvedParts.push(part);
+                    }
+                }
+                
+                return resolvedParts.length === 0 ? '/' : '/' + resolvedParts.join('/');
             }
 
             function getDirectoryContents(path) {
@@ -610,20 +674,34 @@ sub-second response times and 99.9% uptime.`
                 let current = fileSystem['/'];
                 
                 for (const part of parts) {
-                    const key = part.endsWith('/') ? part : part + '/';
-                    const fileKey = part.endsWith('/') ? part.slice(0, -1) : part;
+                    // Try both with and without trailing slash
+                    const dirKey = part + '/';
+                    const fileKey = part;
                     
-                    if (current.children && current.children[key]) {
-                        current = current.children[key];
-                    } else if (current[key]) {
-                        current = current[key];
-                    } else if (current.children && current.children[fileKey]) {
-                        current = current.children[fileKey];
-                    } else if (current[fileKey]) {
-                        current = current[fileKey];
-                    } else {
-                        return null;
+                    // Check in children first (for directories)
+                    if (current.children) {
+                        if (current.children[dirKey]) {
+                            current = current.children[dirKey];
+                            continue;
+                        }
+                        if (current.children[fileKey]) {
+                            current = current.children[fileKey];
+                            continue;
+                        }
                     }
+                    
+                    // Check in current level
+                    if (current[dirKey]) {
+                        current = current[dirKey];
+                        continue;
+                    }
+                    if (current[fileKey]) {
+                        current = current[fileKey];
+                        continue;
+                    }
+                    
+                    // Not found
+                    return null;
                 }
                 
                 return current;
@@ -655,7 +733,7 @@ sub-second response times and 99.9% uptime.`
                     
                     if (!dirContents || dirContents.type === 'file') return [];
                     
-                    const entries = Object.keys(dirContents.children || dirContents).filter(entry => {
+                    let entries = Object.keys(dirContents.children || dirContents).filter(entry => {
                         if (command === 'cd') {
                             // Only directories for cd
                             const entryObj = (dirContents.children || dirContents)[entry];
@@ -663,6 +741,14 @@ sub-second response times and 99.9% uptime.`
                         }
                         return entry.startsWith(fileName);
                     });
+                    
+                    // Add . and .. for directory navigation
+                    if (command === 'cd' || command === 'ls') {
+                        const dotEntries = [];
+                        if ('.'.startsWith(fileName)) dotEntries.push('.');
+                        if ('..'.startsWith(fileName) && currentPath !== '/') dotEntries.push('..');
+                        entries = [...dotEntries, ...entries];
+                    }
                     
                     return entries.map(entry => dirPath + entry);
                 }
