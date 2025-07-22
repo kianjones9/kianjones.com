@@ -760,7 +760,6 @@ sub-second response times and 99.9% uptime.`
                     // Thumb dragging
                     this.thumb.addEventListener('mousedown', (e) => {
                         e.preventDefault();
-                        console.log('Thumb mousedown event fired');
                         this.isDragging = true;
                         this.startY = e.clientY;
                         this.startScrollTop = this.content.scrollTop;
@@ -770,7 +769,6 @@ sub-second response times and 99.9% uptime.`
                         const handleMouseMove = (e) => {
                             if (!this.isDragging) return;
                             e.preventDefault();
-                            console.log('Mouse move during drag');
                             
                             const deltaY = e.clientY - this.startY;
                             const scrollbarHeight = this.scrollbar.clientHeight;
@@ -783,7 +781,6 @@ sub-second response times and 99.9% uptime.`
                             const scrollRatio = deltaY / trackHeight;
                             const newScrollTop = this.startScrollTop + (scrollRatio * maxScrollTop);
                             
-                            console.log('Drag values:', { deltaY, scrollRatio, newScrollTop, maxScrollTop });
                             
                             this.content.scrollTop = Math.max(0, Math.min(maxScrollTop, newScrollTop));
                             this.updateThumbPosition();
@@ -821,6 +818,11 @@ sub-second response times and 99.9% uptime.`
                     
                     // Initial update
                     this.updateScrollbar();
+                    
+                    // Mark as initialized and show
+                    setTimeout(() => {
+                        this.scrollbar.classList.add('initialized');
+                    }, 50);
                     
                     // Content change observer
                     const observer = new MutationObserver(() => {
@@ -893,10 +895,8 @@ sub-second response times and 99.9% uptime.`
                 const editorScrollbar = document.getElementById('editor-scrollbar');
                 const editorThumb = document.getElementById('editor-thumb');
                 
-                console.log('Editor elements:', { editorContainer, editorContent, editorScrollbar, editorThumb });
                 
                 if (editorContainer && editorContent && editorScrollbar && editorThumb) {
-                    console.log('Creating editor scrollbar');
                     new CustomScrollbar(editorContainer, editorContent, editorScrollbar, editorThumb);
                 }
                 
@@ -906,10 +906,8 @@ sub-second response times and 99.9% uptime.`
                 const terminalScrollbar = document.getElementById('terminal-scrollbar');
                 const terminalThumb = document.getElementById('terminal-thumb');
                 
-                console.log('Terminal elements:', { terminalContainer, terminalContent, terminalScrollbar, terminalThumb });
                 
                 if (terminalContainer && terminalContent && terminalScrollbar && terminalThumb) {
-                    console.log('Creating terminal scrollbar');
                     new CustomScrollbar(terminalContainer, terminalContent, terminalScrollbar, terminalThumb);
                 }
             };
@@ -953,7 +951,6 @@ sub-second response times and 99.9% uptime.`
                 
                 // Initialize custom scrollbars with longer delay to ensure DOM is ready
                 setTimeout(() => {
-                    console.log('Initializing scrollbars...');
                     initScrollbars();
                 }, 500);
             });

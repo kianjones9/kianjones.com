@@ -669,6 +669,12 @@ body {
     border-left: 1px solid #333;
     z-index: 1000;
     user-select: none;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.custom-scrollbar.initialized {
+    opacity: 1;
 }
 
 /* Custom Scrollbar Thumb */
