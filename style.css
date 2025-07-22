@@ -496,6 +496,7 @@ body {
     margin-left: 8px;
     outline: none;
     width: 100%;
+    caret-color: transparent;
 }
 
 #terminal-input::placeholder {
@@ -634,15 +635,16 @@ body {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 8px;
-    height: 20px;
+    width: 10px;
+    height: 30px;
     background-image: 
-        radial-gradient(circle at 50% 2px, #999999 1px, transparent 1px),
-        radial-gradient(circle at 50% 8px, #999999 1px, transparent 1px),
-        radial-gradient(circle at 50% 14px, #999999 1px, transparent 1px);
-    background-size: 8px 6px;
+        radial-gradient(circle at 50% 3px, #999999 2px, transparent 2px),
+        radial-gradient(circle at 50% 10px, #999999 2px, transparent 2px),
+        radial-gradient(circle at 50% 17px, #999999 2px, transparent 2px),
+        radial-gradient(circle at 50% 24px, #999999 2px, transparent 2px);
+    background-size: 10px 7px;
     background-repeat: no-repeat;
-    opacity: 0.7;
+    opacity: 0.8;
     pointer-events: none;
 }
 
@@ -652,9 +654,10 @@ body {
 
 .custom-scrollbar-thumb:hover::before {
     background-image: 
-        radial-gradient(circle at 50% 2px, rgba(255,255,255,0.8) 1px, transparent 1px),
-        radial-gradient(circle at 50% 8px, rgba(255,255,255,0.8) 1px, transparent 1px),
-        radial-gradient(circle at 50% 14px, rgba(255,255,255,0.8) 1px, transparent 1px);
+        radial-gradient(circle at 50% 3px, rgba(255,255,255,0.9) 2px, transparent 2px),
+        radial-gradient(circle at 50% 10px, rgba(255,255,255,0.9) 2px, transparent 2px),
+        radial-gradient(circle at 50% 17px, rgba(255,255,255,0.9) 2px, transparent 2px),
+        radial-gradient(circle at 50% 24px, rgba(255,255,255,0.9) 2px, transparent 2px);
     opacity: 1;
 }
 
@@ -664,9 +667,10 @@ body {
 
 .custom-scrollbar-thumb.dragging::before {
     background-image: 
-        radial-gradient(circle at 50% 2px, rgba(255,255,255,0.9) 1px, transparent 1px),
-        radial-gradient(circle at 50% 8px, rgba(255,255,255,0.9) 1px, transparent 1px),
-        radial-gradient(circle at 50% 14px, rgba(255,255,255,0.9) 1px, transparent 1px);
+        radial-gradient(circle at 50% 3px, rgba(255,255,255,1) 2px, transparent 2px),
+        radial-gradient(circle at 50% 10px, rgba(255,255,255,1) 2px, transparent 2px),
+        radial-gradient(circle at 50% 17px, rgba(255,255,255,1) 2px, transparent 2px),
+        radial-gradient(circle at 50% 24px, rgba(255,255,255,1) 2px, transparent 2px);
     opacity: 1;
 }
 
