@@ -532,6 +532,10 @@ sub-second response times and 99.9% uptime.`
                     }
                     historyIndex = commandHistory.length;
                     terminalInput.value = '';
+                    // Ensure cursor stays at the beginning
+                    setTimeout(() => {
+                        terminalInput.focus();
+                    }, 0);
                 } else if (e.key === 'ArrowUp') {
                     e.preventDefault();
                     if (historyIndex > 0) {
@@ -595,8 +599,11 @@ sub-second response times and 99.9% uptime.`
                     terminalOutput.insertBefore(resultDiv, inputLine);
                 }
 
-                // Scroll to bottom
-                terminalOutput.scrollTop = terminalOutput.scrollHeight;
+                // Scroll to bottom and maintain input focus
+                setTimeout(() => {
+                    terminalOutput.scrollTop = terminalOutput.scrollHeight;
+                    terminalInput.focus();
+                }, 0);
             }
 
             // Cursor blinking
@@ -752,14 +759,47 @@ sub-second response times and 99.9% uptime.`
                     
                     // Thumb dragging
                     this.thumb.addEventListener('mousedown', (e) => {
+                        e.preventDefault();
+                        console.log('Thumb mousedown event fired');
                         this.isDragging = true;
                         this.startY = e.clientY;
                         this.startScrollTop = this.content.scrollTop;
                         this.thumb.classList.add('dragging');
+                        document.body.style.userSelect = 'none';
                         
-                        document.addEventListener('mousemove', this.handleDrag.bind(this));
-                        document.addEventListener('mouseup', this.handleDragEnd.bind(this));
-                        e.preventDefault();
+                        const handleMouseMove = (e) => {
+                            if (!this.isDragging) return;
+                            e.preventDefault();
+                            console.log('Mouse move during drag');
+                            
+                            const deltaY = e.clientY - this.startY;
+                            const scrollbarHeight = this.scrollbar.clientHeight;
+                            const thumbHeight = this.thumb.offsetHeight;
+                            const maxScrollTop = this.content.scrollHeight - this.content.clientHeight;
+                            
+                            if (maxScrollTop <= 0) return;
+                            
+                            const trackHeight = scrollbarHeight - thumbHeight;
+                            const scrollRatio = deltaY / trackHeight;
+                            const newScrollTop = this.startScrollTop + (scrollRatio * maxScrollTop);
+                            
+                            console.log('Drag values:', { deltaY, scrollRatio, newScrollTop, maxScrollTop });
+                            
+                            this.content.scrollTop = Math.max(0, Math.min(maxScrollTop, newScrollTop));
+                            this.updateThumbPosition();
+                            this.syncLineNumbers();
+                        };
+                        
+                        const handleMouseUp = () => {
+                            this.isDragging = false;
+                            this.thumb.classList.remove('dragging');
+                            document.removeEventListener('mousemove', handleMouseMove);
+                            document.removeEventListener('mouseup', handleMouseUp);
+                            document.body.style.userSelect = '';
+                        };
+                        
+                        document.addEventListener('mousemove', handleMouseMove);
+                        document.addEventListener('mouseup', handleMouseUp);
                     });
                     
                     // Track clicking
@@ -801,29 +841,6 @@ sub-second response times and 99.9% uptime.`
                     this.syncLineNumbers();
                 }
                 
-                handleDrag(e) {
-                    if (!this.isDragging) return;
-                    
-                    const deltaY = e.clientY - this.startY;
-                    const trackHeight = this.scrollbar.offsetHeight;
-                    const thumbHeight = this.thumb.offsetHeight;
-                    const contentHeight = this.content.scrollHeight;
-                    const containerHeight = this.content.clientHeight;
-                    
-                    const scrollRatio = deltaY / (trackHeight - thumbHeight);
-                    const maxScroll = contentHeight - containerHeight;
-                    
-                    this.content.scrollTop = this.startScrollTop + (scrollRatio * maxScroll);
-                    this.updateThumbPosition();
-                    this.syncLineNumbers();
-                }
-                
-                handleDragEnd() {
-                    this.isDragging = false;
-                    this.thumb.classList.remove('dragging');
-                    document.removeEventListener('mousemove', this.handleDrag);
-                    document.removeEventListener('mouseup', this.handleDragEnd);
-                }
                 
                 syncLineNumbers() {
                     // Only sync for editor content, not terminal
@@ -876,7 +893,10 @@ sub-second response times and 99.9% uptime.`
                 const editorScrollbar = document.getElementById('editor-scrollbar');
                 const editorThumb = document.getElementById('editor-thumb');
                 
+                console.log('Editor elements:', { editorContainer, editorContent, editorScrollbar, editorThumb });
+                
                 if (editorContainer && editorContent && editorScrollbar && editorThumb) {
+                    console.log('Creating editor scrollbar');
                     new CustomScrollbar(editorContainer, editorContent, editorScrollbar, editorThumb);
                 }
                 
@@ -886,7 +906,10 @@ sub-second response times and 99.9% uptime.`
                 const terminalScrollbar = document.getElementById('terminal-scrollbar');
                 const terminalThumb = document.getElementById('terminal-thumb');
                 
+                console.log('Terminal elements:', { terminalContainer, terminalContent, terminalScrollbar, terminalThumb });
+                
                 if (terminalContainer && terminalContent && terminalScrollbar && terminalThumb) {
+                    console.log('Creating terminal scrollbar');
                     new CustomScrollbar(terminalContainer, terminalContent, terminalScrollbar, terminalThumb);
                 }
             };
@@ -927,10 +950,12 @@ sub-second response times and 99.9% uptime.`
                 
                 // Focus terminal input
                 terminalInput.focus();
-                updateCursorPosition();
                 
-                // Initialize custom scrollbars
-                setTimeout(initScrollbars, 100);
+                // Initialize custom scrollbars with longer delay to ensure DOM is ready
+                setTimeout(() => {
+                    console.log('Initializing scrollbars...');
+                    initScrollbars();
+                }, 500);
             });
         </script>
         
