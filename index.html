@@ -1257,6 +1257,9 @@ sub-second response times and 99.9% uptime.`
                 // Focus terminal input
                 terminalInput.focus();
                 
+                // Show help command on load
+                executeCommand('help');
+                
                 // Initialize custom scrollbars with longer delay to ensure DOM is ready
                 setTimeout(() => {
                     initScrollbars();
