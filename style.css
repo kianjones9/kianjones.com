@@ -400,6 +400,7 @@ body {
     min-height: 150px;
     max-height: 400px;
     position: relative;
+    overflow: hidden;
 }
 
 .terminal-header {
@@ -439,19 +440,20 @@ body {
 .terminal-content {
     flex: 1;
     background-color: #000000;
-    padding: 8px 12px;
+    padding: 0 0 0 12px;
     font-family: 'Cascadia Code', 'Monaco', monospace;
     font-size: 14px;
-    overflow-y: auto;
+    overflow: hidden;
     display: flex;
     flex-direction: column;
     cursor: text;
+    position: relative;
 }
 
 .terminal-output {
     flex: 1;
     overflow-y: auto;
-    margin-bottom: 8px;
+    margin-bottom: 0;
 }
 
 .terminal-line {
@@ -476,7 +478,8 @@ body {
 .terminal-input-line {
     display: flex;
     align-items: center;
-    margin-top: 4px;
+    margin: 0;
+    padding: 0;
 }
 
 .input-container {
@@ -484,6 +487,8 @@ body {
     display: flex;
     align-items: center;
     position: relative;
+    margin: 0;
+    padding: 0;
 }
 
 #terminal-input {
@@ -621,12 +626,13 @@ body {
     position: absolute;
     left: 3px;
     width: 12px;
-    background: #666666;
+    background: #9933cc;
     cursor: pointer;
     transition: background 0.2s ease;
     min-height: 30px;
     border-radius: 0;
     position: relative;
+    top: 0;
 }
 
 .custom-scrollbar-thumb::before {
@@ -638,10 +644,10 @@ body {
     width: 10px;
     height: 30px;
     background-image: 
-        radial-gradient(circle at 50% 3px, #999999 2px, transparent 2px),
-        radial-gradient(circle at 50% 10px, #999999 2px, transparent 2px),
-        radial-gradient(circle at 50% 17px, #999999 2px, transparent 2px),
-        radial-gradient(circle at 50% 24px, #999999 2px, transparent 2px);
+        radial-gradient(circle at 50% 3px, #cc66ff 2px, transparent 2px),
+        radial-gradient(circle at 50% 10px, #cc66ff 2px, transparent 2px),
+        radial-gradient(circle at 50% 17px, #cc66ff 2px, transparent 2px),
+        radial-gradient(circle at 50% 24px, #cc66ff 2px, transparent 2px);
     background-size: 10px 7px;
     background-repeat: no-repeat;
     opacity: 0.8;
@@ -649,7 +655,7 @@ body {
 }
 
 .custom-scrollbar-thumb:hover {
-    background: var(--accent-primary);
+    background: #b359e6;
 }
 
 .custom-scrollbar-thumb:hover::before {
@@ -662,7 +668,7 @@ body {
 }
 
 .custom-scrollbar-thumb.dragging {
-    background: var(--accent-secondary);
+    background: #d480ff;
 }
 
 .custom-scrollbar-thumb.dragging::before {
@@ -687,6 +693,69 @@ body {
     padding: 8px 0;
     overflow: hidden;
     height: 100%;
+}
+
+/* Terminal panel scrollbar should be pink */
+.terminal-panel .custom-scrollbar-thumb,
+.terminal-content .custom-scrollbar-thumb,
+#terminal-scrollbar .custom-scrollbar-thumb {
+    background: #ff006e;
+}
+
+/* Terminal content should not have scrollbar padding */
+.terminal-content.scroll-content {
+    padding-right: 0;
+    margin-right: 0;
+}
+
+.terminal-content .scroll-container {
+    position: relative;
+    overflow: hidden;
+    flex: 1;
+    height: 100%;
+}
+
+.terminal-panel .custom-scrollbar-thumb:hover,
+.terminal-content .custom-scrollbar-thumb:hover,
+#terminal-scrollbar .custom-scrollbar-thumb:hover {
+    background: #ff3385;
+}
+
+.terminal-panel .custom-scrollbar-thumb.dragging,
+.terminal-content .custom-scrollbar-thumb.dragging,
+#terminal-scrollbar .custom-scrollbar-thumb.dragging {
+    background: #ff66a3;
+}
+
+/* Terminal scrollbar dots */
+.terminal-panel .custom-scrollbar-thumb::before,
+.terminal-content .custom-scrollbar-thumb::before,
+#terminal-scrollbar .custom-scrollbar-thumb::before {
+    background-image: 
+        radial-gradient(circle at 50% 3px, #ff99b3 2px, transparent 2px),
+        radial-gradient(circle at 50% 10px, #ff99b3 2px, transparent 2px),
+        radial-gradient(circle at 50% 17px, #ff99b3 2px, transparent 2px),
+        radial-gradient(circle at 50% 24px, #ff99b3 2px, transparent 2px);
+}
+
+.terminal-panel .custom-scrollbar-thumb:hover::before,
+.terminal-content .custom-scrollbar-thumb:hover::before,
+#terminal-scrollbar .custom-scrollbar-thumb:hover::before {
+    background-image: 
+        radial-gradient(circle at 50% 3px, rgba(255,255,255,0.9) 2px, transparent 2px),
+        radial-gradient(circle at 50% 10px, rgba(255,255,255,0.9) 2px, transparent 2px),
+        radial-gradient(circle at 50% 17px, rgba(255,255,255,0.9) 2px, transparent 2px),
+        radial-gradient(circle at 50% 24px, rgba(255,255,255,0.9) 2px, transparent 2px);
+}
+
+.terminal-panel .custom-scrollbar-thumb.dragging::before,
+.terminal-content .custom-scrollbar-thumb.dragging::before,
+#terminal-scrollbar .custom-scrollbar-thumb.dragging::before {
+    background-image: 
+        radial-gradient(circle at 50% 3px, rgba(255,255,255,1) 2px, transparent 2px),
+        radial-gradient(circle at 50% 10px, rgba(255,255,255,1) 2px, transparent 2px),
+        radial-gradient(circle at 50% 17px, rgba(255,255,255,1) 2px, transparent 2px),
+        radial-gradient(circle at 50% 24px, rgba(255,255,255,1) 2px, transparent 2px);
 }
 
 /* Responsive Design */
