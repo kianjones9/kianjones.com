@@ -133,7 +133,8 @@
                             <div class="line-number">19</div>
                             <div class="line-number">20</div>
                         </div>
-                        <div class="editor-content" id="editor-content">
+                        <div class="scroll-container">
+                            <div class="editor-content scroll-content" id="editor-content">
                             <div id="readme-content">
 <pre><code># Kian Jones
 
@@ -179,6 +180,10 @@ for the future of AI agent interactions.
 ---
 *Navigate using the file explorer → or try the terminal below ↓*</code></pre>
                             </div>
+                            </div>
+                            <div class="custom-scrollbar" id="editor-scrollbar">
+                                <div class="custom-scrollbar-thumb" id="editor-thumb"></div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -198,7 +203,8 @@ for the future of AI agent interactions.
                     </div>
                 </div>
                 <div class="terminal-content">
-                    <div class="terminal-output" id="terminal-output">
+                    <div class="scroll-container">
+                        <div class="terminal-output scroll-content" id="terminal-output">
                         <div class="terminal-line">
                             <span class="prompt">kian@letta:~/kianjones.com$</span>
                             <span>echo "Welcome to my interactive portfolio!"</span>
@@ -216,6 +222,10 @@ drwxr-xr-x  3 kian  staff   96 Jul 21 19:30 ..
 -rw-r--r--  1 kian  staff  512 Jul 21 19:45 contact.md
 drwxr-xr-x  5 kian  staff  160 Jul 21 19:50 posts
 drwxr-xr-x  2 kian  staff   64 Jul 21 19:50 projects</div>
+                        </div>
+                        <div class="custom-scrollbar" id="terminal-scrollbar">
+                            <div class="custom-scrollbar-thumb" id="terminal-thumb"></div>
+                        </div>
                     </div>
                     <div class="terminal-input-line">
                         <span class="prompt">kian@letta:~/kianjones.com$</span>
@@ -686,11 +696,164 @@ sub-second response times and 99.9% uptime.`
                 document.getElementById('theme-switcher').textContent = theme.icon;
             }
 
+            // Custom Scrollbar System
+            class CustomScrollbar {
+                constructor(container, content, scrollbar, thumb) {
+                    this.container = container;
+                    this.content = content;
+                    this.scrollbar = scrollbar;
+                    this.thumb = thumb;
+                    this.isDragging = false;
+                    this.startY = 0;
+                    this.startScrollTop = 0;
+                    
+                    this.init();
+                }
+                
+                init() {
+                    // Mouse wheel scrolling
+                    this.container.addEventListener('wheel', (e) => {
+                        e.preventDefault();
+                        const delta = e.deltaY;
+                        this.scroll(delta);
+                    });
+                    
+                    // Thumb dragging
+                    this.thumb.addEventListener('mousedown', (e) => {
+                        this.isDragging = true;
+                        this.startY = e.clientY;
+                        this.startScrollTop = this.content.scrollTop;
+                        this.thumb.classList.add('dragging');
+                        
+                        document.addEventListener('mousemove', this.handleDrag.bind(this));
+                        document.addEventListener('mouseup', this.handleDragEnd.bind(this));
+                        e.preventDefault();
+                    });
+                    
+                    // Track clicking
+                    this.scrollbar.addEventListener('click', (e) => {
+                        if (e.target === this.scrollbar) {
+                            const rect = this.scrollbar.getBoundingClientRect();
+                            const clickY = e.clientY - rect.top;
+                            const thumbHeight = this.thumb.offsetHeight;
+                            const trackHeight = this.scrollbar.offsetHeight;
+                            
+                            const scrollRatio = (clickY - thumbHeight / 2) / (trackHeight - thumbHeight);
+                            const maxScroll = this.content.scrollHeight - this.content.clientHeight;
+                            
+                            this.content.scrollTop = scrollRatio * maxScroll;
+                            this.updateThumbPosition();
+                        }
+                    });
+                    
+                    // Initial update
+                    this.updateScrollbar();
+                    
+                    // Content change observer
+                    const observer = new MutationObserver(() => {
+                        this.updateScrollbar();
+                    });
+                    observer.observe(this.content, { childList: true, subtree: true });
+                }
+                
+                scroll(delta) {
+                    const maxScroll = this.content.scrollHeight - this.content.clientHeight;
+                    let newScrollTop = this.content.scrollTop + delta;
+                    
+                    if (newScrollTop < 0) newScrollTop = 0;
+                    if (newScrollTop > maxScroll) newScrollTop = maxScroll;
+                    
+                    this.content.scrollTop = newScrollTop;
+                    this.updateThumbPosition();
+                }
+                
+                handleDrag(e) {
+                    if (!this.isDragging) return;
+                    
+                    const deltaY = e.clientY - this.startY;
+                    const trackHeight = this.scrollbar.offsetHeight;
+                    const thumbHeight = this.thumb.offsetHeight;
+                    const contentHeight = this.content.scrollHeight;
+                    const containerHeight = this.content.clientHeight;
+                    
+                    const scrollRatio = deltaY / (trackHeight - thumbHeight);
+                    const maxScroll = contentHeight - containerHeight;
+                    
+                    this.content.scrollTop = this.startScrollTop + (scrollRatio * maxScroll);
+                    this.updateThumbPosition();
+                }
+                
+                handleDragEnd() {
+                    this.isDragging = false;
+                    this.thumb.classList.remove('dragging');
+                    document.removeEventListener('mousemove', this.handleDrag);
+                    document.removeEventListener('mouseup', this.handleDragEnd);
+                }
+                
+                updateScrollbar() {
+                    const contentHeight = this.content.scrollHeight;
+                    const containerHeight = this.content.clientHeight;
+                    
+                    if (contentHeight <= containerHeight) {
+                        this.scrollbar.style.display = 'none';
+                        return;
+                    }
+                    
+                    this.scrollbar.style.display = 'block';
+                    
+                    const thumbRatio = containerHeight / contentHeight;
+                    const minThumbHeight = 30;
+                    const thumbHeight = Math.max(minThumbHeight, thumbRatio * this.scrollbar.offsetHeight);
+                    
+                    this.thumb.style.height = thumbHeight + 'px';
+                    this.updateThumbPosition();
+                }
+                
+                updateThumbPosition() {
+                    const contentHeight = this.content.scrollHeight;
+                    const containerHeight = this.content.clientHeight;
+                    const scrollTop = this.content.scrollTop;
+                    const trackHeight = this.scrollbar.offsetHeight;
+                    const thumbHeight = this.thumb.offsetHeight;
+                    
+                    const scrollRatio = scrollTop / (contentHeight - containerHeight);
+                    const thumbTop = scrollRatio * (trackHeight - thumbHeight);
+                    
+                    this.thumb.style.top = thumbTop + 'px';
+                }
+            }
+            
+            // Initialize custom scrollbars
+            const initScrollbars = () => {
+                // Editor scrollbar
+                const editorContainer = document.querySelector('.scroll-container');
+                const editorContent = document.getElementById('editor-content');
+                const editorScrollbar = document.getElementById('editor-scrollbar');
+                const editorThumb = document.getElementById('editor-thumb');
+                
+                if (editorContainer && editorContent && editorScrollbar && editorThumb) {
+                    new CustomScrollbar(editorContainer, editorContent, editorScrollbar, editorThumb);
+                }
+                
+                // Terminal scrollbar
+                const terminalContainer = document.querySelector('.terminal-content .scroll-container');
+                const terminalContent = document.getElementById('terminal-output');
+                const terminalScrollbar = document.getElementById('terminal-scrollbar');
+                const terminalThumb = document.getElementById('terminal-thumb');
+                
+                if (terminalContainer && terminalContent && terminalScrollbar && terminalThumb) {
+                    new CustomScrollbar(terminalContainer, terminalContent, terminalScrollbar, terminalThumb);
+                }
+            };
+
             // Initialize
             document.addEventListener('DOMContentLoaded', () => {
                 // Focus terminal input
                 terminalInput.focus();
                 updateCursorPosition();
+                
+                // Initialize custom scrollbars
+                setTimeout(initScrollbars, 100);
             });
         </script>
         

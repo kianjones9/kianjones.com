@@ -336,8 +336,7 @@ body {
     font-size: 14px;
     line-height: 19px;
     color: #ffffff;
-    overflow-y: auto;
-    overflow-x: hidden;
+    overflow: hidden;
 }
 
 .editor-content pre {
@@ -512,25 +511,47 @@ body {
 
 /* Resize Handles */
 .resize-handle {
-    background-color: transparent;
     position: relative;
     z-index: 10;
+    transition: all 0.2s ease;
 }
 
 .sidebar-resize {
     width: 4px;
     cursor: col-resize;
     background-color: var(--accent-primary);
+    position: relative;
 }
 
 .sidebar-resize:hover {
     background-color: var(--accent-secondary);
 }
 
+.sidebar-resize::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 12px;
+    height: 30px;
+    background-color: var(--accent-primary);
+    border-radius: 6px;
+    opacity: 1;
+    transition: all 0.2s ease;
+}
+
+.sidebar-resize:hover::before {
+    background-color: var(--accent-secondary);
+    width: 14px;
+    height: 35px;
+}
+
 .terminal-resize {
     height: 4px;
     cursor: row-resize;
     background-color: var(--accent-terminal);
+    position: relative;
 }
 
 .terminal-resize:hover {
@@ -538,27 +559,130 @@ body {
     opacity: 0.8;
 }
 
-/* Scrollbars */
-::-webkit-scrollbar {
-    width: 12px;
+.terminal-resize::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 30px;
     height: 12px;
-}
-
-::-webkit-scrollbar-track {
-    background: #000000;
-}
-
-::-webkit-scrollbar-thumb {
-    background: #333333;
+    background-color: var(--accent-terminal);
     border-radius: 6px;
+    opacity: 1;
+    transition: all 0.2s ease;
 }
 
-::-webkit-scrollbar-thumb:hover {
-    background: #555555;
+.terminal-resize:hover::before {
+    width: 35px;
+    height: 14px;
 }
 
-::-webkit-scrollbar-corner {
-    background: #000000;
+/* Hide All Default Scrollbars */
+* {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+*::-webkit-scrollbar {
+    display: none;
+}
+
+/* Custom Scrollbar Container */
+.scroll-container {
+    position: relative;
+    overflow: hidden;
+    flex: 1;
+    height: 100%;
+}
+
+.scroll-content {
+    overflow: hidden;
+    height: 100%;
+    padding-right: 18px;
+    margin-right: -18px;
+}
+
+/* Custom Scrollbar Track */
+.custom-scrollbar {
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 18px;
+    height: 100%;
+    background: #1a1a1a;
+    z-index: 1000;
+    user-select: none;
+}
+
+/* Custom Scrollbar Thumb */
+.custom-scrollbar-thumb {
+    position: absolute;
+    left: 3px;
+    width: 12px;
+    background: #666666;
+    cursor: pointer;
+    transition: background 0.2s ease;
+    min-height: 30px;
+    border-radius: 0;
+    position: relative;
+}
+
+.custom-scrollbar-thumb::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 8px;
+    height: 20px;
+    background-image: 
+        radial-gradient(circle at 50% 2px, #999999 1px, transparent 1px),
+        radial-gradient(circle at 50% 8px, #999999 1px, transparent 1px),
+        radial-gradient(circle at 50% 14px, #999999 1px, transparent 1px);
+    background-size: 8px 6px;
+    background-repeat: no-repeat;
+    opacity: 0.7;
+    pointer-events: none;
+}
+
+.custom-scrollbar-thumb:hover {
+    background: var(--accent-primary);
+}
+
+.custom-scrollbar-thumb:hover::before {
+    background-image: 
+        radial-gradient(circle at 50% 2px, rgba(255,255,255,0.8) 1px, transparent 1px),
+        radial-gradient(circle at 50% 8px, rgba(255,255,255,0.8) 1px, transparent 1px),
+        radial-gradient(circle at 50% 14px, rgba(255,255,255,0.8) 1px, transparent 1px);
+    opacity: 1;
+}
+
+.custom-scrollbar-thumb.dragging {
+    background: var(--accent-secondary);
+}
+
+.custom-scrollbar-thumb.dragging::before {
+    background-image: 
+        radial-gradient(circle at 50% 2px, rgba(255,255,255,0.9) 1px, transparent 1px),
+        radial-gradient(circle at 50% 8px, rgba(255,255,255,0.9) 1px, transparent 1px),
+        radial-gradient(circle at 50% 14px, rgba(255,255,255,0.9) 1px, transparent 1px);
+    opacity: 1;
+}
+
+/* Scrollable Content Areas */
+.terminal-output {
+    flex: 1;
+    overflow: hidden;
+    margin-bottom: 8px;
+    height: 100%;
+}
+
+.file-tree {
+    flex: 1;
+    padding: 8px 0;
+    overflow: hidden;
+    height: 100%;
 }
 
 /* Responsive Design */
