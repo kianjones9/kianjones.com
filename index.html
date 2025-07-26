@@ -761,6 +761,116 @@
                 terminalInput.focus();
             });
 
+            // Panel Resizing
+            let isResizing = false;
+            let currentResizer = null;
+
+            // Sidebar resize
+            document.querySelector('.sidebar-resize').addEventListener('mousedown', (e) => {
+                isResizing = true;
+                currentResizer = 'sidebar';
+                document.addEventListener('mousemove', handleResize);
+                document.addEventListener('mouseup', stopResize);
+                e.preventDefault();
+            });
+
+            // Terminal resize
+            document.querySelector('.terminal-resize').addEventListener('mousedown', (e) => {
+                isResizing = true;
+                currentResizer = 'terminal';
+                document.addEventListener('mousemove', handleResize);
+                document.addEventListener('mouseup', stopResize);
+                e.preventDefault();
+            });
+
+            function handleResize(e) {
+                if (!isResizing) return;
+
+                if (currentResizer === 'sidebar') {
+                    const sidebar = document.querySelector('.sidebar');
+                    const newWidth = e.clientX;
+                    if (newWidth >= 200 && newWidth <= 500) {
+                        sidebar.style.width = newWidth + 'px';
+                    }
+                } else if (currentResizer === 'terminal') {
+                    const terminal = document.querySelector('.terminal-panel');
+                    const newHeight = window.innerHeight - e.clientY;
+                    if (newHeight >= 150 && newHeight <= 400) {
+                        terminal.style.height = newHeight + 'px';
+                    }
+                }
+            }
+
+            function stopResize() {
+                isResizing = false;
+                currentResizer = null;
+                document.removeEventListener('mousemove', handleResize);
+                document.removeEventListener('mouseup', stopResize);
+            }
+
+            // Theme Switcher
+            const themes = [
+                { name: 'Purple', class: '', icon: '🟣' },
+                { name: 'Orange', class: 'theme-orange', icon: '🟠' },
+                { name: 'Green', class: 'theme-green', icon: '🟢' },
+                { name: 'Red', class: 'theme-red', icon: '🔴' },
+                { name: 'Cyan', class: 'theme-cyan', icon: '🔵' },
+                { name: 'Yellow', class: 'theme-yellow', icon: '🟡' }
+            ];
+            
+            let currentTheme = 0;
+            
+            // Theme switcher dropdown functionality
+            document.getElementById('theme-switcher').addEventListener('click', (e) => {
+                e.stopPropagation();
+                const dropdown = document.getElementById('theme-dropdown');
+                dropdown.classList.toggle('show');
+                updateActiveTheme();
+            });
+            
+            // Handle theme selection
+            document.querySelectorAll('.theme-option').forEach(option => {
+                option.addEventListener('click', (e) => {
+                    const themeIndex = parseInt(e.target.dataset.theme);
+                    applyTheme(themeIndex);
+                    document.getElementById('theme-dropdown').classList.remove('show');
+                });
+            });
+            
+            // Close dropdown when clicking outside
+            document.addEventListener('click', () => {
+                document.getElementById('theme-dropdown').classList.remove('show');
+            });
+            
+            function applyTheme(themeIndex) {
+                // Remove current theme
+                document.body.className = '';
+                
+                currentTheme = themeIndex;
+                const theme = themes[currentTheme];
+                
+                // Apply new theme
+                if (theme.class) {
+                    document.body.className = theme.class;
+                }
+                
+                // Store theme preference
+                localStorage.setItem('theme', currentTheme.toString());
+                updateActiveTheme();
+            }
+            
+            function updateActiveTheme() {
+                document.querySelectorAll('.theme-option').forEach((option, index) => {
+                    option.classList.toggle('active', index === currentTheme);
+                });
+            }
+            
+            // Load saved theme
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme) {
+                applyTheme(parseInt(savedTheme));
+            }
+
             // Initialize
             document.addEventListener('DOMContentLoaded', async () => {
                 // Initialize posts sidebar
