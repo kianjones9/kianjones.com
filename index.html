@@ -59,14 +59,6 @@
                                     <span class="file-icon">📄</span>
                                     <span class="file-name">README.md</span>
                                 </div>
-                                <div class="file" onclick="loadFile('bio')">
-                                    <span class="file-icon">👤</span>
-                                    <span class="file-name">bio.md</span>
-                                </div>
-                                <div class="file" onclick="loadFile('contact')">
-                                    <span class="file-icon">📧</span>
-                                    <span class="file-name">contact.md</span>
-                                </div>
                                 <div class="folder">
                                     <div class="folder-header" onclick="toggleFolder(this)">
                                         <span class="folder-icon">📁</span>
@@ -96,25 +88,6 @@
                     <div class="editor">
                         <div class="line-numbers">
                             <div class="line-number">1</div>
-                            <div class="line-number">2</div>
-                            <div class="line-number">3</div>
-                            <div class="line-number">4</div>
-                            <div class="line-number">5</div>
-                            <div class="line-number">6</div>
-                            <div class="line-number">7</div>
-                            <div class="line-number">8</div>
-                            <div class="line-number">9</div>
-                            <div class="line-number">10</div>
-                            <div class="line-number">11</div>
-                            <div class="line-number">12</div>
-                            <div class="line-number">13</div>
-                            <div class="line-number">14</div>
-                            <div class="line-number">15</div>
-                            <div class="line-number">16</div>
-                            <div class="line-number">17</div>
-                            <div class="line-number">18</div>
-                            <div class="line-number">19</div>
-                            <div class="line-number">20</div>
                         </div>
                         <div class="scroll-container">
                             <div class="editor-content scroll-content" id="editor-content">
@@ -258,90 +231,37 @@
                 }
             }
 
-            // Static content
-            const staticContent = {
-                'readme': `<h1>Kian Jones</h1>
-<p><strong>Infrastructure Engineer @ <a href="https://letta.com">Letta</a></strong><br>
-Building the backbone for next-generation AI agents</p>
-<h2>About</h2>
-<p>Infrastructure specialist with deep expertise in cloud architecture, networking, 
-and observability. Currently architecting scalable systems that enable AI agents 
-to operate reliably at massive scale.</p>
-<h2>Experience</h2>
-<ul>
-<li><strong>Letta</strong> - Infrastructure Engineer (AI Agent Platform)</li>
-<li><strong>Covariant</strong> - Cloud & Infrastructure</li>
-<li><strong>Meta</strong> - Platform Engineering</li>
-<li><strong>Nokia</strong> - Network Infrastructure</li>
-<li><strong>CENGN</strong> - Research & Development</li>
-<li><strong>Environment Canada</strong> - Systems Engineering</li>
-<li><strong>SurveyMonkey</strong> - Backend Infrastructure</li>
-</ul>
-<h2>Expertise</h2>
-<h3>🏗️ Cloud Architecture</h3>
-<p>AWS, GCP, Kubernetes, Terraform, Infrastructure as Code</p>
-<h3>📊 Observability</h3>
-<p>Monitoring, Logging, Distributed Tracing, Performance Metrics</p>
-<h3>🌐 Networking</h3>
-<p>Load Balancing, CDN, Service Mesh, Network Security</p>
-<h3>🤖 AI Infrastructure</h3>
-<p>GPU Clusters, Model Serving, Agent Orchestration, Auto-scaling</p>
-<h2>Current Focus</h2>
-<p>Building the infrastructure that powers thousands of concurrent AI agents at Letta.
-From Kubernetes orchestration to observability systems, creating the foundation
-for the future of AI agent interactions.</p>
-<hr>
-<p><em>Navigate using the file explorer → or try the terminal below ↓</em></p>`,
-                'bio': `<h1>Bio</h1>
-<h2>Kian Jones - Infrastructure Engineer</h2>
-<p>Currently building the foundational systems that power AI agents at Letta. 
-Passionate about creating robust, scalable infrastructure that enables the 
-next generation of artificial intelligence to operate seamlessly.</p>
-<h3>Background</h3>
-<p>With extensive experience across cloud platforms, networking, and observability,
-I specialize in designing systems that can handle massive scale while maintaining
-reliability and performance.</p>
-<h3>Philosophy</h3>
-<p>Great infrastructure is invisible - it just works. My focus is on building
-systems that developers and AI agents can rely on, allowing them to focus
-on innovation rather than operational concerns.</p>`,
-                'contact': `<h1>Contact</h1>
-<h2>Get in Touch</h2>
-<p><strong>Email</strong>: <a href="mailto:kian@kianjones.com">kian@kianjones.com</a><br>
-<strong>LinkedIn</strong>: <a href="https://linkedin.com/in/kianjones">linkedin.com/in/kianjones</a><br>
-<strong>GitHub</strong>: <a href="https://github.com/kianjones">github.com/kianjones</a><br>
-<strong>Twitter</strong>: <a href="https://twitter.com/kianjones">@kianjones</a></p>
-<h3>Open to Discuss</h3>
-<ul>
-<li>Infrastructure architecture and scaling challenges</li>
-<li>AI/ML platform engineering opportunities</li>
-<li>Cloud-native system design</li>
-<li>Observability and monitoring strategies</li>
-<li>Open source contributions</li>
-</ul>
-<hr>
-<p><em>Always happy to talk about infrastructure, AI agents, and building scalable systems!</em></p>`,
-                'letta-infra': `<h1>Letta Infrastructure Project</h1>
-<h2>Overview</h2>
-<p>Building the scalable infrastructure backbone for Letta's AI agent platform.</p>
-<h3>Responsibilities</h3>
-<ul>
-<li>Kubernetes cluster management and optimization</li>
-<li>CI/CD pipeline design and implementation</li>
-<li>Monitoring and observability systems</li>
-<li>Cost optimization and resource management</li>
-</ul>
-<h3>Technologies</h3>
-<ul>
-<li><strong>Cloud</strong>: AWS, GCP</li>
-<li><strong>Orchestration</strong>: Kubernetes, Docker</li>
-<li><strong>Monitoring</strong>: Prometheus, Grafana, Jaeger</li>
-<li><strong>IaC</strong>: Terraform, Helm</li>
-</ul>
-<h3>Impact</h3>
-<p>Enabling thousands of concurrent AI agent conversations while maintaining 
-sub-second response times and 99.9% uptime.</p>`
-            };
+            // Function to load static content from readme.md.html
+            async function loadStaticContent() {
+                try {
+                    console.log('Loading static content from readme.md.html');
+                    const response = await fetch('readme.md.html');
+                    
+                    if (!response.ok) {
+                        throw new Error(`HTTP ${response.status}`);
+                    }
+                    
+                    const html = await response.text();
+                    
+                    // Extract content div
+                    const parser = new DOMParser();
+                    const doc = parser.parseFromString(html, 'text/html');
+                    const contentDiv = doc.querySelector('.content');
+                    
+                    if (contentDiv) {
+                        return contentDiv.innerHTML;
+                    }
+                    
+                    return '<h1>Error</h1><p>Content could not be loaded from readme.md.html</p>';
+                    
+                } catch (error) {
+                    console.error('Failed to load static content:', error);
+                    return '<h1>Error</h1><p>Error loading static content.</p>';
+                }
+            }
+
+            // Cache for loaded static content
+            let cachedStaticContent = null;
 
             // Load file function
             async function loadFile(fileName) {
@@ -376,8 +296,20 @@ sub-second response times and 99.9% uptime.</p>`
                         content = `<h1>${postConfig.title}</h1><p>Error loading post content.</p>`;
                     }
                 } else {
-                    // Static content
-                    content = staticContent[fileName] || 'File not found';
+                    // Static content - load from readme.md.html
+                    if (!cachedStaticContent) {
+                        // Show loading
+                        editorContent.innerHTML = '<p>Loading content...</p>';
+                        
+                        try {
+                            cachedStaticContent = await loadStaticContent();
+                        } catch (error) {
+                            console.error('Failed to load static content:', error);
+                            cachedStaticContent = '<h1>Error</h1><p>Error loading static content.</p>';
+                        }
+                    }
+                    
+                    content = cachedStaticContent || 'File not found';
                     
                     // Set display names and icons for static files
                     const staticNames = {
@@ -510,8 +442,6 @@ sub-second response times and 99.9% uptime.</p>`
                 return {
                     '/': {
                         'README.md': { type: 'file', content: 'readme' },
-                        'bio.md': { type: 'file', content: 'bio' },
-                        'contact.md': { type: 'file', content: 'contact' },
                         'posts/': {
                             type: 'directory',
                             children: postsChildren
@@ -600,7 +530,7 @@ sub-second response times and 99.9% uptime.</p>`
                     return '';
                 },
                 
-                cat: (file) => {
+                cat: async (file) => {
                     if (!file) {
                         return 'cat: missing file operand';
                     }
@@ -616,8 +546,16 @@ sub-second response times and 99.9% uptime.</p>`
                         return `cat: ${file}: Is a directory`;
                     }
                     
-                    const content = staticContent[fileObj.content];
-                    return content || `cat: ${file}: No such file or directory`;
+                    // Load static content if not cached
+                    if (!cachedStaticContent) {
+                        try {
+                            cachedStaticContent = await loadStaticContent();
+                        } catch (error) {
+                            return `cat: ${file}: Error loading content`;
+                        }
+                    }
+                    
+                    return cachedStaticContent || `cat: ${file}: No such file or directory`;
                 }
             };
 
@@ -719,7 +657,7 @@ sub-second response times and 99.9% uptime.</p>`
             let commandHistory = [];
             let historyIndex = -1;
 
-            function executeCommand(commandLine, showOnly = false) {
+            async function executeCommand(commandLine, showOnly = false) {
                 // Add command to output (always show the prompt line, even for empty commands)
                 const cmdDiv = document.createElement('div');
                 cmdDiv.className = 'terminal-line';
@@ -745,7 +683,7 @@ sub-second response times and 99.9% uptime.</p>`
 
                 let result = '';
                 if (commands[cmd]) {
-                    result = commands[cmd](...args);
+                    result = await commands[cmd](...args);
                 } else {
                     result = `bash: ${cmd}: command not found`;
                 }
@@ -778,11 +716,11 @@ sub-second response times and 99.9% uptime.</p>`
                 promptElement.textContent = `kian@letta:~/kianjones.com${currentDir}$`;
             }
 
-            terminalInput.addEventListener('keydown', (e) => {
+            terminalInput.addEventListener('keydown', async (e) => {
                 if (e.key === 'Enter') {
                     e.preventDefault();
                     const command = terminalInput.value.trim();
-                    executeCommand(command);
+                    await executeCommand(command);
                     if (command) {
                         commandHistory.push(command);
                     }
@@ -823,19 +761,135 @@ sub-second response times and 99.9% uptime.</p>`
                 terminalInput.focus();
             });
 
+            // Panel Resizing
+            let isResizing = false;
+            let currentResizer = null;
+
+            // Sidebar resize
+            document.querySelector('.sidebar-resize').addEventListener('mousedown', (e) => {
+                isResizing = true;
+                currentResizer = 'sidebar';
+                document.addEventListener('mousemove', handleResize);
+                document.addEventListener('mouseup', stopResize);
+                e.preventDefault();
+            });
+
+            // Terminal resize
+            document.querySelector('.terminal-resize').addEventListener('mousedown', (e) => {
+                isResizing = true;
+                currentResizer = 'terminal';
+                document.addEventListener('mousemove', handleResize);
+                document.addEventListener('mouseup', stopResize);
+                e.preventDefault();
+            });
+
+            function handleResize(e) {
+                if (!isResizing) return;
+
+                if (currentResizer === 'sidebar') {
+                    const sidebar = document.querySelector('.sidebar');
+                    const newWidth = e.clientX;
+                    if (newWidth >= 200 && newWidth <= 500) {
+                        sidebar.style.width = newWidth + 'px';
+                    }
+                } else if (currentResizer === 'terminal') {
+                    const terminal = document.querySelector('.terminal-panel');
+                    const newHeight = window.innerHeight - e.clientY;
+                    if (newHeight >= 150 && newHeight <= 400) {
+                        terminal.style.height = newHeight + 'px';
+                    }
+                }
+            }
+
+            function stopResize() {
+                isResizing = false;
+                currentResizer = null;
+                document.removeEventListener('mousemove', handleResize);
+                document.removeEventListener('mouseup', stopResize);
+            }
+
+            // Theme Switcher
+            const themes = [
+                { name: 'Purple', class: '', icon: '🟣' },
+                { name: 'Orange', class: 'theme-orange', icon: '🟠' },
+                { name: 'Green', class: 'theme-green', icon: '🟢' },
+                { name: 'Red', class: 'theme-red', icon: '🔴' },
+                { name: 'Cyan', class: 'theme-cyan', icon: '🔵' },
+                { name: 'Yellow', class: 'theme-yellow', icon: '🟡' }
+            ];
+            
+            let currentTheme = 0;
+            
+            // Theme switcher dropdown functionality
+            document.getElementById('theme-switcher').addEventListener('click', (e) => {
+                e.stopPropagation();
+                const dropdown = document.getElementById('theme-dropdown');
+                dropdown.classList.toggle('show');
+                updateActiveTheme();
+            });
+            
+            // Handle theme selection
+            document.querySelectorAll('.theme-option').forEach(option => {
+                option.addEventListener('click', (e) => {
+                    const themeIndex = parseInt(e.target.dataset.theme);
+                    applyTheme(themeIndex);
+                    document.getElementById('theme-dropdown').classList.remove('show');
+                });
+            });
+            
+            // Close dropdown when clicking outside
+            document.addEventListener('click', () => {
+                document.getElementById('theme-dropdown').classList.remove('show');
+            });
+            
+            function applyTheme(themeIndex) {
+                // Remove current theme
+                document.body.className = '';
+                
+                currentTheme = themeIndex;
+                const theme = themes[currentTheme];
+                
+                // Apply new theme
+                if (theme.class) {
+                    document.body.className = theme.class;
+                }
+                
+                // Store theme preference
+                localStorage.setItem('theme', currentTheme.toString());
+                updateActiveTheme();
+            }
+            
+            function updateActiveTheme() {
+                document.querySelectorAll('.theme-option').forEach((option, index) => {
+                    option.classList.toggle('active', index === currentTheme);
+                });
+            }
+            
+            // Load saved theme
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme) {
+                applyTheme(parseInt(savedTheme));
+            }
+
             // Initialize
-            document.addEventListener('DOMContentLoaded', () => {
+            document.addEventListener('DOMContentLoaded', async () => {
                 // Initialize posts sidebar
                 initializePosts();
                 
-                // Update line numbers for the default README content
-                updateLineNumbers();
+                // Load static content into cache and update the initial display
+                try {
+                    cachedStaticContent = await loadStaticContent();
+                    document.getElementById('editor-content').innerHTML = cachedStaticContent;
+                    updateLineNumbers();
+                } catch (error) {
+                    console.error('Failed to load static content on init:', error);
+                }
                 
                 // Focus terminal input
                 terminalInput.focus();
                 
                 // Show help command on load
-                executeCommand('help');
+                await executeCommand('help');
             });
         </script>
         
