@@ -23,7 +23,7 @@
                         <span class="control minimize"></span>
                         <span class="control maximize"></span>
                     </span>
-                    <span class="app-title">kianjones.com - IDE</span>
+                    <span class="app-title">kianjones.com - VS Code</span>
                 </div>
                 <div class="title-bar-center">README.md</div>
                 <div class="title-bar-right">
@@ -86,12 +86,11 @@
                         </div>
                     </div>
                     <div class="editor">
+                        <div class="line-numbers">
+                            <div class="line-number">1</div>
+                        </div>
                         <div class="scroll-container">
-                            <div class="editor-wrapper">
-                                <div class="line-numbers">
-                                    <div class="line-number">1</div>
-                                </div>
-                                <div class="editor-content" id="editor-content">
+                            <div class="editor-content scroll-content" id="editor-content">
                                 <h1>Kian Jones</h1>
 
                                 <p><strong>Infrastructure Engineer @ <a href="https://letta.com">Letta</a></strong><br>
@@ -137,7 +136,6 @@
 
                                 <hr>
                                 <p><em>Navigate using the file explorer → or try the terminal below ↓</em></p>
-                                </div>
                             </div>
                             <div class="custom-scrollbar" id="editor-scrollbar">
                                 <div class="custom-scrollbar-thumb" id="editor-thumb"></div>
@@ -265,57 +263,15 @@
             // Cache for loaded static content
             let cachedStaticContent = null;
 
-            // URL routing functions
-            function initializeRouting() {
-                // Handle browser back/forward buttons
-                window.addEventListener('popstate', (event) => {
-                    if (event.state) {
-                        if (event.state.type === 'post') {
-                            loadFile(event.state.id, false);
-                        } else if (event.state.type === 'home') {
-                            loadFile('readme', false);
-                        }
-                    }
-                });
-                
-                // Handle initial page load with URL routing
-                handleInitialRoute();
-            }
-            
-            function handleInitialRoute() {
-                const path = window.location.pathname;
-                
-                // Check if it's a blog post URL: /posts/{post-id}
-                const postMatch = path.match(/^\/posts\/(.+)$/);
-                if (postMatch) {
-                    const postId = postMatch[1];
-                    const postConfig = POSTS_CONFIG.find(post => post.id === postId);
-                    
-                    if (postConfig) {
-                        // Load the post without updating URL (we're already at the right URL)
-                        loadFile(postId, false);
-                        return;
-                    } else {
-                        // Post not found, redirect to home
-                        window.history.replaceState({ type: 'home' }, 'kianjones.com - Infrastructure Engineer', window.location.origin);
-                        loadFile('readme', false);
-                        return;
-                    }
-                }
-                
-                // Default to home page
-                loadFile('readme', false);
-            }
-
             // Load file function
-            async function loadFile(fileName, updateUrl = true) {
+            async function loadFile(fileName) {
                 const editorContent = document.getElementById('editor-content');
                 
                 // Remove active class from all files
                 document.querySelectorAll('.file').forEach(f => f.classList.remove('active'));
                 
                 // Add active class to clicked file
-                if (event && event.target) {
+                if (event) {
                     event.target.closest('.file').classList.add('active');
                 }
                 
@@ -338,13 +294,6 @@
                     } catch (error) {
                         console.error('Failed to load post:', error);
                         content = `<h1>${postConfig.title}</h1><p>Error loading post content.</p>`;
-                    }
-                    
-                    // Update URL for blog posts
-                    if (updateUrl) {
-                        const newUrl = `${window.location.origin}/posts/${postConfig.id}`;
-                        window.history.pushState({ type: 'post', id: postConfig.id }, postConfig.title, newUrl);
-                        document.title = `${postConfig.title} - kianjones.com`;
                     }
                 } else {
                     // Static content - load from readme.md.html
@@ -379,12 +328,6 @@
                     
                     displayName = staticNames[fileName] || fileName;
                     icon = staticIcons[fileName] || '📄';
-                    
-                    // Update URL for home page
-                    if (updateUrl && fileName === 'readme') {
-                        window.history.pushState({ type: 'home' }, 'kianjones.com - Infrastructure Engineer', window.location.origin);
-                        document.title = 'kianjones.com - Infrastructure Engineer';
-                    }
                 }
                 
                 // Update tab
@@ -933,15 +876,14 @@
                 // Initialize posts sidebar
                 initializePosts();
                 
-                // Load static content into cache
+                // Load static content into cache and update the initial display
                 try {
                     cachedStaticContent = await loadStaticContent();
+                    document.getElementById('editor-content').innerHTML = cachedStaticContent;
+                    updateLineNumbers();
                 } catch (error) {
                     console.error('Failed to load static content on init:', error);
                 }
-                
-                // Initialize URL routing - this will handle loading the correct initial content
-                initializeRouting();
                 
                 // Focus terminal input
                 terminalInput.focus();
