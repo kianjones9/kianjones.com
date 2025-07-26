@@ -431,6 +431,29 @@
                     lineDiv.textContent = i;
                     lineNumbers.appendChild(lineDiv);
                 }
+                
+                // Setup scroll synchronization
+                setupScrollSync();
+            }
+            
+            // Function to synchronize line numbers scroll with content scroll
+            function setupScrollSync() {
+                const editorContent = document.getElementById('editor-content');
+                const lineNumbers = document.querySelector('.line-numbers');
+                
+                // Remove existing scroll listener if any
+                editorContent.removeEventListener('scroll', syncLineNumbersScroll);
+                
+                // Add scroll synchronization
+                editorContent.addEventListener('scroll', syncLineNumbersScroll);
+            }
+            
+            function syncLineNumbersScroll() {
+                const editorContent = document.getElementById('editor-content');
+                const lineNumbers = document.querySelector('.line-numbers');
+                
+                // Instead of transform, sync the scroll position directly
+                lineNumbers.scrollTop = editorContent.scrollTop;
             }
 
             // Terminal functionality
