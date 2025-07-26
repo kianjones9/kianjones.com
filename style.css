@@ -358,6 +358,16 @@ body {
     overflow: hidden;
 }
 
+.editor-wrapper {
+    display: flex;
+    width: 100%;
+    overflow-y: auto;
+    height: 100%;
+    padding-right: 20px;
+    margin-right: -20px;
+    flex-direction: row;
+}
+
 .line-numbers {
     background-color: #0a0a0a;
     color: var(--accent-secondary);
@@ -368,8 +378,8 @@ body {
     min-width: 50px;
     border-right: 1px solid var(--accent-primary);
     user-select: none;
-    overflow: hidden;
-    height: 100%;
+    flex-shrink: 0;
+    order: 1;
 }
 
 .line-number {
@@ -384,7 +394,7 @@ body {
     font-size: 14px;
     line-height: 19px;
     color: #ffffff;
-    overflow: hidden;
+    order: 2;
 }
 
 .editor-content pre {
