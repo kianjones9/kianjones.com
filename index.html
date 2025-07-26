@@ -92,51 +92,7 @@
                                     <div class="line-number">1</div>
                                 </div>
                                 <div class="editor-content" id="editor-content">
-                                <h1>Kian Jones</h1>
-
-                                <p><strong>Infrastructure Engineer @ <a href="https://letta.com">Letta</a></strong><br>
-                                Building the backbone for next-generation AI agents</p>
-
-                                <h2>About</h2>
-
-                                <p>Infrastructure specialist with deep expertise in cloud architecture, networking, 
-                                and observability. Currently architecting scalable systems that enable AI agents 
-                                to operate reliably at massive scale.</p>
-
-                                <h2>Experience</h2>
-
-                                <ul>
-                                <li><strong>Letta</strong> - Infrastructure Engineer (AI Agent Platform)</li>
-                                <li><strong>Covariant</strong> - Cloud & Infrastructure</li>
-                                <li><strong>Meta</strong> - Platform Engineering</li>
-                                <li><strong>Nokia</strong> - Network Infrastructure</li>
-                                <li><strong>CENGN</strong> - Research & Development</li>
-                                <li><strong>Environment Canada</strong> - Systems Engineering</li>
-                                <li><strong>SurveyMonkey</strong> - Backend Infrastructure</li>
-                                </ul>
-
-                                <h2>Expertise</h2>
-
-                                <h3>🏗️ Cloud Architecture</h3>
-                                <p>AWS, GCP, Kubernetes, Terraform, Infrastructure as Code</p>
-
-                                <h3>📊 Observability</h3>
-                                <p>Monitoring, Logging, Distributed Tracing, Performance Metrics</p>
-
-                                <h3>🌐 Networking</h3>
-                                <p>Load Balancing, CDN, Service Mesh, Network Security</p>
-
-                                <h3>🤖 AI Infrastructure</h3>
-                                <p>GPU Clusters, Model Serving, Agent Orchestration, Auto-scaling</p>
-
-                                <h2>Current Focus</h2>
-
-                                <p>Building the infrastructure that powers thousands of concurrent AI agents at Letta.
-                                From Kubernetes orchestration to observability systems, creating the foundation
-                                for the future of AI agent interactions.</p>
-
-                                <hr>
-                                <p><em>Navigate using the file explorer → or try the terminal below ↓</em></p>
+                                    <p>Loading...</p>
                                 </div>
                             </div>
                             <div class="custom-scrollbar" id="editor-scrollbar">
@@ -267,49 +223,53 @@
 
             // URL routing functions
             function initializeRouting() {
-                // Handle browser back/forward buttons
-                window.addEventListener('popstate', (event) => {
-                    if (event.state) {
-                        if (event.state.type === 'post') {
-                            loadFile(event.state.id, false);
-                        } else if (event.state.type === 'home') {
-                            loadFile('readme', false);
-                        }
-                    }
-                });
+                // Handle hash changes for routing
+                window.addEventListener('hashchange', handleHashChange);
                 
-                // Handle initial page load with URL routing
-                handleInitialRoute();
+                // Handle initial page load with hash routing
+                handleHashChange();
             }
             
-            function handleInitialRoute() {
-                const path = window.location.pathname;
+            function handleHashChange() {
+                console.log('Hash changed to:', window.location.hash);
+                const hash = window.location.hash.substring(1); // Remove the # symbol
                 
-                // Check if it's a blog post URL: /posts/{post-id}
-                const postMatch = path.match(/^\/posts\/(.+)$/);
+                if (!hash) {
+                    // No hash means home page
+                    console.log('Loading home page');
+                    loadFile('readme', false);
+                    return;
+                }
+                
+                // Check if it's a blog post hash: posts/{post-id}
+                const postMatch = hash.match(/^posts\/(.+)$/);
                 if (postMatch) {
                     const postId = postMatch[1];
                     const postConfig = POSTS_CONFIG.find(post => post.id === postId);
+                    console.log('Loading post:', postId, postConfig);
                     
                     if (postConfig) {
-                        // Load the post without updating URL (we're already at the right URL)
+                        // Load the post without updating URL (we're already at the right hash)
                         loadFile(postId, false);
-                        return;
-                    } else {
-                        // Post not found, redirect to home
-                        window.history.replaceState({ type: 'home' }, 'kianjones.com - Infrastructure Engineer', window.location.origin);
-                        loadFile('readme', false);
                         return;
                     }
                 }
                 
-                // Default to home page
+                // Invalid hash, redirect to home
+                console.log('Invalid hash, redirecting to home');
+                window.location.hash = '';
                 loadFile('readme', false);
             }
 
             // Load file function
             async function loadFile(fileName, updateUrl = true) {
+                console.log('Loading file:', fileName, 'updateUrl:', updateUrl);
                 const editorContent = document.getElementById('editor-content');
+                
+                if (!editorContent) {
+                    console.error('Editor content element not found!');
+                    return;
+                }
                 
                 // Remove active class from all files
                 document.querySelectorAll('.file').forEach(f => f.classList.remove('active'));
@@ -342,18 +302,20 @@
                     
                     // Update URL for blog posts
                     if (updateUrl) {
-                        const newUrl = `${window.location.origin}/posts/${postConfig.id}`;
-                        window.history.pushState({ type: 'post', id: postConfig.id }, postConfig.title, newUrl);
+                        window.location.hash = `posts/${postConfig.id}`;
                         document.title = `${postConfig.title} - kianjones.com`;
                     }
                 } else {
                     // Static content - load from readme.md.html
+                    console.log('Loading static content, cached:', !!cachedStaticContent);
                     if (!cachedStaticContent) {
                         // Show loading
                         editorContent.innerHTML = '<p>Loading content...</p>';
                         
                         try {
+                            console.log('Fetching static content...');
                             cachedStaticContent = await loadStaticContent();
+                            console.log('Static content loaded successfully');
                         } catch (error) {
                             console.error('Failed to load static content:', error);
                             cachedStaticContent = '<h1>Error</h1><p>Error loading static content.</p>';
@@ -382,7 +344,7 @@
                     
                     // Update URL for home page
                     if (updateUrl && fileName === 'readme') {
-                        window.history.pushState({ type: 'home' }, 'kianjones.com - Infrastructure Engineer', window.location.origin);
+                        window.location.hash = '';
                         document.title = 'kianjones.com - Infrastructure Engineer';
                     }
                 }
@@ -398,10 +360,12 @@
                 document.querySelector('.title-bar-center').textContent = displayName;
                 
                 // Update content
+                console.log('Setting content:', content.substring(0, 100) + '...');
                 editorContent.innerHTML = content;
                 
                 // Update line numbers after content change
                 updateLineNumbers();
+                console.log('File loaded successfully:', fileName);
             }
 
             // Initialize posts sidebar
@@ -930,24 +894,35 @@
 
             // Initialize
             document.addEventListener('DOMContentLoaded', async () => {
+                console.log('DOM loaded, initializing...');
+                
                 // Initialize posts sidebar
                 initializePosts();
                 
                 // Load static content into cache
                 try {
+                    console.log('Pre-loading static content...');
                     cachedStaticContent = await loadStaticContent();
+                    console.log('Static content pre-loaded successfully');
                 } catch (error) {
                     console.error('Failed to load static content on init:', error);
+                    cachedStaticContent = '<h1>Error</h1><p>Failed to load content.</p>';
                 }
                 
                 // Initialize URL routing - this will handle loading the correct initial content
+                console.log('Initializing routing...');
                 initializeRouting();
                 
                 // Focus terminal input
-                terminalInput.focus();
+                const terminalInput = document.getElementById('terminal-input');
+                if (terminalInput) {
+                    terminalInput.focus();
+                }
                 
                 // Show help command on load
                 await executeCommand('help');
+                
+                console.log('Initialization complete');
             });
         </script>
         
