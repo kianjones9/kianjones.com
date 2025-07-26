@@ -55,7 +55,7 @@
                                 <span class="folder-name">kianjones.com</span>
                             </div>
                             <div class="folder-content">
-                                <div class="file active" onclick="loadFile('readme')">
+                                <div class="file active" onclick="document.querySelectorAll('.file').forEach(f => f.classList.remove('active')); this.classList.add('active'); loadFile('readme')">
                                     <span class="file-icon">📄</span>
                                     <span class="file-name">README.md</span>
                                 </div>
@@ -91,51 +91,6 @@
                         </div>
                         <div class="scroll-container">
                             <div class="editor-content scroll-content" id="editor-content">
-                                <h1>Kian Jones</h1>
-
-                                <p><strong>Infrastructure Engineer @ <a href="https://letta.com">Letta</a></strong><br>
-                                Building the backbone for next-generation AI agents</p>
-
-                                <h2>About</h2>
-
-                                <p>Infrastructure specialist with deep expertise in cloud architecture, networking, 
-                                and observability. Currently architecting scalable systems that enable AI agents 
-                                to operate reliably at massive scale.</p>
-
-                                <h2>Experience</h2>
-
-                                <ul>
-                                <li><strong>Letta</strong> - Infrastructure Engineer (AI Agent Platform)</li>
-                                <li><strong>Covariant</strong> - Cloud & Infrastructure</li>
-                                <li><strong>Meta</strong> - Platform Engineering</li>
-                                <li><strong>Nokia</strong> - Network Infrastructure</li>
-                                <li><strong>CENGN</strong> - Research & Development</li>
-                                <li><strong>Environment Canada</strong> - Systems Engineering</li>
-                                <li><strong>SurveyMonkey</strong> - Backend Infrastructure</li>
-                                </ul>
-
-                                <h2>Expertise</h2>
-
-                                <h3>🏗️ Cloud Architecture</h3>
-                                <p>AWS, GCP, Kubernetes, Terraform, Infrastructure as Code</p>
-
-                                <h3>📊 Observability</h3>
-                                <p>Monitoring, Logging, Distributed Tracing, Performance Metrics</p>
-
-                                <h3>🌐 Networking</h3>
-                                <p>Load Balancing, CDN, Service Mesh, Network Security</p>
-
-                                <h3>🤖 AI Infrastructure</h3>
-                                <p>GPU Clusters, Model Serving, Agent Orchestration, Auto-scaling</p>
-
-                                <h2>Current Focus</h2>
-
-                                <p>Building the infrastructure that powers thousands of concurrent AI agents at Letta.
-                                From Kubernetes orchestration to observability systems, creating the foundation
-                                for the future of AI agent interactions.</p>
-
-                                <hr>
-                                <p><em>Navigate using the file explorer → or try the terminal below ↓</em></p>
                             </div>
                             <div class="custom-scrollbar" id="editor-scrollbar">
                                 <div class="custom-scrollbar-thumb" id="editor-thumb"></div>
@@ -264,15 +219,12 @@
             let cachedStaticContent = null;
 
             // Load file function
-            async function loadFile(fileName) {
+            async function loadFile(fileName, updateUrl = true) {
                 const editorContent = document.getElementById('editor-content');
                 
-                // Remove active class from all files
-                document.querySelectorAll('.file').forEach(f => f.classList.remove('active'));
-                
-                // Add active class to clicked file
-                if (event) {
-                    event.target.closest('.file').classList.add('active');
+                // Update URL hash if requested
+                if (updateUrl) {
+                    window.location.hash = fileName;
                 }
                 
                 // Check if it's a dynamic post
@@ -286,9 +238,6 @@
                     displayName = postConfig.title;
                     icon = postConfig.icon;
                     
-                    // Show loading
-                    editorContent.innerHTML = '<p>Loading post...</p>';
-                    
                     try {
                         content = await loadPostContent(postConfig);
                     } catch (error) {
@@ -298,9 +247,6 @@
                 } else {
                     // Static content - load from readme.md.html
                     if (!cachedStaticContent) {
-                        // Show loading
-                        editorContent.innerHTML = '<p>Loading content...</p>';
-                        
                         try {
                             cachedStaticContent = await loadStaticContent();
                         } catch (error) {
@@ -366,8 +312,13 @@
                     
                     const fileDiv = document.createElement('div');
                     fileDiv.className = 'file';
-                    fileDiv.onclick = () => {
+                    fileDiv.onclick = (e) => {
                         console.log('Clicking post:', post.id);
+                        
+                        // Update active states before loading
+                        document.querySelectorAll('.file').forEach(f => f.classList.remove('active'));
+                        fileDiv.classList.add('active');
+                        
                         loadFile(post.id);
                     };
                     
@@ -426,6 +377,29 @@
                     lineDiv.textContent = i;
                     lineNumbers.appendChild(lineDiv);
                 }
+                
+                // Setup scroll synchronization
+                setupScrollSync();
+            }
+            
+            // Function to synchronize line numbers scroll with content scroll
+            function setupScrollSync() {
+                const editorContent = document.getElementById('editor-content');
+                const lineNumbers = document.querySelector('.line-numbers');
+                
+                // Remove existing scroll listener if any
+                editorContent.removeEventListener('scroll', syncLineNumbersScroll);
+                
+                // Add scroll synchronization
+                editorContent.addEventListener('scroll', syncLineNumbersScroll);
+            }
+            
+            function syncLineNumbersScroll() {
+                const editorContent = document.getElementById('editor-content');
+                const lineNumbers = document.querySelector('.line-numbers');
+                
+                // Instead of transform, sync the scroll position directly
+                lineNumbers.scrollTop = editorContent.scrollTop;
             }
 
             // Terminal functionality
@@ -871,19 +845,75 @@
                 applyTheme(parseInt(savedTheme));
             }
 
+            // Handle URL hash changes
+            function handleHashChange() {
+                const hash = window.location.hash.slice(1); // Remove the #
+                if (hash) {
+                    // Check if this is a valid post ID or static file
+                    const postConfig = POSTS_CONFIG.find(post => post.id === hash);
+                    const isValidFile = postConfig || hash === 'readme';
+                    
+                    if (isValidFile) {
+                        // Ensure posts folder is open if loading a post
+                        if (postConfig) {
+                            const postsFolders = document.querySelectorAll('.folder');
+                            postsFolders.forEach(folder => {
+                                const folderName = folder.querySelector('.folder-name');
+                                if (folderName && folderName.textContent === 'posts/') {
+                                    if (!folder.classList.contains('open')) {
+                                        const folderHeader = folder.querySelector('.folder-header');
+                                        if (folderHeader) {
+                                            toggleFolder(folderHeader);
+                                        }
+                                    }
+                                }
+                            });
+                        }
+                        
+                        // Find and activate the correct file in sidebar
+                        const fileElements = document.querySelectorAll('.file');
+                        fileElements.forEach(fileEl => {
+                            fileEl.classList.remove('active');
+                            const fileName = fileEl.querySelector('.file-name');
+                            if (fileName) {
+                                if (postConfig && fileName.textContent === postConfig.title) {
+                                    fileEl.classList.add('active');
+                                } else if (fileName.textContent === 'README.md' && hash === 'readme') {
+                                    fileEl.classList.add('active');
+                                }
+                            }
+                        });
+                        
+                        loadFile(hash, false); // Don't update URL again
+                    } else {
+                        // Invalid hash, default to readme
+                        loadFile('readme', false);
+                    }
+                } else {
+                    // No hash, default to readme
+                    loadFile('readme', false);
+                }
+            }
+            
+            // Listen for hash changes
+            window.addEventListener('hashchange', handleHashChange);
+
             // Initialize
             document.addEventListener('DOMContentLoaded', async () => {
                 // Initialize posts sidebar
                 initializePosts();
                 
-                // Load static content into cache and update the initial display
+                // Load static content into cache
                 try {
                     cachedStaticContent = await loadStaticContent();
-                    document.getElementById('editor-content').innerHTML = cachedStaticContent;
-                    updateLineNumbers();
                 } catch (error) {
                     console.error('Failed to load static content on init:', error);
                 }
+                
+                // Small delay to ensure DOM is fully ready, then handle URL hash
+                setTimeout(() => {
+                    handleHashChange();
+                }, 100);
                 
                 // Focus terminal input
                 terminalInput.focus();

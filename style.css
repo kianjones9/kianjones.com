@@ -368,13 +368,25 @@ body {
     min-width: 50px;
     border-right: 1px solid var(--accent-primary);
     user-select: none;
-    overflow: hidden;
+    overflow-y: auto;
+    overflow-x: hidden;
+    position: relative;
     height: 100%;
 }
 
 .line-number {
     height: 19px;
     line-height: 19px;
+}
+
+/* Hide scrollbar on line numbers */
+.line-numbers::-webkit-scrollbar {
+    display: none;
+}
+
+.line-numbers {
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE/Edge */
 }
 
 .editor-content {
