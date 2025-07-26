@@ -55,7 +55,7 @@
                                 <span class="folder-name">kianjones.com</span>
                             </div>
                             <div class="folder-content">
-                                <div class="file active" onclick="loadFile('readme')">
+                                <div class="file active" onclick="document.querySelectorAll('.file').forEach(f => f.classList.remove('active')); this.classList.add('active'); loadFile('readme')">
                                     <span class="file-icon">📄</span>
                                     <span class="file-name">README.md</span>
                                 </div>
@@ -91,51 +91,6 @@
                         </div>
                         <div class="scroll-container">
                             <div class="editor-content scroll-content" id="editor-content">
-                                <h1>Kian Jones</h1>
-
-                                <p><strong>Infrastructure Engineer @ <a href="https://letta.com">Letta</a></strong><br>
-                                Building the backbone for next-generation AI agents</p>
-
-                                <h2>About</h2>
-
-                                <p>Infrastructure specialist with deep expertise in cloud architecture, networking, 
-                                and observability. Currently architecting scalable systems that enable AI agents 
-                                to operate reliably at massive scale.</p>
-
-                                <h2>Experience</h2>
-
-                                <ul>
-                                <li><strong>Letta</strong> - Infrastructure Engineer (AI Agent Platform)</li>
-                                <li><strong>Covariant</strong> - Cloud & Infrastructure</li>
-                                <li><strong>Meta</strong> - Platform Engineering</li>
-                                <li><strong>Nokia</strong> - Network Infrastructure</li>
-                                <li><strong>CENGN</strong> - Research & Development</li>
-                                <li><strong>Environment Canada</strong> - Systems Engineering</li>
-                                <li><strong>SurveyMonkey</strong> - Backend Infrastructure</li>
-                                </ul>
-
-                                <h2>Expertise</h2>
-
-                                <h3>🏗️ Cloud Architecture</h3>
-                                <p>AWS, GCP, Kubernetes, Terraform, Infrastructure as Code</p>
-
-                                <h3>📊 Observability</h3>
-                                <p>Monitoring, Logging, Distributed Tracing, Performance Metrics</p>
-
-                                <h3>🌐 Networking</h3>
-                                <p>Load Balancing, CDN, Service Mesh, Network Security</p>
-
-                                <h3>🤖 AI Infrastructure</h3>
-                                <p>GPU Clusters, Model Serving, Agent Orchestration, Auto-scaling</p>
-
-                                <h2>Current Focus</h2>
-
-                                <p>Building the infrastructure that powers thousands of concurrent AI agents at Letta.
-                                From Kubernetes orchestration to observability systems, creating the foundation
-                                for the future of AI agent interactions.</p>
-
-                                <hr>
-                                <p><em>Navigate using the file explorer → or try the terminal below ↓</em></p>
                             </div>
                             <div class="custom-scrollbar" id="editor-scrollbar">
                                 <div class="custom-scrollbar-thumb" id="editor-thumb"></div>
@@ -267,14 +222,6 @@
             async function loadFile(fileName, updateUrl = true) {
                 const editorContent = document.getElementById('editor-content');
                 
-                // Remove active class from all files
-                document.querySelectorAll('.file').forEach(f => f.classList.remove('active'));
-                
-                // Add active class to clicked file
-                if (event) {
-                    event.target.closest('.file').classList.add('active');
-                }
-                
                 // Update URL hash if requested
                 if (updateUrl) {
                     window.location.hash = fileName;
@@ -291,9 +238,6 @@
                     displayName = postConfig.title;
                     icon = postConfig.icon;
                     
-                    // Show loading
-                    editorContent.innerHTML = '<p>Loading post...</p>';
-                    
                     try {
                         content = await loadPostContent(postConfig);
                     } catch (error) {
@@ -303,9 +247,6 @@
                 } else {
                     // Static content - load from readme.md.html
                     if (!cachedStaticContent) {
-                        // Show loading
-                        editorContent.innerHTML = '<p>Loading content...</p>';
-                        
                         try {
                             cachedStaticContent = await loadStaticContent();
                         } catch (error) {
@@ -371,8 +312,13 @@
                     
                     const fileDiv = document.createElement('div');
                     fileDiv.className = 'file';
-                    fileDiv.onclick = () => {
+                    fileDiv.onclick = (e) => {
                         console.log('Clicking post:', post.id);
+                        
+                        // Update active states before loading
+                        document.querySelectorAll('.file').forEach(f => f.classList.remove('active'));
+                        fileDiv.classList.add('active');
+                        
                         loadFile(post.id);
                     };
                     
