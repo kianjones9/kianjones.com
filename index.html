@@ -264,7 +264,7 @@
             let cachedStaticContent = null;
 
             // Load file function
-            async function loadFile(fileName) {
+            async function loadFile(fileName, updateUrl = true) {
                 const editorContent = document.getElementById('editor-content');
                 
                 // Remove active class from all files
@@ -273,6 +273,11 @@
                 // Add active class to clicked file
                 if (event) {
                     event.target.closest('.file').classList.add('active');
+                }
+                
+                // Update URL hash if requested
+                if (updateUrl) {
+                    window.location.hash = fileName;
                 }
                 
                 // Check if it's a dynamic post
@@ -871,19 +876,75 @@
                 applyTheme(parseInt(savedTheme));
             }
 
+            // Handle URL hash changes
+            function handleHashChange() {
+                const hash = window.location.hash.slice(1); // Remove the #
+                if (hash) {
+                    // Check if this is a valid post ID or static file
+                    const postConfig = POSTS_CONFIG.find(post => post.id === hash);
+                    const isValidFile = postConfig || hash === 'readme';
+                    
+                    if (isValidFile) {
+                        // Ensure posts folder is open if loading a post
+                        if (postConfig) {
+                            const postsFolders = document.querySelectorAll('.folder');
+                            postsFolders.forEach(folder => {
+                                const folderName = folder.querySelector('.folder-name');
+                                if (folderName && folderName.textContent === 'posts/') {
+                                    if (!folder.classList.contains('open')) {
+                                        const folderHeader = folder.querySelector('.folder-header');
+                                        if (folderHeader) {
+                                            toggleFolder(folderHeader);
+                                        }
+                                    }
+                                }
+                            });
+                        }
+                        
+                        // Find and activate the correct file in sidebar
+                        const fileElements = document.querySelectorAll('.file');
+                        fileElements.forEach(fileEl => {
+                            fileEl.classList.remove('active');
+                            const fileName = fileEl.querySelector('.file-name');
+                            if (fileName) {
+                                if (postConfig && fileName.textContent === postConfig.title) {
+                                    fileEl.classList.add('active');
+                                } else if (fileName.textContent === 'README.md' && hash === 'readme') {
+                                    fileEl.classList.add('active');
+                                }
+                            }
+                        });
+                        
+                        loadFile(hash, false); // Don't update URL again
+                    } else {
+                        // Invalid hash, default to readme
+                        loadFile('readme', false);
+                    }
+                } else {
+                    // No hash, default to readme
+                    loadFile('readme', false);
+                }
+            }
+            
+            // Listen for hash changes
+            window.addEventListener('hashchange', handleHashChange);
+
             // Initialize
             document.addEventListener('DOMContentLoaded', async () => {
                 // Initialize posts sidebar
                 initializePosts();
                 
-                // Load static content into cache and update the initial display
+                // Load static content into cache
                 try {
                     cachedStaticContent = await loadStaticContent();
-                    document.getElementById('editor-content').innerHTML = cachedStaticContent;
-                    updateLineNumbers();
                 } catch (error) {
                     console.error('Failed to load static content on init:', error);
                 }
+                
+                // Small delay to ensure DOM is fully ready, then handle URL hash
+                setTimeout(() => {
+                    handleHashChange();
+                }, 100);
                 
                 // Focus terminal input
                 terminalInput.focus();
