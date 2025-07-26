@@ -459,7 +459,6 @@
                    -a  show all files (including . and ..)
                    -l  long format with details
   cat <file>     - show file content  
-  clear          - clear terminal
   whoami         - show user info
   pwd            - current directory
   cd <dir>       - change directory`,
@@ -525,10 +524,6 @@
                 
                 whoami: () => `kian - Infrastructure Engineer @ Letta`,
                 
-                clear: () => {
-                    terminalOutput.innerHTML = '';
-                    return '';
-                },
                 
                 cat: async (file) => {
                     if (!file) {
@@ -705,9 +700,14 @@
 
                 // Scroll to bottom and maintain input focus
                 setTimeout(() => {
-                    terminalOutput.scrollTop = terminalOutput.scrollHeight;
+                    const scrollContainer = terminalOutput.closest('.scroll-container');
+                    if (scrollContainer) {
+                        scrollContainer.scrollTop = scrollContainer.scrollHeight;
+                    } else {
+                        terminalOutput.scrollTop = terminalOutput.scrollHeight;
+                    }
                     terminalInput.focus();
-                }, 0);
+                }, 10);
             }
 
             function updatePrompt() {
@@ -730,6 +730,32 @@
                     setTimeout(() => {
                         terminalInput.focus();
                     }, 0);
+                } else if (e.key === 'c' && e.ctrlKey) {
+                    e.preventDefault();
+                    // Clear current input and show ^C
+                    const cmdDiv = document.createElement('div');
+                    cmdDiv.className = 'terminal-line';
+                    const currentDir = currentPath === '/' ? '' : currentPath;
+                    cmdDiv.innerHTML = `<span class="prompt">kian@letta:~/kianjones.com${currentDir}$</span> ${terminalInput.value}^C`;
+                    
+                    // Insert before the input line
+                    const inputLine = document.querySelector('.terminal-input-line');
+                    terminalOutput.insertBefore(cmdDiv, inputLine);
+                    
+                    // Clear input and reset history index
+                    terminalInput.value = '';
+                    historyIndex = commandHistory.length;
+                    
+                    // Scroll to bottom and focus
+                    setTimeout(() => {
+                        const scrollContainer = terminalOutput.closest('.scroll-container');
+                        if (scrollContainer) {
+                            scrollContainer.scrollTop = scrollContainer.scrollHeight;
+                        } else {
+                            terminalOutput.scrollTop = terminalOutput.scrollHeight;
+                        }
+                        terminalInput.focus();
+                    }, 10);
                 } else if (e.key === 'ArrowUp') {
                     e.preventDefault();
                     if (historyIndex > 0) {
