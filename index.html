@@ -433,7 +433,6 @@
                    -a  show all files (including . and ..)
                    -l  long format with details
   cat <file>     - show file content  
-  clear          - clear terminal
   whoami         - show user info
   pwd            - current directory
   cd <dir>       - change directory`,
@@ -497,12 +496,7 @@
                 
                 pwd: () => `/home/kian/kianjones.com${currentPath === '/' ? '' : currentPath}`,
                 
-                whoami: () => `kian - Infrastructure Engineer @ Letta`,
-                
-                clear: () => {
-                    terminalOutput.innerHTML = '';
-                    return '';
-                },
+                whoami: () => `Hi! 👋 My name is Kian! Welcome to my site.\nAt time of writing this is (yet another 🙄) sparsely populated tech blog.\nCurrently I'm building the future of AI agents @ Letta`,
                 
                 cat: async (file) => {
                     if (!file) {
@@ -641,6 +635,7 @@
                 // Insert before the input line
                 const inputLine = document.querySelector('.terminal-input-line');
                 terminalOutput.insertBefore(cmdDiv, inputLine);
+                scrollToBottom();
                 
                 // If showOnly is true (for tab completion), don't execute
                 if (showOnly) return;
@@ -670,6 +665,7 @@
                     // Insert before the input line
                     const inputLine = document.querySelector('.terminal-input-line');
                     terminalOutput.insertBefore(resultDiv, inputLine);
+                    scrollToBottom();
                 }
 
                 // Update the input prompt only if directory changed
@@ -678,16 +674,27 @@
                 }
 
                 // Scroll to bottom and maintain input focus
+                scrollToBottom();
                 setTimeout(() => {
-                    terminalOutput.scrollTop = terminalOutput.scrollHeight;
                     terminalInput.focus();
                 }, 0);
+            }
+
+            function scrollToBottom() {
+                // Use requestAnimationFrame to ensure DOM has updated
+                requestAnimationFrame(() => {
+                    const terminalOutput = document.getElementById('terminal-output');
+                    if (terminalOutput) {
+                        terminalOutput.scrollTop = terminalOutput.scrollHeight;
+                    }
+                });
             }
 
             function updatePrompt() {
                 const promptElement = document.querySelector('.terminal-input-line .prompt');
                 const currentDir = currentPath === '/' ? '' : currentPath;
                 promptElement.textContent = `kian@letta:~/kianjones.com${currentDir}$`;
+                scrollToBottom();
             }
 
             terminalInput.addEventListener('keydown', async (e) => {
@@ -701,6 +708,28 @@
                     historyIndex = commandHistory.length;
                     terminalInput.value = '';
                     // Ensure cursor stays at the beginning
+                    setTimeout(() => {
+                        terminalInput.focus();
+                    }, 0);
+                } else if (e.key === 'c' && e.ctrlKey) {
+                    e.preventDefault();
+                    // Clear current input and show ^C
+                    const cmdDiv = document.createElement('div');
+                    cmdDiv.className = 'terminal-line';
+                    const currentDir = currentPath === '/' ? '' : currentPath;
+                    cmdDiv.innerHTML = `<span class="prompt">kian@letta:~/kianjones.com${currentDir}$</span> ${terminalInput.value}^C`;
+                    
+                    // Insert before the input line
+                    const inputLine = document.querySelector('.terminal-input-line');
+                    terminalOutput.insertBefore(cmdDiv, inputLine);
+                    scrollToBottom();
+                    
+                    // Clear input and reset history index
+                    terminalInput.value = '';
+                    historyIndex = commandHistory.length;
+                    
+                    // Scroll to bottom and focus
+                    scrollToBottom();
                     setTimeout(() => {
                         terminalInput.focus();
                     }, 0);
