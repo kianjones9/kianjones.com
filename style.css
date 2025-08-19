@@ -872,3 +872,80 @@ body {
     max-height: 500px;
     object-fit: contain;
 }
+
+/* Code Block Styling */
+.editor-content pre {
+    background-color: #0d1117;
+    border: 1px solid #30363d;
+    border-radius: 6px;
+    padding: 16px;
+    margin: 16px 0;
+    overflow-x: auto;
+    font-family: 'Cascadia Code', 'Monaco', 'Consolas', monospace;
+    font-size: 13px;
+    line-height: 1.45;
+    position: relative;
+}
+
+.editor-content pre::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
+    border-radius: 6px 6px 0 0;
+}
+
+.editor-content pre code {
+    background: none;
+    padding: 0;
+    border: none;
+    color: #e6edf3;
+    font-family: inherit;
+    font-size: inherit;
+    white-space: pre;
+    word-wrap: normal;
+}
+
+/* Inline Code Styling */
+.editor-content code {
+    background-color: #161b22;
+    color: var(--accent-secondary);
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-family: 'Cascadia Code', 'Monaco', 'Consolas', monospace;
+    font-size: 13px;
+    border: 1px solid #30363d;
+}
+
+/* Override inline code styling when inside pre blocks */
+.editor-content pre code {
+    background: none;
+    padding: 0;
+    border: none;
+    color: #e6edf3;
+}
+
+/* Syntax highlighting for common elements in code blocks */
+.editor-content pre .comment {
+    color: #7d8590;
+    font-style: italic;
+}
+
+.editor-content pre .string {
+    color: #a5d6ff;
+}
+
+.editor-content pre .keyword {
+    color: #ff7b72;
+}
+
+.editor-content pre .function {
+    color: #d2a8ff;
+}
+
+.editor-content pre .variable {
+    color: #ffa657;
+}
