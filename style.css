@@ -474,6 +474,11 @@ body {
     text-decoration: underline;
 }
 
+.editor-content p {
+    margin: 16px 0;
+    line-height: 1.6;
+}
+
 /* Terminal Panel */
 .terminal-panel {
     height: 250px;
@@ -887,20 +892,37 @@ body {
 }
 
 /* Image styling for post content */
-.editor-content img {
-    max-width: 100%;
-    height: auto;
-    margin: 16px 0;
+.editor-content img,
+#editor-content img,
+img {
+    max-width: 70% !important;
+    max-height: 400px !important;
+    width: auto !important;
+    height: auto !important;
+    margin: 16px auto !important;
+    display: block !important;
     border-radius: 4px;
     border: 1px solid #333333;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    object-fit: contain;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.editor-content img:hover,
+#editor-content img:hover,
+img:hover {
+    transform: scale(1.02);
 }
 
 .editor-content img[src*="screenshot"],
-.editor-content img[src*="image"] {
-    max-width: 80%;
-    max-height: 500px;
-    object-fit: contain;
+.editor-content img[src*="image"],
+#editor-content img[src*="screenshot"],
+#editor-content img[src*="image"],
+img[src*="screenshot"],
+img[src*="image"] {
+    max-width: 65% !important;
+    max-height: 350px !important;
 }
 
 /* Code Block Styling */

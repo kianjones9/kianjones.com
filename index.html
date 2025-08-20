@@ -186,6 +186,13 @@
                         // Fix image paths
                         const postDir = `posts/${encodeURIComponent(postConfig.folder)}/`;
                         content = content.replace(/src="(?!http|\/)/g, `src="${postDir}`);
+                        
+                        // Add inline styles to constrain images
+                        content = content.replace(/<img([^>]*)>/g, '<img$1 style="max-width: 45% !important; max-height: 300px !important; width: auto !important; height: auto !important; margin: 16px auto !important; display: block !important; border-radius: 4px; border: 1px solid #333333; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3); object-fit: contain; cursor: pointer;">');
+                        
+                        // Add inline styles for paragraph spacing
+                        content = content.replace(/<p([^>]*)>/g, '<p$1 style="margin: 16px 0 !important; line-height: 1.6 !important;">');
+                        
                         return content;
                     }
                     
