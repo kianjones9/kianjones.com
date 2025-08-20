@@ -126,7 +126,7 @@ body {
     display: inline-block;
 }
 
-.theme-button {
+.theme-button, .reader-mode-button {
     background: none;
     border: 1px solid #333333;
     color: #ffffff;
@@ -135,11 +135,22 @@ body {
     cursor: pointer;
     font-size: 14px;
     transition: all 0.2s ease;
+    margin-right: 8px;
 }
 
-.theme-button:hover {
+.reader-mode-button:last-child {
+    margin-right: 0;
+}
+
+.theme-button:hover,
+.reader-mode-button:hover {
     background-color: #222222;
     border-color: #666666;
+}
+
+.reader-mode-button.active {
+    background-color: var(--accent-primary);
+    border-color: var(--accent-primary);
 }
 
 .theme-dropdown {
@@ -201,6 +212,13 @@ body {
     position: relative;
     min-width: 200px;
     max-width: 500px;
+    transition: width 0.3s ease, min-width 0.3s ease;
+}
+
+.sidebar.collapsed {
+    width: 0;
+    min-width: 0;
+    overflow: hidden;
 }
 
 .sidebar-header {
@@ -210,6 +228,12 @@ body {
     align-items: center;
     padding: 0 12px;
     border-bottom: 1px solid #333333;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.sidebar-header:hover {
+    background-color: #1a1a1a;
 }
 
 .sidebar-title {
@@ -450,6 +474,11 @@ body {
     text-decoration: underline;
 }
 
+.editor-content p {
+    margin: 16px 0;
+    line-height: 1.6;
+}
+
 /* Terminal Panel */
 .terminal-panel {
     height: 250px;
@@ -461,6 +490,12 @@ body {
     max-height: 400px;
     position: relative;
     overflow: hidden;
+    transition: height 0.3s ease, min-height 0.3s ease;
+}
+
+.terminal-panel.collapsed {
+    height: 35px;
+    min-height: 35px;
 }
 
 .terminal-header {
@@ -857,18 +892,112 @@ body {
 }
 
 /* Image styling for post content */
-.editor-content img {
-    max-width: 100%;
-    height: auto;
-    margin: 16px 0;
+.editor-content img,
+#editor-content img,
+img {
+    max-width: 70% !important;
+    max-height: 400px !important;
+    width: auto !important;
+    height: auto !important;
+    margin: 16px auto !important;
+    display: block !important;
     border-radius: 4px;
     border: 1px solid #333333;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    object-fit: contain;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.editor-content img:hover,
+#editor-content img:hover,
+img:hover {
+    transform: scale(1.02);
 }
 
 .editor-content img[src*="screenshot"],
-.editor-content img[src*="image"] {
-    max-width: 80%;
-    max-height: 500px;
-    object-fit: contain;
+.editor-content img[src*="image"],
+#editor-content img[src*="screenshot"],
+#editor-content img[src*="image"],
+img[src*="screenshot"],
+img[src*="image"] {
+    max-width: 65% !important;
+    max-height: 350px !important;
+}
+
+/* Code Block Styling */
+.editor-content pre {
+    background-color: #0d1117;
+    border: 1px solid #30363d;
+    border-radius: 6px;
+    padding: 16px;
+    margin: 16px 0;
+    overflow-x: auto;
+    font-family: 'Cascadia Code', 'Monaco', 'Consolas', monospace;
+    font-size: 13px;
+    line-height: 1.45;
+    position: relative;
+}
+
+.editor-content pre::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
+    border-radius: 6px 6px 0 0;
+}
+
+.editor-content pre code {
+    background: none;
+    padding: 0;
+    border: none;
+    color: #e6edf3;
+    font-family: inherit;
+    font-size: inherit;
+    white-space: pre;
+    word-wrap: normal;
+}
+
+/* Inline Code Styling */
+.editor-content code {
+    background-color: #161b22;
+    color: var(--accent-secondary);
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-family: 'Cascadia Code', 'Monaco', 'Consolas', monospace;
+    font-size: 13px;
+    border: 1px solid #30363d;
+}
+
+/* Override inline code styling when inside pre blocks */
+.editor-content pre code {
+    background: none;
+    padding: 0;
+    border: none;
+    color: #e6edf3;
+}
+
+/* Syntax highlighting for common elements in code blocks */
+.editor-content pre .comment {
+    color: #7d8590;
+    font-style: italic;
+}
+
+.editor-content pre .string {
+    color: #a5d6ff;
+}
+
+.editor-content pre .keyword {
+    color: #ff7b72;
+}
+
+.editor-content pre .function {
+    color: #d2a8ff;
+}
+
+.editor-content pre .variable {
+    color: #ffa657;
 }
