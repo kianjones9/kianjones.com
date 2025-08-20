@@ -126,7 +126,7 @@ body {
     display: inline-block;
 }
 
-.theme-button {
+.theme-button, .reader-mode-button {
     background: none;
     border: 1px solid #333333;
     color: #ffffff;
@@ -135,11 +135,22 @@ body {
     cursor: pointer;
     font-size: 14px;
     transition: all 0.2s ease;
+    margin-right: 8px;
 }
 
-.theme-button:hover {
+.reader-mode-button:last-child {
+    margin-right: 0;
+}
+
+.theme-button:hover,
+.reader-mode-button:hover {
     background-color: #222222;
     border-color: #666666;
+}
+
+.reader-mode-button.active {
+    background-color: var(--accent-primary);
+    border-color: var(--accent-primary);
 }
 
 .theme-dropdown {
@@ -201,6 +212,13 @@ body {
     position: relative;
     min-width: 200px;
     max-width: 500px;
+    transition: width 0.3s ease, min-width 0.3s ease;
+}
+
+.sidebar.collapsed {
+    width: 0;
+    min-width: 0;
+    overflow: hidden;
 }
 
 .sidebar-header {
@@ -210,6 +228,12 @@ body {
     align-items: center;
     padding: 0 12px;
     border-bottom: 1px solid #333333;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.sidebar-header:hover {
+    background-color: #1a1a1a;
 }
 
 .sidebar-title {
@@ -461,6 +485,12 @@ body {
     max-height: 400px;
     position: relative;
     overflow: hidden;
+    transition: height 0.3s ease, min-height 0.3s ease;
+}
+
+.terminal-panel.collapsed {
+    height: 35px;
+    min-height: 35px;
 }
 
 .terminal-header {

@@ -27,18 +27,21 @@
                 </div>
                 <div class="title-bar-center">README.md</div>
                 <div class="title-bar-right">
-                    <div class="theme-switcher-container">
-                        <button id="theme-switcher" class="theme-button">🎨</button>
-                        <div id="theme-dropdown" class="theme-dropdown">
-                            <div class="theme-option" data-theme="0">🟣 Purple</div>
-                            <div class="theme-option" data-theme="1">🟠 Orange</div>
-                            <div class="theme-option" data-theme="2">🟢 Green</div>
-                            <div class="theme-option" data-theme="3">🔴 Red</div>
-                            <div class="theme-option" data-theme="4">🔵 Cyan</div>
-                            <div class="theme-option" data-theme="5">🟡 Yellow</div>
-                        </div>
+                <button class="reader-mode-button" title="Toggle Reader Mode">
+                    📖 Reader
+                </button>
+                <div class="theme-switcher-container">
+                    <button class="theme-button" id="theme-switcher">🎨 Theme</button>
+                    <div class="theme-dropdown" id="theme-dropdown">
+                        <div class="theme-option" data-theme="0">🟣 Purple</div>
+                        <div class="theme-option" data-theme="1">🟠 Orange</div>
+                        <div class="theme-option" data-theme="2">🟢 Green</div>
+                        <div class="theme-option" data-theme="3">🔴 Red</div>
+                        <div class="theme-option" data-theme="4">🔵 Cyan</div>
+                        <div class="theme-option" data-theme="5">🟡 Yellow</div>
                     </div>
                 </div>
+            </div>
             </div>
 
             <!-- Main IDE Layout -->
@@ -226,8 +229,93 @@
             // Cache for loaded static content
             let cachedStaticContent = null;
 
+            // Reader mode functionality - Global scope
+            let isReaderMode = false;
+            let sidebarCollapsed = false;
+            let terminalCollapsed = false;
+
+            function toggleReaderMode() {
+                isReaderMode = !isReaderMode;
+                const readerButton = document.querySelector('.reader-mode-button');
+                const sidebar = document.querySelector('.sidebar');
+                const terminal = document.querySelector('.terminal-panel');
+                
+                if (isReaderMode) {
+                    // Store current states before entering reader mode
+                    sidebarCollapsed = sidebar.classList.contains('collapsed');
+                    terminalCollapsed = terminal.classList.contains('collapsed');
+                    
+                    // Collapse both panels - use inline styles to override any existing inline styles
+                    sidebar.classList.add('collapsed');
+                    sidebar.style.width = '0px';
+                    sidebar.style.minWidth = '0px';
+                    
+                    terminal.classList.add('collapsed');
+                    terminal.style.height = '35px';
+                    terminal.style.minHeight = '35px';
+                    
+                    readerButton.classList.add('active');
+                    readerButton.textContent = '📖 Exit Reader';
+                } else {
+                    // Restore previous states
+                    if (!sidebarCollapsed) {
+                        sidebar.classList.remove('collapsed');
+                        sidebar.style.width = '';
+                        sidebar.style.minWidth = '';
+                    }
+                    if (!terminalCollapsed) {
+                        terminal.classList.remove('collapsed');
+                        terminal.style.height = '';
+                        terminal.style.minHeight = '';
+                    }
+                    readerButton.classList.remove('active');
+                    readerButton.textContent = '📖 Reader';
+                }
+            }
+
+            function toggleSidebar() {
+                const sidebar = document.querySelector('.sidebar');
+                const wasCollapsed = sidebar.classList.contains('collapsed');
+                
+                if (wasCollapsed) {
+                    sidebar.classList.remove('collapsed');
+                    // Clear any inline width that might override CSS
+                    sidebar.style.width = '';
+                    sidebarCollapsed = false;
+                } else {
+                    sidebar.classList.add('collapsed');
+                    sidebarCollapsed = true;
+                }
+                
+                // Update reader mode state if active
+                if (isReaderMode && !wasCollapsed) {
+                    sidebarCollapsed = false;
+                }
+            }
+
+            function toggleTerminal() {
+                const terminal = document.querySelector('.terminal-panel');
+                const wasCollapsed = terminal.classList.contains('collapsed');
+                
+                if (wasCollapsed) {
+                    terminal.classList.remove('collapsed');
+                    // Clear any inline height that might override CSS
+                    terminal.style.height = '';
+                    terminalCollapsed = false;
+                } else {
+                    terminal.classList.add('collapsed');
+                    terminalCollapsed = true;
+                }
+                
+                // Update reader mode state if active
+                if (isReaderMode && !wasCollapsed) {
+                    terminalCollapsed = false;
+                }
+            }
+
             // Load file function
             async function loadFile(fileName, updateUrl = true) {
+                console.log('Loading file:', fileName);
                 const editorContent = document.getElementById('editor-content');
                 
                 // Update URL hash if requested
@@ -237,6 +325,7 @@
                 
                 // Check if it's a dynamic post
                 const postConfig = POSTS_CONFIG.find(post => post.id === fileName);
+                console.log('Post config found:', postConfig);
                 let content = '';
                 let displayName = fileName;
                 let icon = '📄';
@@ -951,6 +1040,24 @@
                 setTimeout(() => {
                     handleHashChange();
                 }, 100);
+                
+                // Add click handlers for individual panel toggling
+                document.querySelector('.sidebar-header').addEventListener('click', function(e) {
+                    // Only toggle if clicking directly on the header text, not folder elements
+                    if (e.target.classList.contains('sidebar-header') || 
+                        (e.target.textContent && e.target.textContent.trim() === 'EXPLORER')) {
+                        toggleSidebar();
+                    }
+                });
+
+                document.querySelector('.terminal-header').addEventListener('click', function() {
+                    toggleTerminal();
+                });
+
+                // Add reader mode button click handler
+                document.querySelector('.reader-mode-button').addEventListener('click', function() {
+                    toggleReaderMode();
+                });
                 
                 // Focus terminal input
                 terminalInput.focus();
