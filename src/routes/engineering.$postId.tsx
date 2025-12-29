@@ -1,6 +1,7 @@
 import { useParams, Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 
 const postFiles = import.meta.glob('../posts/engineering/*/index.md', { 
   query: '?raw',
@@ -50,12 +51,15 @@ export default function EngineeringPost() {
       <Link to="/engineering">← Back to Engineering</Link>
       <div className="post-content">
         <ReactMarkdown
+          remarkPlugins={[remarkGfm]}
           components={{
             img: ({node, ...props}) => {
               // Transform relative image paths to imported assets
               let src = props.src;
               if (src?.startsWith('./')) {
-                const imagePath = `../posts/engineering/${postId}/${src.slice(2)}`;
+                // Decode URL-encoded characters like %20
+                const decodedSrc = decodeURIComponent(src.slice(2));
+                const imagePath = `../posts/engineering/${postId}/${decodedSrc}`;
                 src = imageFiles[imagePath] as string || props.src;
               }
               return <img {...props} src={src} alt={props.alt || ''} />;

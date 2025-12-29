@@ -1,6 +1,7 @@
 :root {
   --bg-color: #101010;
   --text-color: #A9B7C6;
+  --text-alt-color: #808080;
   --accent-color: #ff79c6;
 }
 
@@ -10,11 +11,22 @@
   box-sizing: border-box;
 }
 
+html, body {
+  height: 100%;
+}
+
 body {
   background-color: var(--bg-color);
   color: var(--text-color);
   font-family: monospace;
+  font-size: 18px;
   line-height: 1.6;
+}
+
+#root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
   padding: 2rem;
   max-width: 800px;
   margin: 0 auto;
@@ -33,6 +45,10 @@ a:hover {
   color: var(--bg-color);
 }
 
+h1 a, h2 a, h3 a, h4 a, h5 a, h6 a {
+  padding-left: 0;
+}
+
 .navbar {
   list-style: none;
   display: flex;
@@ -42,19 +58,138 @@ a:hover {
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-h1, h2, h3 {
+h1 {
   color: var(--text-color);
+  font-size: 2.5rem;
   margin: 2rem 0 1rem 0;
 }
 
-ul {
+h2 {
+  color: var(--text-color);
+  font-size: 2rem;
+  margin: 2rem 0 1rem 0;
+}
+
+h3 {
+  color: var(--text-color);
+  font-size: 1.5rem;
+  margin: 2rem 0 1rem 0;
+}
+
+nav ul {
   list-style: none;
 }
 
-ul li {
+nav ul li {
   margin: 1rem 0;
+}
+
+.post-content ul,
+.post-content ol {
+  margin: 1.5rem 0;
+  padding-left: 2rem;
+}
+
+.post-content li {
+  margin: 0.75rem 0;
+}
+
+.post-content ol {
+  list-style: decimal;
+}
+
+.post-content ul {
+  list-style: disc;
+}
+
+.post-content pre {
+  margin: 1.5rem 0;
+  padding: 1rem;
+  background-color: #1a1a1a;
+  border-radius: 4px;
+  overflow-x: auto;
+}
+
+.post-content code {
+  font-family: monospace;
+}
+
+.post-content p {
+  margin: 1rem 0;
+}
+
+.post-content table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 2rem 0;
+}
+
+.post-content th,
+.post-content td {
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 0.75rem;
+  text-align: left;
+}
+
+.post-content th {
+  background-color: rgba(255, 255, 255, 0.05);
+  font-weight: bold;
+}
+
+.post-content tr:hover {
+  background-color: rgba(255, 255, 255, 0.02);
+}
+
+main {
+  flex: 1;
+}
+
+footer {
+  margin-top: auto;
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  text-align: center;
+  color: var(--text-color);
 }
 
 article {
   margin-top: 2rem;
+}
+
+.post-list {
+  margin-top: 2rem;
+}
+
+.post-item {
+  margin: 1.5rem 0;
+}
+
+.post-item a {
+  padding-left: 0;
+}
+
+.post-meta {
+  font-size: 0.9rem;
+  color: var(--text-alt-color);
+  margin-top: 0.25rem;
+}
+
+.post-date {
+  color: var(--text-alt-color);
+}
+
+.post-description {
+  color: var(--text-color);
+  opacity: 0.7;
+}
+
+.post-content {
+  margin-top: 3rem;
+}
+
+article img {
+  max-width: 100%;
+  height: auto;
+  margin: 2rem 0;
 }

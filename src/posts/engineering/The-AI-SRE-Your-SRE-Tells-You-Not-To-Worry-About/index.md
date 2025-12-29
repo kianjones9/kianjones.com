@@ -3,8 +3,12 @@ Despite what the title may have believe, I would think of myself as an SRE, or a
 I'd like to introduce my new coworker: Tracey!
 
 Tracey is an SRE agent I built to help me in my day to day management and triage of production issues. Powered by Letta™️, she is a Letta agent, tasked as the PoC for incoming production related events. At time of writing, there are two relevant kick-off events. 
+
+
+
 1. New events in our bug tracking software (currently Datadog)
 2. New on-call alerts
+
 
 Recently we released [Letta code](https://www.letta.com/blog/letta-code), our take on the cli coding agent, with all the classic Letta-powered twists: long-term memory, hosted server-side, model agnostic, etc. With it comes the [letta-code-action](https://github.com/letta-ai/letta-code-action), a first-party Letta code Github action, for running your Letta platform backed coding agents in your Github workflows. I think we can do something here...
 
@@ -12,6 +16,8 @@ So let's automate ourselves out of a job here!
 
 ## Lights, Camera,  Action 🎬
 To add the letta-code action, just simply add an action like this to your `.github/workflows` directory: 
+
+
 ```yaml
 name: Letta Code
 on:
@@ -39,6 +45,8 @@ jobs:
           letta_api_key: ${{ secrets.LETTA_API_KEY }}
           github_token: ${{ secrets.GITHUB_TOKEN }}
 ```
+
+
 Make sure you set your keys in the Github secrets console! (`secrets.GITHUB_TOKEN` is automatically created on each Github Actions workflow run, but it may not have the permissions configured as you'd like/want)
 ## New Bug Notification 🐞
 For this, we'll use the Datadog error tracking feature. We'll configure a monitor which triggers on new issues (typically a thrown exception or error code) and then forward the event details to Tracey by way of a "Datadog workflow" which opens a Github issue in our monorepo and tags `@letta-code`. 
@@ -54,7 +62,7 @@ Then we add a small workflow in the datadog drag+drop workflow builder:
 And then we can start seeing our issues being created in our github repo!
 
 Now a little prompt engineering later (and a lot of stumbling through DD's ridiculous template variable interface) and voila:
-![[Pasted image 20251223015502.png]]
+![message coming into github](./Pastedimage20251223015502.png)
 A nice-ish formatted message (nice enough for Tracey at least, she's like a robot!)
 
 Not seeing a response from Letta code though. Looking at the failed action logs we need to add some permissions so that our datadog bot account opening these issues is allowed to tag `@letta-code`.
