@@ -1,0 +1,13 @@
+{
+  "title": "Guide to Operating Self-Hosted LLM Providers in CI Pipelines",
+  "date": "2025-10-20",
+  "description": "Running Ollama, LMStudio, and vLLM in CI",
+  "tags": [
+    "DevOps",
+    "CI",
+    "LLMs",
+    "Ollama",
+    "vLLM",
+    "LMStudio"
+  ]
+}

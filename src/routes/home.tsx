@@ -1,12 +1,15 @@
 export default function Home() {
   return (
-    <div style={{ textAlign: 'center', padding: '4rem 2rem' }}>
-      <h1 style={{ fontSize: '3rem', marginBottom: '1rem' }}>
-        Welcome 👋
-      </h1>
-      <p style={{ fontSize: '1.25rem', maxWidth: '600px', margin: '0 auto', lineHeight: '1.8' }}>
-        This is my personal site where I share thoughts on engineering, language learning, and life.
-      </p>
+    <div>
+      <h1>Welcome!</h1>
+      <p>Thank you for visiting my corner of the internet!</p>
+
+      <h3><a href="/engineering" >Engineering</a></h3>
+      <p>covers some of the projects I've worked on, and technical write ups.</p>
+      
+      <h3><a href="/personal" >Personal</a></h3>
+      <p> includes blog posts about my personal life and after-hours pursuits like language learning, sewing, etc.</p>
+
     </div>
   );
 }

@@ -1,6 +1,7 @@
 import { useParams, Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 
 const postFiles = import.meta.glob('../posts/personal/*/index.md', { 
   query: '?raw',
@@ -50,13 +51,21 @@ export default function PersonalPost() {
       <Link to="/personal">← Back to Personal</Link>
       <div className="post-content">
         <ReactMarkdown
+          remarkPlugins={[remarkGfm]}
           components={{
             img: ({node, ...props}) => {
               // Transform relative image paths to imported assets
               let src = props.src;
               if (src?.startsWith('./')) {
-                const imagePath = `../posts/personal/${postId}/${src.slice(2)}`;
+                // Decode URL-encoded characters like %20
+                const decodedSrc = decodeURIComponent(src.slice(2));
+                const imagePath = `../posts/personal/${postId}/${decodedSrc}`;
+                console.log('Looking for image:', imagePath);
+                console.log('Available images:', Object.keys(imageFiles));
                 src = imageFiles[imagePath] as string || props.src;
+                if (!imageFiles[imagePath]) {
+                  console.warn('Image not found:', imagePath);
+                }
               }
               return <img {...props} src={src} alt={props.alt || ''} />;
             }
