@@ -14,6 +14,7 @@ export default defineConfig({
         }
         copyFileSync('CNAME', 'dist/CNAME');
         copyFileSync('.nojekyll', 'dist/.nojekyll');
+        copyFileSync('404.html', 'dist/404.html');
       }
     }
   ],
