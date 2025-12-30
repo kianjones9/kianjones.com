@@ -84,6 +84,17 @@ nav ul li {
   margin: 1rem 0;
 }
 
+/* General list styling (for about page, etc.) */
+ul:not(.navbar) {
+  list-style: disc;
+  padding-left: 2rem;
+  margin: 1rem 0;
+}
+
+ul:not(.navbar) li {
+  margin: 0.5rem 0;
+}
+
 .post-content ul,
 .post-content ol {
   margin: 1.5rem 0;
@@ -227,6 +238,18 @@ article img {
     margin-bottom: 2rem;
   }
 
+  /* Ensure list bullets are never cut off */
+  ul:not(.navbar) {
+    padding-left: 1.5rem;
+    margin-left: 0.5rem;
+  }
+
+  .post-content ul,
+  .post-content ol {
+    padding-left: 1.5rem;
+    margin-left: 0.5rem;
+  }
+
   .post-content pre {
     padding: 0.75rem;
     font-size: 0.875rem;
@@ -268,5 +291,17 @@ article img {
 
   h3 {
     font-size: 1.1rem;
+  }
+
+  /* Extra spacing for very small screens */
+  ul:not(.navbar) {
+    padding-left: 1.25rem;
+    margin-left: 0.75rem;
+  }
+
+  .post-content ul,
+  .post-content ol {
+    padding-left: 1.25rem;
+    margin-left: 0.75rem;
   }
 }
