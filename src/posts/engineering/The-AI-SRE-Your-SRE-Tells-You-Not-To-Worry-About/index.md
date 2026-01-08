@@ -74,3 +74,7 @@ After fixing this, I got my first AI generated triaged issue:
 
 We can definitely do some better prompt engineering to tweak our results, like adding some information about how the agent can test its own work, etc... but technically pretty awesome!
 
+After a few weeks in production, she's already prepared a few PRs for things which might be low-priority for someone on the team to pick up, and otherwise go unfixed!
+![List of AI Generated PRs](./PRs.png)
+
+I'll likely make a part 2. I have some ideAs for next steps, like enriching the context sent by datadog, but also some low hanging prompt optimizations, and some nifty Letta-powered upgrades!
