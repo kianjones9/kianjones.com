@@ -1,3 +1,5 @@
+# The AI SRE Your SRE Tells You Not To Worry About
+
 Despite what the title may have believe, I would think of myself as an SRE, or at least an SRE-type. Everyday at work I am managing issues in production, triaging new bugs, trying to ascertain the source of sudden latency, etc. and at a small startup, the buck often stops with me. Although that's the job I signed up for, sometimes it can be overwhelming, and I need a little help.
 
 I'd like to introduce my new coworker: Tracey!

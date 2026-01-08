@@ -1,3 +1,5 @@
+# Guide to Operating Self-Hosted LLM Providers in CI Pipelines
+
 At Letta, there are a ton of interesting and novel challenges to solve. One such challenge is the slew of LLM inference providers a modern, pluggable framework must accommodate, not to mention their level of adherence to published standards \*cough\* OpenAI Chat Completions \*cough\*. With many models across many providers, it can be easy to accidentally break a provider integration or drop support for a particular model.
 
 The conventional software engineering solution to this problem is to do integration testing, or to add "CI checks", in today's DevOps vernacular.
