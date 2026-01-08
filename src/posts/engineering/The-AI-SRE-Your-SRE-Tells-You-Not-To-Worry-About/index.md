@@ -77,4 +77,4 @@ We can definitely do some better prompt engineering to tweak our results, like a
 After a few weeks in production, she's already prepared a few PRs for things which might be low-priority for someone on the team to pick up, and otherwise go unfixed!
 ![List of AI Generated PRs](./PRs.png)
 
-I'll likely make a part 2. I have some ideAs for next steps, like enriching the context sent by datadog, but also some low hanging prompt optimizations, and some nifty Letta-powered upgrades!
+I'll likely make a part 2 soon. I have some ideas for next steps, like enriching the context sent by datadog, but also some low hanging prompt optimizations, and some nifty Letta-powered upgrades!
