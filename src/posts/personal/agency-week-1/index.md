@@ -1,0 +1,8 @@
+# Educating Myself on the Civil Rights Movement
+ I'm writing this retrospectively (Saturday February 7th) as is afforded to me by my self-imposed "Vegan w/ Bacon" policy. Because I started my year of agency around mid January, my first week landed squarely with Martin Luther King Jr. Day. As a Canadian, I don't think I had a sufficient education of Dr. King, and the civil rights movement as a whole.
+ 
+I chose to listen to "The Radical King" audiobook, and I won't get too deep into it, but it was eye opening. Of course I was aware of many terrible injustices experienced by African Americans during the time period, but it was seriously crazy to hear some of the specifics.
+
+The book also changed my views on religion, since Dr. King espoused how religious fervor is sometimes what's required for revolution. That sometimes belief in a higher power can be your north star in a situation where you feel otherwise powerless.
+
+I also learned a ton about Gandhi, and non-violence as a mechanism to overthrow an oppressor. Although my good friend claimed it to be "ruling class propaganda... power is the right to do violence", the radical king's ideology makes perfect sense to me: "violence makes an enemy out of your enemy, while non-violence makes a friend out of your enemy". In this way, by overthrowing on oppressor, using non-violence is a means to a peaceful collaborative end. If you exercise violence, your oppressor may be overthrown, but violence begets violence, and your former oppressor will only feel justified in their violent retaliation.

@@ -26,6 +26,7 @@ I'm not sure I've effectively summarized the learnings, so I'd suggest just watc
 So that brings us back to the headline of this post: This year, every week, I am going to exercise my agency in the pursuit of self-discovery. 
 
 I'd like to write a post each week about my exhibitions of agency, and describe any learnings, findings, etc. I will list them in the table below.
+
 ## Vegan w/ Bacon
 I find often times people create self-imposed rules or constraints, which they intend to help guide them through a tough challenge or project. But sometimes those rules are the exact reason they falter. I did see this idea on tiktok, so forgive me, but I love the example.
 
