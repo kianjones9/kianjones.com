@@ -38,4 +38,5 @@ Therefore, I herby declare, there are no rules!
 
 | Date | Act | Post |
 | ---- | --- | ---- |
-|      |     |      |
+|  2026-01-19 | Educating Myself on the Civil Rights Movements | https://kianjon.es/personal/agency-week-1  |
+|  2026-01-29 | Missed Connections | https://kianjon.es/personal/agency-week-2  |
