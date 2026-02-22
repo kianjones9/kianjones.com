@@ -1,7 +1,7 @@
 export default function Footer() {
   return (
     <footer>
-      <a href="https://bsky.app/profile/kianjones9.bsky.social" target="_blank" rel="noopener noreferrer">
+      <a href="https://bsky.app/profile/kianjon.es" target="_blank" rel="noopener noreferrer">
         Bluesky
       </a>
       <span> · </span>

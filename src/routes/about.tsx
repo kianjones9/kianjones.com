@@ -21,7 +21,7 @@ export default function About() {
         <h3>Connect</h3>
         <ul>
           <li>
-            <a href="https://bsky.app/profile/kianjones9.bsky.social" target="_blank" rel="noopener noreferrer">
+            <a href="https://bsky.app/profile/kianjon.es" target="_blank" rel="noopener noreferrer">
               Bluesky
             </a>
           </li>
