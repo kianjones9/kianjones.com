@@ -16,10 +16,10 @@ When I first learned to drive, I was struck by how easy it was to do things inco
 ## Case Studies
 
 Persian Food
-![[persian.jpg]]
+![persian.jpg](persian.jpg)
 Steak
-![[steak.jpg]]
+![steak.jpg](steak.jpg)
 Fish from farmer's market
-![[farmers-market-fish.jpg]]
+![farmers-market-fish.jpg](farmers-market-fish.jpg)
 Broccoli Thoran
-![[thoran.jpg]]
+![thoran.jpg](thoran.jpg)
