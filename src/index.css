@@ -162,11 +162,29 @@ footer {
   border-top: 1px solid rgba(255, 255, 255, 0.1);
   text-align: center;
   color: var(--text-color);
+}
+
+.webring,
+.social-links {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
   gap: 0.5rem;
+}
+
+.webring {
+  margin-bottom: 1rem;
+  color: var(--text-alt-color);
+  font-size: 0.9rem;
+}
+
+.webring-label {
+  color: var(--text-alt-color);
+}
+
+.webring-links {
+  margin-left: 0.5rem;
 }
 
 article {
