@@ -8,5 +8,6 @@
     .static_assets = [
         "favicon.ico",
         "cursor.png",
+        "cursor.cur",
     ],
 }),

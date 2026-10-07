@@ -5,7 +5,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<title :text="$page.title.suffix(' · kianjones.com')"></title>
 		<link rel="icon" href="$site.asset('favicon.png').link()">
-		<link type="text/css" rel="stylesheet" href="$site.asset('style.css').link()">
+		<link type="text/css" rel="stylesheet" href="$site.asset('style.css').link().suffix('?v=2')">
 		<link type="text/css" rel="stylesheet" href="$site.asset('highlight.css').link()">
 		<super>
 	</head>
