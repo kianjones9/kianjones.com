@@ -3,12 +3,63 @@
 .date = .date("2025-10-12T00:00:00"),
 .layout = "post.shtml",
 .description = "Live coding music with AI agents and strudel",
-.tags = ["Letta", "srudel"],
+.tags = ["Letta", "strudel"],
 ---
 # Letta-powered AlgoRave
 
+For the last few months I have been thinking about building this (epic) "DJ" with [Strudel](https://strudel.cc/) powered by [Letta](https://letta.com), where live stream viewers can chat and the agent tunes the shared audio stream collectively. I finally sat down to build a prototype.
 
-See the bluesky thread [here](https://bsky.app/profile/kianjon.es/post/3m2xwj6fl2k2x)
-Or X thread [here](https://x.com/kian_jones_/status/1977240250452980176)
+Strudel is a music live-coding environment for the browser. It ports the TidalCycles pattern language to JavaScript, so a performance is just a buffer of code that you edit while it plays. The idea is to point a stateful agent at that buffer and let the room steer it.
 
 See the demo: [Letta-powered AlgoRave](https://www.youtube.com/live/GwjfcAkPcnw?t=15915)
+
+## Building the agent
+
+I started in the [Letta ADE](https://app.letta.com), and a few ideas showed up immediately.
+
+One I think would be particularly cool: let users specify custom sound packs. In Strudel you can already load custom samples from GitHub, [like this](https://urswilke.github.io/strudel/learn/samples/#loading-custom-samples). If chat can name a pack, the agent should be able to pull it in instead of being stuck with the default kit.
+
+The agent also needs some kind of seed. Its SOP is always to mutate rather than start from scratch. I skipped that for the prototype, since I'm all-in on stateful agents and the memory can carry the pattern forward, but a seed would be nice for future use-cases. A fresh room, or a fresh agent, needs somewhere to begin.
+
+## The seed
+
+I started from this "cover?" of John Coltrane's Giant Steps, from the [Strudel examples](https://strudel.cc/examples). Open it in the [REPL](https://strudel.cc/#Ly8gSm9obiBDb2x0cmFuZSAtIEdpYW50IFN0ZXBzCgpsZXQgbWVsb2R5ID0gc2VxKAogICJbRiM1IEQ1XSBbQjQgRzRdIEJiNCBbQjQgQTRdIiwKICAiW0Q1IEJiNF0gW0c0IEViNF0gRiM0IFtHNCBGNF0iLAogICJCYjQgW0I0IEE0XSBENSBbRCM1IEMjNV0iLAogICJGIzUgW0c1IEY1XSBCYjUgW0YjNSBGIzVdIiwKKS5ub3RlKCkKCnN0YWNrKAogIC8vIG1lbG9keQogIG1lbG9keS5jb2xvcignI0Y4RTcxQycpLAogIC8vIGNob3JkcwogIHNlcSgKICAgICJbQl43IEQ3XSBbR143IEJiN10gRWJeNyBbQW03IEQ3XSIsCiAgICAiW0deNyBCYjddIFtFYl43IEYjN10gQl43IFtGbTcgQmI3XSIsCiAgICAiRWJeNyBbQW03IEQ3XSBHXjcgW0MjbTcgRiM3XSIsCiAgICAiQl43IFtGbTcgQmI3XSBFYl43IFtDI203IEYjN10iCiAgKS5jaG9yZCgpLmRpY3QoJ2xlZnRoYW5kJykKICAuYW5jaG9yKG1lbG9keSkubW9kZSgnZHVjaycpCiAgLnZvaWNpbmcoKS5jb2xvcignIzdFRDMyMScpLAogIC8vIGJhc3MKICBzZXEoCiAgICAiW0IyIEQyXSBbRzIgQmIyXSBbRWIyIEJiM10gW0EyIEQyXSIsCiAgICAiW0cyIEJiMl0gW0ViMiBGIzJdIFtCMiBGIzJdIFtGMiBCYjJdIiwKICAgICJbRWIyIEJiMl0gW0EyIEQyXSBbRzIgRDJdIFtDIzIgRiMyXSIsCiAgICAiW0IyIEYjMl0gW0YyIEJiMl0gW0ViMiBCYjNdIFtDIzIgRiMyXSIKICApLm5vdGUoKS5jb2xvcignIzAwQjhENCcpCikuc2xvdygyMCkKLnBpYW5vcm9sbCh7Zm9sZDoxfSk=).
+
+```javascript
+// John Coltrane - Giant Steps
+
+let melody = seq(
+  "[F#5 D5] [B4 G4] Bb4 [B4 A4]",
+  "[D5 Bb4] [G4 Eb4] F#4 [G4 F4]",
+  "Bb4 [B4 A4] D5 [D#5 C#5]",
+  "F#5 [G5 F5] Bb5 [F#5 F#5]",
+).note()
+
+stack(
+  // melody
+  melody.color('#F8E71C'),
+  // chords
+  seq(
+    "[B^7 D7] [G^7 Bb7] Eb^7 [Am7 D7]",
+    "[G^7 Bb7] [Eb^7 F#7] B^7 [Fm7 Bb7]",
+    "Eb^7 [Am7 D7] G^7 [C#m7 F#7]",
+    "B^7 [Fm7 Bb7] Eb^7 [C#m7 F#7]"
+  ).chord().dict('lefthand')
+  .anchor(melody).mode('duck')
+  .voicing().color('#7ED321'),
+  // bass
+  seq(
+    "[B2 D2] [G2 Bb2] [Eb2 Bb3] [A2 D2]",
+    "[G2 Bb2] [Eb2 F#2] [B2 F#2] [F2 Bb2]",
+    "[Eb2 Bb2] [A2 D2] [G2 D2] [C#2 F#2]",
+    "[B2 F#2] [F2 Bb2] [Eb2 Bb3] [C#2 F#2]"
+  ).note().color('#00B8D4')
+).slow(20)
+.pianoroll({fold:1})
+```
+
+Melody, lefthand voicings, and bass, stacked and slowed way down. That's the pattern the agent is supposed to mutate, not replace.
+
+## Where I left it
+
+I got so distracted playing with the proof-of-concept agent that I didn't finish the rest. The missing piece is a way for the agent to edit the text in the Strudel REPL. Chat can already steer the idea. Custom samples and a seed can wait. Until the agent can write into that buffer, it isn't actually DJing.
