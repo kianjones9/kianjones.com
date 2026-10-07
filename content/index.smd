@@ -1,0 +1,11 @@
+---
+.title = "Welcome!",
+.date = .date("2026-01-01T00:00:00"),
+.layout = "index.shtml",
+---
+
+Thank you for visiting my corner of the internet!
+
+**[Engineering](/engineering/)** covers some of the projects I've worked on, and technical write ups.
+
+**[Personal](/personal/)** includes blog posts about my personal life and after-hours pursuits like language learning, sewing, etc.

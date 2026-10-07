@@ -1,0 +1,18 @@
+<extend template="base.shtml">
+<head id="head">
+</head>
+<main id="main">
+	<article>
+		<h1 :text="$page.title"></h1>
+		<div class="post-content" :html="$page.content()"></div>
+		<div class="post-list" :loop="$page.subpages()">
+			<div class="post-item">
+				<a href="$loop.it.link()"><span :text="$loop.it.title"></span></a>
+				<div class="post-meta">
+					<span class="post-date" :text="$loop.it.date.format('January 02, 2006')"></span>
+					<span class="post-description" :text="$loop.it.description.prefix(' · ')"></span>
+				</div>
+			</div>
+		</div>
+	</article>
+</main>
