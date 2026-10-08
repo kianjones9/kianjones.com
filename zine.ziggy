@@ -9,5 +9,7 @@
         "favicon.ico",
         "cursor.png",
         "cursor.cur",
+        "cursor-hand.png",
+        "cursor-hand.cur",
     ],
 }),
